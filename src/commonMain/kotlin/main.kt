@@ -1,26 +1,33 @@
-import com.soywiz.klock.*
-import com.soywiz.korge.*
-import com.soywiz.korge.tween.*
-import com.soywiz.korge.view.*
-import com.soywiz.korim.color.*
-import com.soywiz.korim.format.*
-import com.soywiz.korio.file.std.*
-import com.soywiz.korma.geom.*
-import com.soywiz.korma.interpolation.*
+import com.snakegame.scenes.GameScene
+import com.snakegame.scenes.LoadingScene
+import com.snakegame.scenes.MainMenuScene
+import com.soywiz.korge.Korge
+import com.soywiz.korge.scene.Module
+import com.soywiz.korge.scene.Scene
+import com.soywiz.korim.color.Colors
+import com.soywiz.korinject.AsyncInjector
+import com.soywiz.korma.geom.SizeInt
+import kotlin.reflect.KClass
 
-suspend fun main() = Korge(width = 512, height = 512, bgcolor = Colors["#2b2b2b"]) {
-	val minDegrees = (-16).degrees
-	val maxDegrees = (+16).degrees
+suspend fun main() = Korge(Korge.Config(module = SnakeGameModule))
 
-	val image = image(resourcesVfs["korge.png"].readBitmap()) {
-		rotation = maxDegrees
-		anchor(.5, .5)
-		scale(.8)
-		position(256, 256)
-	}
+object SnakeGameModule : Module() {
+	override val title = "Snake Game"
+	override val size = SizeInt(800, 600)
+	override val windowSize = SizeInt(800, 600)
 
-	while (true) {
-		image.tween(image::rotation[minDegrees], time = 1.seconds, easing = Easing.EASE_IN_OUT)
-		image.tween(image::rotation[maxDegrees], time = 1.seconds, easing = Easing.EASE_IN_OUT)
+	override val bgcolor = Colors["#2b2b2b"]
+	override val mainScene: KClass<out Scene> = LoadingScene::class
+
+	override suspend fun init(injector: AsyncInjector): Unit = injector.run {
+		//mapInstance(Resources())
+		mapPrototype { LoadingScene(/*get()*/) }
+		mapPrototype { MainMenuScene(/*get()*/) }
+		mapPrototype { GameScene(/*get()*/) }
 	}
 }
+
+
+
+
+
