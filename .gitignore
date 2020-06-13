@@ -2,6 +2,7 @@
 /.idea
 /build/genMainResources
 /build/js
+/build/classes
 /build/kotlin
 /build/libs
 /build/libs

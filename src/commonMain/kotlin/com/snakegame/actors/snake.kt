@@ -3,6 +3,7 @@ package com.snakegame.actors
 import com.snakegame.MILLISECONDS_PER_FRAME
 import com.snakegame.extensions.toBool
 import com.snakegame.input.*
+import com.snakegame.map.CollisionChecker
 import com.soywiz.kmem.unsetBits
 import com.soywiz.korev.Key
 import com.soywiz.korge.atlas.readAtlas
@@ -99,7 +100,7 @@ class Snake(
 }
 
 
-suspend fun Container.snake(views: Views) {
+suspend fun Container.snake(views: Views, collisionChecker: CollisionChecker) {
     val snakeAtlas = resourcesVfs["snake.atlas.json"].readAtlas(views)
     val headTile = snakeAtlas["snake_head_01.png"] as BitmapSlice<Bitmap>
     val bodyTile = snakeAtlas["snake_body.png"] as BitmapSlice<Bitmap>
@@ -108,10 +109,6 @@ suspend fun Container.snake(views: Views) {
     val initialX = 100.0
     val initialY = 100.0
     val snake = Snake(initialX, initialY, 2)
-
-
-
-
 
     var key = 0
 
@@ -142,8 +139,6 @@ suspend fun Container.snake(views: Views) {
                 addBodyPart()
             }
         }
-
-
 
         var frames  =  0.0
         val speed  = 4.0
@@ -181,6 +176,11 @@ suspend fun Container.snake(views: Views) {
                 snake.lastDirection = snake.direction
                 snake.direction = newDirection
                 snake.move()
+
+                collisionChecker.checkCollision(snake.head.x, snake.head.y) {
+                    snake.head.x = 100.0
+                    snake.head.y = 100.0
+                }
             } else {
                 snake.interpolate(frames / tileSize)
             }

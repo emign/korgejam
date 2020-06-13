@@ -3,6 +3,7 @@ package com.snakegame.scenes
 import com.snakegame.actors.apple
 import com.snakegame.actors.snake
 import com.snakegame.input.getButtonPressed
+import com.snakegame.map.CollisionChecker
 import com.snakegame.map.tiledMap
 import com.soywiz.kmem.setBits
 import com.soywiz.kmem.unsetBits
@@ -21,8 +22,10 @@ class GameScene() : Scene() {
         onKeyUp { key = key.unsetBits(getButtonPressed(it)) }
 
 
-        tiledMap(1)
+        val tiledMap = tiledMap(1)
+        val collisionChecker = CollisionChecker(tiledMap)
+
         apple(views)
-        snake(views)
+        snake(views, collisionChecker)
     }
 }
