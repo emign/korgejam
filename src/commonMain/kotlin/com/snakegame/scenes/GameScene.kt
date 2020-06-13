@@ -1,5 +1,6 @@
 package com.snakegame.scenes
 
+import com.snakegame.actors.apple
 import com.snakegame.actors.snake
 import com.snakegame.input.getButtonPressed
 import com.snakegame.map.tiledMap
@@ -21,6 +22,7 @@ class GameScene() : Scene() {
 
 
         tiledMap(1)
+        apple(views)
         snake(views)
     }
 }

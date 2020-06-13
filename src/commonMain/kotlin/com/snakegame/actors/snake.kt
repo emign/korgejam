@@ -1,16 +1,14 @@
 package com.snakegame.actors
 
+import com.snakegame.MILLISECONDS_PER_FRAME
 import com.snakegame.extensions.toBool
 import com.snakegame.input.*
-import com.soywiz.kmem.setBits
 import com.soywiz.kmem.unsetBits
+import com.soywiz.korev.Key
 import com.soywiz.korge.atlas.readAtlas
 import com.soywiz.korge.input.onKeyDown
 import com.soywiz.korge.input.onKeyUp
-import com.soywiz.korge.view.Container
-import com.soywiz.korge.view.Views
-import com.soywiz.korge.view.container
-import com.soywiz.korge.view.image
+import com.soywiz.korge.view.*
 import com.soywiz.korim.bitmap.Bitmap
 import com.soywiz.korim.bitmap.BitmapSlice
 import com.soywiz.korio.file.std.resourcesVfs
@@ -103,13 +101,17 @@ class Snake(
 
 suspend fun Container.snake(views: Views) {
     val snakeAtlas = resourcesVfs["snake.atlas.json"].readAtlas(views)
-    val head = snakeAtlas["head.png"] as BitmapSlice<Bitmap>
-    val body = snakeAtlas["body.png"] as BitmapSlice<Bitmap>
-    val tail = snakeAtlas["tail.png"] as BitmapSlice<Bitmap>
+    val headTile = snakeAtlas["snake_head_01.png"] as BitmapSlice<Bitmap>
+    val bodyTile = snakeAtlas["snake_body.png"] as BitmapSlice<Bitmap>
+    val tailTile = snakeAtlas["snake_body_tail.png"] as BitmapSlice<Bitmap>
 
     val initialX = 100.0
     val initialY = 100.0
-    val snake = Snake(initialX, initialY, 5)
+    val snake = Snake(initialX, initialY, 2)
+
+
+
+
 
     var key = 0
 
@@ -119,21 +121,46 @@ suspend fun Container.snake(views: Views) {
 
 
     container {
-        val bodyParts = listOf(
-                image(head),
-                image(body),
-                image(body),
-                image(body),
-                image(body),
-                image(tail)
+        val bodyParts = mutableListOf(
+                image(headTile),
+                image(bodyTile),
+                image(tailTile)
         )
 
-        var frames  =  0
+        val head = bodyParts.first()
+
+        fun addBodyPart() {
+            val body = snake.body
+            val lastPart = body[body.size - 1]
+            body.add(SnakeBodyPart(lastPart.x, lastPart.y))
+            bodyParts.last().bitmap = bodyTile
+            bodyParts.add(image(tailTile))
+        }
+
+        onKeyDown {
+            if (it.key == Key.SPACE) {
+                addBodyPart()
+            }
+        }
+
+
+
+        var frames  =  0.0
+        val speed  = 4.0
+        val tileSize = 32.0
         var newDirection = snake.direction
         var lockInput = false
 
-        addUpdatable {
-            val scale = if (it == 0) 0.0 else (it / 16.666666)
+        head.onCollision {
+            if (it is Apple) {
+                it.spawn()
+                addBodyPart()
+            }
+        }
+
+        addFixedUpdater(MILLISECONDS_PER_FRAME, false) {
+        //addUpdater { it ->
+        //    val deltaTime:Double = if (it.milliseconds == 0.0) 0.0 else (it.milliseconds / 16.666666)
 
             if(lockInput == false ) {
                 newDirection = when (key) {
@@ -146,16 +173,16 @@ suspend fun Container.snake(views: Views) {
                 if((key and (BUTTON_RIGHT or BUTTON_LEFT or BUTTON_UP or BUTTON_DOWN)).toBool()) lockInput = true
             }
 
-            frames++
+            frames += speed //* deltaTime
 
-            if(frames >= 32) {
+            if(frames >= tileSize) {
                 lockInput = false
-                frames = 0
+                frames = 0.0
                 snake.lastDirection = snake.direction
                 snake.direction = newDirection
                 snake.move()
             } else {
-                snake.interpolate(frames / 32.0)
+                snake.interpolate(frames / tileSize)
             }
 
             bodyParts.forEachIndexed { index, image ->

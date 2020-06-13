@@ -17,7 +17,7 @@ object SnakeGameModule : Module() {
 	override val windowSize = SizeInt(800, 600)
 
 	override val bgcolor = Colors["#2b2b2b"]
-	override val mainScene: KClass<out Scene> = LoadingScene::class
+	override val mainScene: KClass<out Scene> = GameScene::class//LoadingScene::class
 
 	override suspend fun init(injector: AsyncInjector): Unit = injector.run {
 		//mapInstance(Resources())
