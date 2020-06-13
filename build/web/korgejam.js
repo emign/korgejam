@@ -65,19 +65,24 @@
   var readTiledMap = $module$korge_root_korge.com.soywiz.korge.tiled.readTiledMap_utz4xw$;
   var Image_init = $module$korge_root_korge.com.soywiz.korge.view.Image_init_8drxwf$;
   var TiledMapView_init = $module$korge_root_korge.com.soywiz.korge.tiled.TiledMapView;
+  var RGBA = $module$korim_root_korim.com.soywiz.korim.color.RGBA;
+  var tween = $module$korge_root_korge.com.soywiz.korge.tween.tween_t8t7it$;
+  var launch = $module$korio_root_korio.com.soywiz.korio.async.launch_hilpzi$;
   var Scene = $module$korge_root_korge.com.soywiz.korge.scene.Scene;
+  var _interpolate = $module$korge_root_korge.com.soywiz.korge.tween._interpolate_yvo9jy$;
+  var getCallableRef = Kotlin.getCallableRef;
+  var V2_init = $module$korge_root_korge.com.soywiz.korge.tween.V2;
+  var numberToDouble = Kotlin.numberToDouble;
+  var SolidRect_init = $module$korge_root_korge.com.soywiz.korge.view.SolidRect;
   var Camera_init = $module$korge_root_korge.com.soywiz.korge.view.Camera;
   var anchor = $module$korge_root_korge.com.soywiz.korge.view.anchor_11wmr3$;
   var scale = $module$korge_root_korge.com.soywiz.korge.view.scale_2cbtc5$;
   var position = $module$korge_root_korge.com.soywiz.korge.view.position_ajix5r$;
   var Easing = $module$korma_root_korma.com.soywiz.korma.interpolation.Easing;
-  var tween = $module$korge_root_korge.com.soywiz.korge.tween.tween_t8t7it$;
   var getKClass = Kotlin.getKClass;
   var launchImmediately = $module$korio_root_korio.com.soywiz.korio.async.launchImmediately_hilpzi$;
   var get_degrees = $module$korma_root_korma.com.soywiz.korma.geom.get_degrees_s8ev3n$;
   var _interpolateAngle = $module$korge_root_korge.com.soywiz.korge.tween._interpolateAngle_a0zjys$;
-  var getCallableRef = Kotlin.getCallableRef;
-  var V2_init = $module$korge_root_korge.com.soywiz.korge.tween.V2;
   var TimeSpan_0 = $module$korge_root_korge.$$importsForInline$$['klock-root-klock'].com.soywiz.klock.TimeSpan;
   var get_mouse = $module$korge_root_korge.com.soywiz.korge.input.get_mouse_gohfi1$;
   var launchImmediately_0 = $module$korge_root_korge.$$importsForInline$$['korio-root-korio'].com.soywiz.korio.async.launchImmediately_ykkwzu$;
@@ -119,7 +124,7 @@
     this.spawn();
   }
   Apple.prototype.spawn = function () {
-    this.x = random(new IntRange(20, 700), Random.Default);
+    this.x = random(new IntRange(96, 600), Random.Default);
     this.y = random(new IntRange(100, 500), Random.Default);
   };
   Apple.$metadata$ = {
@@ -374,6 +379,13 @@
     this.head.lastY = this.head.y;
     this.head.x = this.head.x + Kotlin.imul(this.direction.deltaX(), this.width);
     this.head.y = this.head.y + Kotlin.imul(this.direction.deltaY(), this.width);
+    var tmp$_0;
+    tmp$_0 = this.body.iterator();
+    while (tmp$_0.hasNext()) {
+      var element = tmp$_0.next();
+      element.xpos = element.lastX;
+      element.ypos = element.lastY;
+    }
   };
   function Snake$interpolate$lerp(a, b, f) {
     return a + f * (b - a);
@@ -604,8 +616,8 @@
   }
   function snake$lambda$lambda$lambda(closure$snake) {
     return function () {
-      closure$snake.head.x = 100.0;
-      closure$snake.head.y = 100.0;
+      closure$snake.head.x = 128.0;
+      closure$snake.head.y = 128.0;
       return Unit;
     };
   }
@@ -754,7 +766,7 @@
             var bodyTile = snakeAtlas.get_61zpoe$('snake_body.png');
             var tailTile = snakeAtlas.get_61zpoe$('snake_body_tail.png');
             var initialX = 2 * 32.0;
-            var initialY = 1 * 32.0;
+            var initialY = 3 * 32.0;
             var snake = new Snake(initialX, initialY, 2);
             var key = {v: 0};
             var prop = getPropertyCallableRef('onKeyDown', 1, function ($receiver) {
@@ -979,6 +991,9 @@
     else
       return instance.doResume(null);
   }
+  function solidRect$lambda($receiver) {
+    return Unit;
+  }
   function camera$lambda($receiver) {
     return Unit;
   }
@@ -988,6 +1003,128 @@
     this.movementMode = movementMode;
     this.scroll = scroll;
   }
+  function Coroutine$GameScene$fade$lambda(closure$fadeRect_0, continuation_0) {
+    CoroutineImpl.call(this, continuation_0);
+    this.exceptionState_0 = 1;
+    this.local$closure$fadeRect = closure$fadeRect_0;
+  }
+  Coroutine$GameScene$fade$lambda.$metadata$ = {
+    kind: Kotlin.Kind.CLASS,
+    simpleName: null,
+    interfaces: [CoroutineImpl]
+  };
+  Coroutine$GameScene$fade$lambda.prototype = Object.create(CoroutineImpl.prototype);
+  Coroutine$GameScene$fade$lambda.prototype.constructor = Coroutine$GameScene$fade$lambda;
+  Coroutine$GameScene$fade$lambda.prototype.doResume = function () {
+    do
+      try {
+        switch (this.state_0) {
+          case 0:
+            this.state_0 = 2;
+            this.result_0 = tween(this.local$closure$fadeRect, [new V2_init(getPropertyCallableRef('alpha', 0, function ($receiver) {
+              return $receiver.alpha;
+            }.bind(null, this.local$closure$fadeRect), function ($receiver, value) {
+              $receiver.alpha = value;
+            }.bind(null, this.local$closure$fadeRect)), 0.0, 1.0, getCallableRef('_interpolate', function (ratio, l, r) {
+              return _interpolate(ratio, l, r);
+            }), true)], TimeSpan.Companion.fromSeconds_14dthe$(2), void 0, void 0, this);
+            if (this.result_0 === COROUTINE_SUSPENDED)
+              return COROUTINE_SUSPENDED;
+            continue;
+          case 1:
+            throw this.exception_0;
+          case 2:
+            return this.result_0;
+          default:this.state_0 = 1;
+            throw new Error('State Machine Unreachable execution');
+        }
+      } catch (e) {
+        if (this.state_0 === 1) {
+          this.exceptionState_0 = this.state_0;
+          throw e;
+        } else {
+          this.state_0 = this.exceptionState_0;
+          this.exception_0 = e;
+        }
+      }
+     while (true);
+  };
+  function GameScene$fade$lambda(closure$fadeRect_0) {
+    return function (continuation_0, suspended) {
+      var instance = new Coroutine$GameScene$fade$lambda(closure$fadeRect_0, continuation_0);
+      if (suspended)
+        return instance;
+      else
+        return instance.doResume(null);
+    };
+  }
+  GameScene.prototype.fade_st8p7j$ = function ($receiver) {
+    var $receiver_0 = addTo(new SolidRect_init(1000.0, 1000.0, RGBA.Companion.float_7b5o5w$(numberToDouble(0), numberToDouble(0), numberToDouble(0), numberToDouble(0))), $receiver);
+    solidRect$lambda($receiver_0);
+    var fadeRect = $receiver_0;
+    launch(this, GameScene$fade$lambda(fadeRect));
+  };
+  function Coroutine$GameScene$unFade$lambda(closure$fadeRect_0, continuation_0) {
+    CoroutineImpl.call(this, continuation_0);
+    this.exceptionState_0 = 1;
+    this.local$closure$fadeRect = closure$fadeRect_0;
+  }
+  Coroutine$GameScene$unFade$lambda.$metadata$ = {
+    kind: Kotlin.Kind.CLASS,
+    simpleName: null,
+    interfaces: [CoroutineImpl]
+  };
+  Coroutine$GameScene$unFade$lambda.prototype = Object.create(CoroutineImpl.prototype);
+  Coroutine$GameScene$unFade$lambda.prototype.constructor = Coroutine$GameScene$unFade$lambda;
+  Coroutine$GameScene$unFade$lambda.prototype.doResume = function () {
+    do
+      try {
+        switch (this.state_0) {
+          case 0:
+            this.state_0 = 2;
+            this.result_0 = tween(this.local$closure$fadeRect, [new V2_init(getPropertyCallableRef('alpha', 0, function ($receiver) {
+              return $receiver.alpha;
+            }.bind(null, this.local$closure$fadeRect), function ($receiver, value) {
+              $receiver.alpha = value;
+            }.bind(null, this.local$closure$fadeRect)), 1.0, 0.0, getCallableRef('_interpolate', function (ratio, l, r) {
+              return _interpolate(ratio, l, r);
+            }), true)], TimeSpan.Companion.fromSeconds_14dthe$(2), void 0, void 0, this);
+            if (this.result_0 === COROUTINE_SUSPENDED)
+              return COROUTINE_SUSPENDED;
+            continue;
+          case 1:
+            throw this.exception_0;
+          case 2:
+            return this.result_0;
+          default:this.state_0 = 1;
+            throw new Error('State Machine Unreachable execution');
+        }
+      } catch (e) {
+        if (this.state_0 === 1) {
+          this.exceptionState_0 = this.state_0;
+          throw e;
+        } else {
+          this.state_0 = this.exceptionState_0;
+          this.exception_0 = e;
+        }
+      }
+     while (true);
+  };
+  function GameScene$unFade$lambda(closure$fadeRect_0) {
+    return function (continuation_0, suspended) {
+      var instance = new Coroutine$GameScene$unFade$lambda(closure$fadeRect_0, continuation_0);
+      if (suspended)
+        return instance;
+      else
+        return instance.doResume(null);
+    };
+  }
+  GameScene.prototype.unFade_st8p7j$ = function ($receiver) {
+    var $receiver_0 = addTo(new SolidRect_init(1000.0, 1000.0, RGBA.Companion.float_7b5o5w$(numberToDouble(0), numberToDouble(0), numberToDouble(0), numberToDouble(1))), $receiver);
+    solidRect$lambda($receiver_0);
+    var fadeRect = $receiver_0;
+    launch(this, GameScene$unFade$lambda(fadeRect));
+  };
   function GameScene$sceneInit$lambda$lambda(closure$cameraCenter, closure$player, closure$cameraSpeed, closure$tiledMap, closure$screenSize) {
     return function ($receiver) {
       var target = closure$cameraCenter - closure$player.head.xpos;
@@ -1057,6 +1194,7 @@
               var screenSize = 800;
               addFixedUpdater(this.local$$receiver_0, MILLISECONDS_PER_FRAME, void 0, void 0, GameScene$sceneInit$lambda$lambda(cameraCenter, player, cameraSpeed, this.local$tiledMap, screenSize));
             }
+            this.$this.unFade_st8p7j$(this.local$$receiver);
             return;
           default:this.state_0 = 1;
             throw new Error('State Machine Unreachable execution');
@@ -1918,6 +2056,7 @@
   var package$map = package$snakegame.map || (package$snakegame.map = {});
   package$map.CollisionChecker = CollisionChecker;
   package$map.tiledMap_iz2l6n$ = tiledMap;
+  $$importsForInline$$['korim-root-korim'] = $module$korim_root_korim;
   var package$scenes = package$snakegame.scenes || (package$snakegame.scenes = {});
   package$scenes.GameScene = GameScene;
   package$scenes.SnakeGameScene = SnakeGameScene;

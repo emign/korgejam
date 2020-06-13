@@ -13,7 +13,7 @@ class Apple(bitmap:BmpSlice) : Image(bitmap) {
     }
 
     fun spawn() {
-        x = (20..700).random().toDouble()
+        x = (96..600).random().toDouble()
         y = (100..500).random().toDouble()
     }
 }

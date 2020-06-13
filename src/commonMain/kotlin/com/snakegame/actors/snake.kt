@@ -115,7 +115,7 @@ suspend fun Container.snake(views: Views, collisionChecker: CollisionChecker, mo
     val tailTile = snakeAtlas["snake_body_tail.png"]
 
     val initialX = 2 * 32.0
-    val initialY = 1 * 32.0
+    val initialY = 3 * 32.0
     val snake = Snake(initialX, initialY, 2)
 
     var key = 0
