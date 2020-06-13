@@ -1,74 +1,478 @@
 {
-	"frames": {
-		"body.png": {
+	"framesMap": {
+		"apple.png": {
+			"filename": "apple.png",
 			"frame": {
 				"x": 2,
 				"y": 2,
-				"w": 36,
-				"h": 36
+				"w": 32,
+				"h": 32
 			},
 			"rotated": false,
 			"sourceSize": {
-				"w": 36,
-				"h": 36
+				"w": 32,
+				"h": 32
 			},
 			"spriteSourceSize": {
 				"x": 0,
 				"y": 0,
-				"w": 36,
-				"h": 36
+				"w": 32,
+				"h": 32
+			},
+			"trimmed": false
+		},
+		"body.png": {
+			"filename": "body.png",
+			"frame": {
+				"x": 2,
+				"y": 38,
+				"w": 32,
+				"h": 32
+			},
+			"rotated": false,
+			"sourceSize": {
+				"w": 32,
+				"h": 32
+			},
+			"spriteSourceSize": {
+				"x": 0,
+				"y": 0,
+				"w": 32,
+				"h": 32
 			},
 			"trimmed": false
 		},
 		"head.png": {
+			"filename": "head.png",
 			"frame": {
 				"x": 2,
-				"y": 38,
-				"w": 36,
-				"h": 36
+				"y": 74,
+				"w": 32,
+				"h": 32
 			},
 			"rotated": false,
 			"sourceSize": {
-				"w": 36,
-				"h": 36
+				"w": 32,
+				"h": 32
 			},
 			"spriteSourceSize": {
 				"x": 0,
 				"y": 0,
-				"w": 36,
-				"h": 36
+				"w": 32,
+				"h": 32
+			},
+			"trimmed": false
+		},
+		"snake_body.png": {
+			"filename": "snake_body.png",
+			"frame": {
+				"x": 2,
+				"y": 110,
+				"w": 32,
+				"h": 32
+			},
+			"rotated": false,
+			"sourceSize": {
+				"w": 32,
+				"h": 32
+			},
+			"spriteSourceSize": {
+				"x": 0,
+				"y": 0,
+				"w": 32,
+				"h": 32
+			},
+			"trimmed": false
+		},
+		"snake_body_tail.png": {
+			"filename": "snake_body_tail.png",
+			"frame": {
+				"x": 2,
+				"y": 146,
+				"w": 32,
+				"h": 32
+			},
+			"rotated": false,
+			"sourceSize": {
+				"w": 32,
+				"h": 32
+			},
+			"spriteSourceSize": {
+				"x": 0,
+				"y": 0,
+				"w": 32,
+				"h": 32
+			},
+			"trimmed": false
+		},
+		"snake_body_turn.png": {
+			"filename": "snake_body_turn.png",
+			"frame": {
+				"x": 2,
+				"y": 182,
+				"w": 32,
+				"h": 32
+			},
+			"rotated": false,
+			"sourceSize": {
+				"w": 32,
+				"h": 32
+			},
+			"spriteSourceSize": {
+				"x": 0,
+				"y": 0,
+				"w": 32,
+				"h": 32
+			},
+			"trimmed": false
+		},
+		"snake_eyebrows.png": {
+			"filename": "snake_eyebrows.png",
+			"frame": {
+				"x": 2,
+				"y": 218,
+				"w": 12,
+				"h": 7
+			},
+			"rotated": false,
+			"sourceSize": {
+				"w": 12,
+				"h": 7
+			},
+			"spriteSourceSize": {
+				"x": 0,
+				"y": 0,
+				"w": 12,
+				"h": 7
+			},
+			"trimmed": false
+		},
+		"snake_hat.png": {
+			"filename": "snake_hat.png",
+			"frame": {
+				"x": 18,
+				"y": 218,
+				"w": 32,
+				"h": 32
+			},
+			"rotated": false,
+			"sourceSize": {
+				"w": 32,
+				"h": 32
+			},
+			"spriteSourceSize": {
+				"x": 0,
+				"y": 0,
+				"w": 32,
+				"h": 32
+			},
+			"trimmed": false
+		},
+		"snake_head_01.png": {
+			"filename": "snake_head_01.png",
+			"frame": {
+				"x": 38,
+				"y": 2,
+				"w": 32,
+				"h": 32
+			},
+			"rotated": false,
+			"sourceSize": {
+				"w": 32,
+				"h": 32
+			},
+			"spriteSourceSize": {
+				"x": 0,
+				"y": 0,
+				"w": 32,
+				"h": 32
+			},
+			"trimmed": false
+		},
+		"snake_head_02.png": {
+			"filename": "snake_head_02.png",
+			"frame": {
+				"x": 38,
+				"y": 38,
+				"w": 32,
+				"h": 32
+			},
+			"rotated": false,
+			"sourceSize": {
+				"w": 32,
+				"h": 32
+			},
+			"spriteSourceSize": {
+				"x": 0,
+				"y": 0,
+				"w": 32,
+				"h": 32
 			},
 			"trimmed": false
 		},
 		"tail.png": {
+			"filename": "tail.png",
 			"frame": {
-				"x": 2,
+				"x": 38,
 				"y": 74,
-				"w": 36,
-				"h": 36
+				"w": 32,
+				"h": 32
 			},
 			"rotated": false,
 			"sourceSize": {
-				"w": 36,
-				"h": 36
+				"w": 32,
+				"h": 32
 			},
 			"spriteSourceSize": {
 				"x": 0,
 				"y": 0,
-				"w": 36,
-				"h": 36
+				"w": 32,
+				"h": 32
 			},
 			"trimmed": false
 		}
 	},
+	"frames": [
+		{
+			"filename": "apple.png",
+			"frame": {
+				"x": 2,
+				"y": 2,
+				"w": 32,
+				"h": 32
+			},
+			"rotated": false,
+			"sourceSize": {
+				"w": 32,
+				"h": 32
+			},
+			"spriteSourceSize": {
+				"x": 0,
+				"y": 0,
+				"w": 32,
+				"h": 32
+			},
+			"trimmed": false
+		},
+		{
+			"filename": "body.png",
+			"frame": {
+				"x": 2,
+				"y": 38,
+				"w": 32,
+				"h": 32
+			},
+			"rotated": false,
+			"sourceSize": {
+				"w": 32,
+				"h": 32
+			},
+			"spriteSourceSize": {
+				"x": 0,
+				"y": 0,
+				"w": 32,
+				"h": 32
+			},
+			"trimmed": false
+		},
+		{
+			"filename": "head.png",
+			"frame": {
+				"x": 2,
+				"y": 74,
+				"w": 32,
+				"h": 32
+			},
+			"rotated": false,
+			"sourceSize": {
+				"w": 32,
+				"h": 32
+			},
+			"spriteSourceSize": {
+				"x": 0,
+				"y": 0,
+				"w": 32,
+				"h": 32
+			},
+			"trimmed": false
+		},
+		{
+			"filename": "snake_body.png",
+			"frame": {
+				"x": 2,
+				"y": 110,
+				"w": 32,
+				"h": 32
+			},
+			"rotated": false,
+			"sourceSize": {
+				"w": 32,
+				"h": 32
+			},
+			"spriteSourceSize": {
+				"x": 0,
+				"y": 0,
+				"w": 32,
+				"h": 32
+			},
+			"trimmed": false
+		},
+		{
+			"filename": "snake_body_tail.png",
+			"frame": {
+				"x": 2,
+				"y": 146,
+				"w": 32,
+				"h": 32
+			},
+			"rotated": false,
+			"sourceSize": {
+				"w": 32,
+				"h": 32
+			},
+			"spriteSourceSize": {
+				"x": 0,
+				"y": 0,
+				"w": 32,
+				"h": 32
+			},
+			"trimmed": false
+		},
+		{
+			"filename": "snake_body_turn.png",
+			"frame": {
+				"x": 2,
+				"y": 182,
+				"w": 32,
+				"h": 32
+			},
+			"rotated": false,
+			"sourceSize": {
+				"w": 32,
+				"h": 32
+			},
+			"spriteSourceSize": {
+				"x": 0,
+				"y": 0,
+				"w": 32,
+				"h": 32
+			},
+			"trimmed": false
+		},
+		{
+			"filename": "snake_eyebrows.png",
+			"frame": {
+				"x": 2,
+				"y": 218,
+				"w": 12,
+				"h": 7
+			},
+			"rotated": false,
+			"sourceSize": {
+				"w": 12,
+				"h": 7
+			},
+			"spriteSourceSize": {
+				"x": 0,
+				"y": 0,
+				"w": 12,
+				"h": 7
+			},
+			"trimmed": false
+		},
+		{
+			"filename": "snake_hat.png",
+			"frame": {
+				"x": 18,
+				"y": 218,
+				"w": 32,
+				"h": 32
+			},
+			"rotated": false,
+			"sourceSize": {
+				"w": 32,
+				"h": 32
+			},
+			"spriteSourceSize": {
+				"x": 0,
+				"y": 0,
+				"w": 32,
+				"h": 32
+			},
+			"trimmed": false
+		},
+		{
+			"filename": "snake_head_01.png",
+			"frame": {
+				"x": 38,
+				"y": 2,
+				"w": 32,
+				"h": 32
+			},
+			"rotated": false,
+			"sourceSize": {
+				"w": 32,
+				"h": 32
+			},
+			"spriteSourceSize": {
+				"x": 0,
+				"y": 0,
+				"w": 32,
+				"h": 32
+			},
+			"trimmed": false
+		},
+		{
+			"filename": "snake_head_02.png",
+			"frame": {
+				"x": 38,
+				"y": 38,
+				"w": 32,
+				"h": 32
+			},
+			"rotated": false,
+			"sourceSize": {
+				"w": 32,
+				"h": 32
+			},
+			"spriteSourceSize": {
+				"x": 0,
+				"y": 0,
+				"w": 32,
+				"h": 32
+			},
+			"trimmed": false
+		},
+		{
+			"filename": "tail.png",
+			"frame": {
+				"x": 38,
+				"y": 74,
+				"w": 32,
+				"h": 32
+			},
+			"rotated": false,
+			"sourceSize": {
+				"w": 32,
+				"h": 32
+			},
+			"spriteSourceSize": {
+				"x": 0,
+				"y": 0,
+				"w": 32,
+				"h": 32
+			},
+			"trimmed": false
+		}
+	],
 	"meta": {
 		"app": "korge",
 		"format": "RGBA8888",
 		"image": "snake.atlas.png",
 		"scale": 1.0,
 		"size": {
-			"w": 36,
-			"h": 108
+			"w": 72,
+			"h": 252
 		},
 		"version": "1.0.0"
 	}

@@ -6,26 +6,27 @@
   else {
     if (typeof kotlin === 'undefined') {
       throw new Error("Error loading module 'kotlin-test'. Its dependency 'kotlin' was not found. Please, check whether 'kotlin' is loaded prior to 'kotlin-test'.");
-    }
-    root['kotlin-test'] = factory(typeof this['kotlin-test'] === 'undefined' ? {} : this['kotlin-test'], kotlin);
+    }root['kotlin-test'] = factory(typeof this['kotlin-test'] === 'undefined' ? {} : this['kotlin-test'], kotlin);
   }
 }(this, function (_, Kotlin) {
   'use strict';
-  var Unit = Kotlin.kotlin.Unit;
+  var $$importsForInline$$ = _.$$importsForInline$$ || (_.$$importsForInline$$ = {});
   var ensureNotNull = Kotlin.ensureNotNull;
-  var Throwable = Error;
   var defineInlineFunction = Kotlin.defineInlineFunction;
   var wrapFunction = Kotlin.wrapFunction;
   var toString = Kotlin.toString;
   var equals = Kotlin.equals;
   var Kind_INTERFACE = Kotlin.Kind.INTERFACE;
+  var Any = Object;
+  var throwCCE = Kotlin.throwCCE;
   var AssertionError_init = Kotlin.kotlin.AssertionError_init;
   var AssertionError_init_0 = Kotlin.kotlin.AssertionError_init_pdl1vj$;
   var Kind_OBJECT = Kotlin.Kind.OBJECT;
   var Kind_CLASS = Kotlin.Kind.CLASS;
   var Annotation = Kotlin.kotlin.Annotation;
+  var Unit = Kotlin.kotlin.Unit;
   var println = Kotlin.kotlin.io.println_s8jyv4$;
-  var throwCCE = Kotlin.throwCCE;
+  var Throwable = Error;
   var IllegalArgumentException_init = Kotlin.kotlin.IllegalArgumentException_init_pdl1vj$;
   var getCallableRef = Kotlin.getCallableRef;
   var to = Kotlin.kotlin.to_ujzrz7$;
@@ -86,8 +87,7 @@
     get_asserter().assertNotNull_67rc9h$(message, actual);
     if (actual != null) {
       block(actual);
-    }
-  }
+    }}
   function assertNull(actual, message) {
     if (message === void 0)
       message = null;
@@ -104,42 +104,116 @@
   function expect_0(expected, message, block) {
     assertEquals(expected, block(), message);
   }
-  function assertFails(block) {
-    return assertFails_0(null, block);
-  }
-  function assertFails_0(message, block) {
-    try {
-      block();
-    }
-     catch (e) {
-      if (Kotlin.isType(e, Throwable)) {
-        assertEquals(e.message, e.message);
-        return e;
+  var assertFails = defineInlineFunction('kotlin-test.kotlin.test.assertFails_o14v8n$', wrapFunction(function () {
+    var checkResultIsFailure = _.kotlin.test.checkResultIsFailure_8v9b5x$;
+    var Result = Kotlin.kotlin.Result;
+    var Throwable = Error;
+    var createFailure = Kotlin.kotlin.createFailure_tcv7n7$;
+    return function (block) {
+      var tmp$;
+      try {
+        tmp$ = new Result(block());
+      } catch (e) {
+        if (Kotlin.isType(e, Throwable)) {
+          tmp$ = new Result(createFailure(e));
+        } else
+          throw e;
       }
-       else
-        throw e;
+      return checkResultIsFailure(null, tmp$);
+    };
+  }));
+  var assertFails_0 = defineInlineFunction('kotlin-test.kotlin.test.assertFails_9bodf6$', wrapFunction(function () {
+    var checkResultIsFailure = _.kotlin.test.checkResultIsFailure_8v9b5x$;
+    var Result = Kotlin.kotlin.Result;
+    var Throwable = Error;
+    var createFailure = Kotlin.kotlin.createFailure_tcv7n7$;
+    return function (message, block) {
+      var tmp$;
+      try {
+        tmp$ = new Result(block());
+      } catch (e) {
+        if (Kotlin.isType(e, Throwable)) {
+          tmp$ = new Result(createFailure(e));
+        } else
+          throw e;
+      }
+      return checkResultIsFailure(message, tmp$);
+    };
+  }));
+  function checkResultIsFailure(message, blockResult) {
+    var tmp$, tmp$_0;
+    var exception = blockResult.exceptionOrNull();
+    if (exception == null) {
+      (tmp$ = blockResult.value) == null || Kotlin.isType(tmp$, Any) || throwCCE();
+      tmp$_0 = get_asserter().fail_pdl1vj$(messagePrefix(message) + 'Expected an exception to be thrown, but was completed successfully.');
+    } else {
+      return exception;
     }
-    get_asserter().fail_pdl1vj$(messagePrefix(message) + 'Expected an exception to be thrown, but was completed successfully.');
   }
   var assertFailsWith = defineInlineFunction('kotlin-test.kotlin.test.assertFailsWith_cnau6l$', wrapFunction(function () {
     var getKClass = Kotlin.getKClass;
-    var assertFailsWith = _.kotlin.test.assertFailsWith_l9oqa2$;
+    var checkResultIsFailure = _.kotlin.test.checkResultIsFailure_3e4uyv$;
+    var Result = Kotlin.kotlin.Result;
+    var Throwable = Error;
+    var createFailure = Kotlin.kotlin.createFailure_tcv7n7$;
     return function (T_0, isT, message, block) {
       if (message === void 0)
         message = null;
-      return assertFailsWith(getKClass(T_0), message, block);
+      var exceptionClass = getKClass(T_0);
+      var tmp$;
+      try {
+        tmp$ = new Result(block());
+      } catch (e) {
+        if (Kotlin.isType(e, Throwable)) {
+          tmp$ = new Result(createFailure(e));
+        } else
+          throw e;
+      }
+      return checkResultIsFailure(exceptionClass, message, tmp$);
     };
   }));
-  function assertFailsWith_0(exceptionClass, block) {
-    return assertFailsWith_1(exceptionClass, null, block);
-  }
+  var assertFailsWith_0 = defineInlineFunction('kotlin-test.kotlin.test.assertFailsWith_jbbixx$', wrapFunction(function () {
+    var checkResultIsFailure = _.kotlin.test.checkResultIsFailure_3e4uyv$;
+    var Result = Kotlin.kotlin.Result;
+    var Throwable = Error;
+    var createFailure = Kotlin.kotlin.createFailure_tcv7n7$;
+    return function (exceptionClass, block) {
+      var tmp$;
+      try {
+        tmp$ = new Result(block());
+      } catch (e) {
+        if (Kotlin.isType(e, Throwable)) {
+          tmp$ = new Result(createFailure(e));
+        } else
+          throw e;
+      }
+      return checkResultIsFailure(exceptionClass, null, tmp$);
+    };
+  }));
+  var assertFailsWith_1 = defineInlineFunction('kotlin-test.kotlin.test.assertFailsWith_l9oqa2$', wrapFunction(function () {
+    var checkResultIsFailure = _.kotlin.test.checkResultIsFailure_3e4uyv$;
+    var Result = Kotlin.kotlin.Result;
+    var Throwable = Error;
+    var createFailure = Kotlin.kotlin.createFailure_tcv7n7$;
+    return function (exceptionClass, message, block) {
+      var tmp$;
+      try {
+        tmp$ = new Result(block());
+      } catch (e) {
+        if (Kotlin.isType(e, Throwable)) {
+          tmp$ = new Result(createFailure(e));
+        } else
+          throw e;
+      }
+      return checkResultIsFailure(exceptionClass, message, tmp$);
+    };
+  }));
   function Asserter() {
   }
   Asserter.prototype.assertTrue_o10pc4$ = function (lazyMessage, actual) {
     if (!actual) {
       this.fail_pdl1vj$(lazyMessage());
-    }
-  };
+    }};
   function Asserter$assertTrue$lambda(closure$message) {
     return function () {
       return closure$message;
@@ -226,8 +300,7 @@
   function DefaultAsserter_getInstance() {
     if (DefaultAsserter_instance === null) {
       new DefaultAsserter();
-    }
-    return DefaultAsserter_instance;
+    }return DefaultAsserter_instance;
   }
   function DefaultAsserter_0() {
     return DefaultAsserter_getInstance();
@@ -311,8 +384,7 @@
   DefaultJsAsserter.prototype.assertTrue_o10pc4$ = function (lazyMessage, actual) {
     if (!actual) {
       this.failWithMessage_0(lazyMessage);
-    }
-     else {
+    } else {
       this.invokeHook_0(true, lazyMessage);
     }
   };
@@ -378,8 +450,7 @@
   DefaultJsAsserter.prototype.invokeHook_0 = function (result, lazyMessage) {
     try {
       assertHook(new DefaultJsAsserter$invokeHook$ObjectLiteral(result, lazyMessage));
-    }
-    finally {
+    }finally {
       this.e_0 = undefined;
       this.a_0 = undefined;
     }
@@ -393,17 +464,23 @@
   function DefaultJsAsserter_getInstance() {
     if (DefaultJsAsserter_instance === null) {
       new DefaultJsAsserter();
-    }
-    return DefaultJsAsserter_instance;
+    }return DefaultJsAsserter_instance;
   }
   function todo(block) {
     println('TODO at ' + toString(block));
   }
-  function assertFailsWith_1(exceptionClass, message, block) {
-    var tmp$;
-    var exception = assertFails_0(message, block);
-    assertTrue_0(exceptionClass.isInstance_s8jyv4$(exception), messagePrefix(message) + ('Expected an exception of ' + exceptionClass + ' to be thrown, but was ' + exception));
-    return Kotlin.isType(tmp$ = exception, Throwable) ? tmp$ : throwCCE();
+  function checkResultIsFailure_0(exceptionClass, message, blockResult) {
+    var tmp$, tmp$_0;
+    var exception = blockResult.exceptionOrNull();
+    if (exception == null) {
+      (tmp$ = blockResult.value) == null || Kotlin.isType(tmp$, Any) || throwCCE();
+      tmp$_0 = get_asserter().fail_pdl1vj$(messagePrefix(message) + ('Expected an exception of ' + exceptionClass + ' to be thrown, but was completed successfully.'));
+    } else {
+      var tmp$_1;
+      if (exceptionClass.isInstance_s8jyv4$(exception)) {
+        return Kotlin.isType(tmp$_1 = exception, Throwable) ? tmp$_1 : throwCCE();
+      }tmp$_0 = get_asserter().fail_pdl1vj$(messagePrefix(message) + ('Expected an exception of ' + exceptionClass + ' to be thrown, but was ' + exception));
+    }
   }
   function lookupAsserter() {
     return DefaultJsAsserter_getInstance();
@@ -415,13 +492,11 @@
       if ((tmp$ = NAME_TO_ADAPTER.get_11rb$(adapter)) != null) {
         setAdapter_0(tmp$());
         tmp$_0 = Unit;
-      }
-       else
+      } else
         tmp$_0 = null;
       if (tmp$_0 == null)
         throw IllegalArgumentException_init("Unsupported test framework adapter: '" + adapter.toString() + "'");
-    }
-     else {
+    } else {
       currentAdapter = adapter;
     }
   }
@@ -454,13 +529,11 @@
   BareAdapter.prototype.suite = function (name, ignored, suiteFn) {
     if (!ignored) {
       suiteFn();
-    }
-  };
+    }};
   BareAdapter.prototype.test = function (name, ignored, testFn) {
     if (!ignored) {
       testFn();
-    }
-  };
+    }};
   BareAdapter.$metadata$ = {
     kind: Kind_CLASS,
     simpleName: 'BareAdapter',
@@ -477,16 +550,14 @@
   JasmineLikeAdapter.prototype.suite = function (name, ignored, suiteFn) {
     if (ignored) {
       xdescribe(name, suiteFn);
-    }
-     else {
+    } else {
       describe(name, suiteFn);
     }
   };
   JasmineLikeAdapter.prototype.test = function (name, ignored, testFn) {
     if (ignored) {
       xit(name, testFn);
-    }
-     else {
+    } else {
       it(name, testFn);
     }
   };
@@ -507,8 +578,7 @@
   QUnitAdapter.prototype.test = function (name, ignored, testFn) {
     if (ignored | this.ignoredSuite) {
       QUnit.skip(name, this.wrapTest_0(testFn));
-    }
-     else {
+    } else {
       QUnit.test(name, this.wrapTest_0(testFn));
     }
   };
@@ -523,11 +593,10 @@
     return function (assert) {
       var assertionsHappened = {v: false};
       assertHook = QUnitAdapter$wrapTest$lambda$lambda(assertionsHappened, assert);
-      closure$testFn();
+      var possiblePromise = closure$testFn();
       if (!assertionsHappened.v) {
         assertTrue_0(true, 'A test with no assertions is considered successful');
-      }
-      return Unit;
+      }return possiblePromise;
     };
   }
   QUnitAdapter.prototype.wrapTest_0 = function (testFn) {
@@ -565,10 +634,9 @@
   package$test.fail_pdl1vj$ = fail;
   package$test.expect_e96eyq$ = expect;
   package$test.expect_rr7wld$ = expect_0;
-  package$test.assertFails_o14v8n$ = assertFails;
-  package$test.assertFails_9bodf6$ = assertFails_0;
-  package$test.assertFailsWith_l9oqa2$ = assertFailsWith_1;
-  package$test.assertFailsWith_jbbixx$ = assertFailsWith_0;
+  package$test.checkResultIsFailure_8v9b5x$ = checkResultIsFailure;
+  $$importsForInline$$['kotlin-test'] = _;
+  package$test.checkResultIsFailure_3e4uyv$ = checkResultIsFailure_0;
   package$test.Asserter = Asserter;
   package$test.AsserterContributor = AsserterContributor;
   Object.defineProperty(package$test, 'DefaultAsserter', {
