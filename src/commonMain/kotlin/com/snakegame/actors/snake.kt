@@ -102,11 +102,11 @@ class Snake(
 
 enum class MovementMode { SNAKE, PACMAN, MARIO }
 
-suspend fun Container.snake(views: Views, collisionChecker: CollisionChecker, movementMode:MovementMode = MovementMode.SNAKE) {
+suspend fun Container.snake(views: Views, collisionChecker: CollisionChecker, movementMode:MovementMode = MovementMode.SNAKE):Snake {
     val snakeAtlas = resourcesVfs["snake.atlas.json"].readAtlas(views)
-    val headTile = snakeAtlas["snake_head_01.png"] as BitmapSlice<Bitmap>
-    val bodyTile = snakeAtlas["snake_body.png"] as BitmapSlice<Bitmap>
-    val tailTile = snakeAtlas["snake_body_tail.png"] as BitmapSlice<Bitmap>
+    val headTile = snakeAtlas["snake_head_01.png"]
+    val bodyTile = snakeAtlas["snake_body.png"]
+    val tailTile = snakeAtlas["snake_body_tail.png"]
 
     val initialX = 2 * 32.0
     val initialY = 1 * 32.0
@@ -261,4 +261,5 @@ suspend fun Container.snake(views: Views, collisionChecker: CollisionChecker, mo
             }
         }
     }
+    return snake
 }
