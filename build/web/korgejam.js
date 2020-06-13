@@ -46,6 +46,7 @@
   var last = Kotlin.kotlin.collections.last_2p1efm$;
   var Key = $module$korgw_root_korgw.com.soywiz.korev.Key;
   var onCollision = $module$korge_root_korge.com.soywiz.korge.view.onCollision_1uywuz$;
+  var anchor = $module$korge_root_korge.com.soywiz.korge.view.anchor_11wmr3$;
   var addFixedUpdater = $module$korge_root_korge.com.soywiz.korge.view.addFixedUpdater_ns2cui$;
   var ArrayList_init = Kotlin.kotlin.collections.ArrayList_init_287e2$;
   var addTo = $module$korge_root_korge.com.soywiz.korge.view.addTo_fct211$;
@@ -69,29 +70,31 @@
   var tween = $module$korge_root_korge.com.soywiz.korge.tween.tween_t8t7it$;
   var launch = $module$korio_root_korio.com.soywiz.korio.async.launch_hilpzi$;
   var Scene = $module$korge_root_korge.com.soywiz.korge.scene.Scene;
+  var readBitmapFont = $module$korim_root_korim.com.soywiz.korim.font.readBitmapFont_2axf5n$;
+  var position = $module$korge_root_korge.com.soywiz.korge.view.position_ajix5r$;
   var _interpolate = $module$korge_root_korge.com.soywiz.korge.tween._interpolate_yvo9jy$;
   var getCallableRef = Kotlin.getCallableRef;
   var V2_init = $module$korge_root_korge.com.soywiz.korge.tween.V2;
   var numberToDouble = Kotlin.numberToDouble;
   var SolidRect_init = $module$korge_root_korge.com.soywiz.korge.view.SolidRect;
   var Camera_init = $module$korge_root_korge.com.soywiz.korge.view.Camera;
-  var anchor = $module$korge_root_korge.com.soywiz.korge.view.anchor_11wmr3$;
+  var color = $module$korge_root_korge.$$importsForInline$$['korim-root-korim'].com.soywiz.korim.color;
+  var Text = $module$korge_root_korge.com.soywiz.korge.view.Text;
   var scale = $module$korge_root_korge.com.soywiz.korge.view.scale_2cbtc5$;
-  var position = $module$korge_root_korge.com.soywiz.korge.view.position_ajix5r$;
   var Easing = $module$korma_root_korma.com.soywiz.korma.interpolation.Easing;
   var getKClass = Kotlin.getKClass;
   var launchImmediately = $module$korio_root_korio.com.soywiz.korio.async.launchImmediately_hilpzi$;
   var get_degrees = $module$korma_root_korma.com.soywiz.korma.geom.get_degrees_s8ev3n$;
   var _interpolateAngle = $module$korge_root_korge.com.soywiz.korge.tween._interpolateAngle_a0zjys$;
   var TimeSpan_0 = $module$korge_root_korge.$$importsForInline$$['klock-root-klock'].com.soywiz.klock.TimeSpan;
+  var centerXOn = $module$korge_root_korge.com.soywiz.korge.view.centerXOn_apzp43$;
+  var positionY = $module$korge_root_korge.com.soywiz.korge.view.positionY_bfm155$;
+  var wait = $module$korge_root_korge.com.soywiz.korge.time.wait_f287ec$;
+  var ensureNotNull = Kotlin.ensureNotNull;
+  var hide = $module$korge_root_korge.com.soywiz.korge.tween.hide_yz29kn$;
+  var _interpolateColor = $module$korge_root_korge.com.soywiz.korge.tween._interpolateColor_ax9ryg$;
   var get_mouse = $module$korge_root_korge.com.soywiz.korge.input.get_mouse_gohfi1$;
   var launchImmediately_0 = $module$korge_root_korge.$$importsForInline$$['korio-root-korio'].com.soywiz.korio.async.launchImmediately_ykkwzu$;
-  var color = $module$korge_root_korge.$$importsForInline$$['korim-root-korim'].com.soywiz.korim.color;
-  var Fonts = $module$korge_root_korge.com.soywiz.korge.view.Fonts;
-  var Text = $module$korge_root_korge.com.soywiz.korge.view.Text;
-  var get_defaultUISkin = $module$korge_root_korge.com.soywiz.korge.ui.get_defaultUISkin_gohfi1$;
-  var get_defaultUIFont = $module$korge_root_korge.com.soywiz.korge.ui.get_defaultUIFont_gohfi1$;
-  var TextButton_init = $module$korge_root_korge.com.soywiz.korge.ui.TextButton;
   var korge = $module$korge_root_korge.com.soywiz.korge;
   var Korge$Config = $module$korge_root_korge.com.soywiz.korge.Korge.Config;
   var Module = $module$korge_root_korge.com.soywiz.korge.scene.Module;
@@ -105,6 +108,8 @@
   Direction.prototype.constructor = Direction;
   MovementMode.prototype = Object.create(Enum.prototype);
   MovementMode.prototype.constructor = MovementMode;
+  PacmanSnakeSkin.prototype = Object.create(SnakeSkin.prototype);
+  PacmanSnakeSkin.prototype.constructor = PacmanSnakeSkin;
   GameScene.prototype = Object.create(Scene.prototype);
   GameScene.prototype.constructor = GameScene;
   SnakeGameScene.prototype = Object.create(GameScene.prototype);
@@ -159,7 +164,7 @@
             throw this.exception_0;
           case 2:
             var snakeAtlas = this.result_0;
-            var appleTile = snakeAtlas.get_61zpoe$('apple.png');
+            var appleTile = snakeAtlas.get_61zpoe$('Apple_02.png');
             this.local$$receiver.addChild_l5rad2$(new Apple(appleTile));
             return;
           default:this.state_0 = 1;
@@ -365,12 +370,23 @@
     }
   });
   Snake.prototype.move = function () {
+    this.head.direction = this.direction;
     for (var i = this.body.size - 1 | 0; i >= 1; i--) {
       var current = this.body.get_za3lpa$(i);
       var tmp$ = this.body.get_za3lpa$(i - 1 | 0);
       var x = tmp$.component1()
       , y = tmp$.component2();
-      current.lastX = current.x;
+      var previous = this.body.get_za3lpa$(i - 1 | 0);
+      var direction = this.direction;
+      if (previous.x === current.x && previous.y > current.y) {
+        current.direction = Direction$DOWN_getInstance();
+      } else if (previous.x === current.x && previous.y < current.y) {
+        current.direction = Direction$UP_getInstance();
+      } else if (previous.x < current.x && previous.y === current.y) {
+        current.direction = Direction$LEFT_getInstance();
+      } else if (previous.x > current.x && previous.y === current.y) {
+        current.direction = Direction$RIGHT_getInstance();
+      }current.lastX = current.x;
       current.lastY = current.y;
       current.x = x;
       current.y = y;
@@ -723,19 +739,55 @@
       tmp$_1 = $receiver_1.iterator();
       while (tmp$_1.hasNext()) {
         var item = tmp$_1.next();
-        var closure$snake_0 = closure$snake;
-        var index_0 = checkIndexOverflow((tmp$_0_0 = index, index = tmp$_0_0 + 1 | 0, tmp$_0_0));
-        item.x = closure$snake_0.body.get_za3lpa$(index_0).xpos;
-        item.y = closure$snake_0.body.get_za3lpa$(index_0).ypos;
+        var tmp$_2, tmp$_3;
+        var bodyPart = closure$snake.body.get_za3lpa$(checkIndexOverflow((tmp$_0_0 = index, index = tmp$_0_0 + 1 | 0, tmp$_0_0)));
+        item.x = bodyPart.xpos + (TILE_SIZE / 2 | 0);
+        item.y = bodyPart.ypos + (TILE_SIZE / 2 | 0);
+        switch (bodyPart.direction.name) {
+          case 'RIGHT':
+            tmp$_2 = 1.0;
+            break;
+          case 'LEFT':
+            tmp$_2 = 1.0;
+            break;
+          case 'UP':
+            tmp$_2 = -1.0;
+            break;
+          case 'DOWN':
+            tmp$_2 = 1.0;
+            break;
+          default:tmp$_2 = Kotlin.noWhenBranchMatched();
+            break;
+        }
+        item.scaleY = tmp$_2;
+        switch (bodyPart.direction.name) {
+          case 'RIGHT':
+            tmp$_3 = 270.0;
+            break;
+          case 'LEFT':
+            tmp$_3 = 90.0;
+            break;
+          case 'UP':
+            tmp$_3 = 0.0;
+            break;
+          case 'DOWN':
+            tmp$_3 = 0.0;
+            break;
+          default:tmp$_3 = Kotlin.noWhenBranchMatched();
+            break;
+        }
+        item.rotationDegrees = tmp$_3;
+        anchor(item, 0.5, 0.5);
       }
       return Unit;
     };
   }
-  function Coroutine$snake($receiver_0, views_0, collisionChecker_0, movementMode_0, continuation_0) {
+  function Coroutine$snake($receiver_0, views_0, skin_0, collisionChecker_0, movementMode_0, continuation_0) {
     CoroutineImpl.call(this, continuation_0);
     this.exceptionState_0 = 1;
     this.local$$receiver = $receiver_0;
     this.local$views = views_0;
+    this.local$skin = skin_0;
     this.local$collisionChecker = collisionChecker_0;
     this.local$movementMode = movementMode_0;
   }
@@ -762,9 +814,9 @@
             throw this.exception_0;
           case 2:
             var snakeAtlas = this.result_0;
-            var headTile = snakeAtlas.get_61zpoe$('snake_head_01.png');
-            var bodyTile = snakeAtlas.get_61zpoe$('snake_body.png');
-            var tailTile = snakeAtlas.get_61zpoe$('snake_body_tail.png');
+            var headTile = snakeAtlas.get_61zpoe$(this.local$skin.headTile);
+            var bodyTile = snakeAtlas.get_61zpoe$(this.local$skin.bodyTile);
+            var tailTile = snakeAtlas.get_61zpoe$(this.local$skin.tailTile);
             var initialX = 2 * 32.0;
             var initialY = 3 * 32.0;
             var snake = new Snake(initialX, initialY, 2);
@@ -821,13 +873,64 @@
       }
      while (true);
   };
-  function snake($receiver_0, views_0, collisionChecker_0, movementMode_0, continuation_0, suspended) {
-    var instance = new Coroutine$snake($receiver_0, views_0, collisionChecker_0, movementMode_0, continuation_0);
+  function snake($receiver_0, views_0, skin_0, collisionChecker_0, movementMode_0, continuation_0, suspended) {
+    var instance = new Coroutine$snake($receiver_0, views_0, skin_0, collisionChecker_0, movementMode_0, continuation_0);
     if (suspended)
       return instance;
     else
       return instance.doResume(null);
   }
+  function SnakeSkin() {
+    this.headTile_145vjg$_0 = 'snake_head_01.png';
+    this.bodyTile_n83ixe$_0 = 'snake_body.png';
+    this.tailTile_193hk4$_0 = 'snake_body_tail.png';
+  }
+  Object.defineProperty(SnakeSkin.prototype, 'headTile', {
+    get: function () {
+      return this.headTile_145vjg$_0;
+    }
+  });
+  Object.defineProperty(SnakeSkin.prototype, 'bodyTile', {
+    get: function () {
+      return this.bodyTile_n83ixe$_0;
+    }
+  });
+  Object.defineProperty(SnakeSkin.prototype, 'tailTile', {
+    get: function () {
+      return this.tailTile_193hk4$_0;
+    }
+  });
+  SnakeSkin.$metadata$ = {
+    kind: Kind_CLASS,
+    simpleName: 'SnakeSkin',
+    interfaces: []
+  };
+  function PacmanSnakeSkin() {
+    SnakeSkin.call(this);
+    this.headTile_g5r8oc$_0 = 'PacMan_Snake_Head_01.png';
+    this.bodyTile_uj3ety$_0 = 'PacMan_Snake_Bdoy_01.png';
+    this.tailTile_ij0lrw$_0 = 'PacMan_Snake_Tail.png';
+  }
+  Object.defineProperty(PacmanSnakeSkin.prototype, 'headTile', {
+    get: function () {
+      return this.headTile_g5r8oc$_0;
+    }
+  });
+  Object.defineProperty(PacmanSnakeSkin.prototype, 'bodyTile', {
+    get: function () {
+      return this.bodyTile_uj3ety$_0;
+    }
+  });
+  Object.defineProperty(PacmanSnakeSkin.prototype, 'tailTile', {
+    get: function () {
+      return this.tailTile_ij0lrw$_0;
+    }
+  });
+  PacmanSnakeSkin.$metadata$ = {
+    kind: Kind_CLASS,
+    simpleName: 'PacmanSnakeSkin',
+    interfaces: [SnakeSkin]
+  };
   var DESIRED_FPS;
   var MILLISECONDS_PER_FRAME;
   var TILE_SIZE;
@@ -997,10 +1100,14 @@
   function camera$lambda($receiver) {
     return Unit;
   }
-  function GameScene(level, movementMode, scroll) {
+  function text$lambda($receiver) {
+    return Unit;
+  }
+  function GameScene(level, movementMode, snakeSkin, scroll) {
     Scene.call(this);
     this.level = level;
     this.movementMode = movementMode;
+    this.snakeSkin = snakeSkin;
     this.scroll = scroll;
   }
   function Coroutine$GameScene$fade$lambda(closure$fadeRect_0, continuation_0) {
@@ -1125,6 +1232,8 @@
     var fadeRect = $receiver_0;
     launch(this, GameScene$unFade$lambda(fadeRect));
   };
+  GameScene.prototype.customInit_st8p7j$ = function ($receiver, continuation) {
+  };
   function GameScene$sceneInit$lambda$lambda(closure$cameraCenter, closure$player, closure$cameraSpeed, closure$tiledMap, closure$screenSize) {
     return function ($receiver) {
       var target = closure$cameraCenter - closure$player.head.xpos;
@@ -1182,7 +1291,7 @@
             continue;
           case 3:
             this.state_0 = 4;
-            this.result_0 = snake(this.local$$receiver_0, this.$this.views, this.local$collisionChecker, this.$this.movementMode, this);
+            this.result_0 = snake(this.local$$receiver_0, this.$this.views, this.$this.snakeSkin, this.local$collisionChecker, this.$this.movementMode, this);
             if (this.result_0 === COROUTINE_SUSPENDED)
               return COROUTINE_SUSPENDED;
             continue;
@@ -1194,6 +1303,12 @@
               var screenSize = 800;
               addFixedUpdater(this.local$$receiver_0, MILLISECONDS_PER_FRAME, void 0, void 0, GameScene$sceneInit$lambda$lambda(cameraCenter, player, cameraSpeed, this.local$tiledMap, screenSize));
             }
+            this.state_0 = 5;
+            this.result_0 = this.$this.customInit_st8p7j$(this.local$$receiver, this);
+            if (this.result_0 === COROUTINE_SUSPENDED)
+              return COROUTINE_SUSPENDED;
+            continue;
+          case 5:
             this.$this.unFade_st8p7j$(this.local$$receiver);
             return;
           default:this.state_0 = 1;
@@ -1223,15 +1338,69 @@
     interfaces: [Scene]
   };
   function SnakeGameScene() {
-    GameScene.call(this, 1, MovementMode$SNAKE_getInstance(), false);
+    GameScene.call(this, 1, MovementMode$SNAKE_getInstance(), new SnakeSkin(), false);
   }
+  function Coroutine$customInit_st8p7j$($this, $receiver_0, continuation_0) {
+    CoroutineImpl.call(this, continuation_0);
+    this.exceptionState_0 = 1;
+    this.$this = $this;
+    this.local$$receiver = $receiver_0;
+  }
+  Coroutine$customInit_st8p7j$.$metadata$ = {
+    kind: Kotlin.Kind.CLASS,
+    simpleName: null,
+    interfaces: [CoroutineImpl]
+  };
+  Coroutine$customInit_st8p7j$.prototype = Object.create(CoroutineImpl.prototype);
+  Coroutine$customInit_st8p7j$.prototype.constructor = Coroutine$customInit_st8p7j$;
+  Coroutine$customInit_st8p7j$.prototype.doResume = function () {
+    do
+      try {
+        switch (this.state_0) {
+          case 0:
+            this.state_0 = 2;
+            this.result_0 = readBitmapFont(std.resourcesVfs.get_61zpoe$('I-pixel-u.fnt'), void 0, this);
+            if (this.result_0 === COROUTINE_SUSPENDED)
+              return COROUTINE_SUSPENDED;
+            continue;
+          case 1:
+            throw this.exception_0;
+          case 2:
+            var font = this.result_0;
+            var color_0;
+            color_0 = color.Colors.WHITE;
+            var $receiver_0 = addTo(Text.Companion.invoke_8ii8iq$('00023', 32.0, color_0, font), this.local$$receiver);
+            text$lambda($receiver_0);
+            position($receiver_0, 25, 15);
+            return;
+          default:this.state_0 = 1;
+            throw new Error('State Machine Unreachable execution');
+        }
+      } catch (e) {
+        if (this.state_0 === 1) {
+          this.exceptionState_0 = this.state_0;
+          throw e;
+        } else {
+          this.state_0 = this.exceptionState_0;
+          this.exception_0 = e;
+        }
+      }
+     while (true);
+  };
+  SnakeGameScene.prototype.customInit_st8p7j$ = function ($receiver_0, continuation_0, suspended) {
+    var instance = new Coroutine$customInit_st8p7j$(this, $receiver_0, continuation_0);
+    if (suspended)
+      return instance;
+    else
+      return instance.doResume(null);
+  };
   SnakeGameScene.$metadata$ = {
     kind: Kind_CLASS,
     simpleName: 'SnakeGameScene',
     interfaces: [GameScene]
   };
   function PacmanGameScene() {
-    GameScene.call(this, 2, MovementMode$PACMAN_getInstance(), false);
+    GameScene.call(this, 2, MovementMode$PACMAN_getInstance(), new PacmanSnakeSkin(), false);
   }
   PacmanGameScene.$metadata$ = {
     kind: Kind_CLASS,
@@ -1239,7 +1408,7 @@
     interfaces: [GameScene]
   };
   function MarioGameScene() {
-    GameScene.call(this, 3, MovementMode$MARIO_getInstance(), true);
+    GameScene.call(this, 3, MovementMode$MARIO_getInstance(), new SnakeSkin(), true);
   }
   MarioGameScene.$metadata$ = {
     kind: Kind_CLASS,
@@ -1410,6 +1579,9 @@
     simpleName: 'LoadingScene',
     interfaces: [Scene]
   };
+  function text$lambda_0($receiver) {
+    return Unit;
+  }
   function Coroutine$doMouseEvent$lambda$lambda$lambda(closure$handler_0, closure$it_0, continuation_0) {
     CoroutineImpl.call(this, continuation_0);
     this.exceptionState_0 = 1;
@@ -1462,28 +1634,84 @@
       return Unit;
     };
   }
-  function text$lambda($receiver) {
-    return Unit;
-  }
-  function textButton$lambda($receiver) {
-    return Unit;
-  }
   function MainMenuScene() {
     Scene.call(this);
   }
-  function Coroutine$MainMenuScene$sceneInit$lambda$lambda(this$MainMenuScene_0, it_0, continuation_0) {
+  function Coroutine$MainMenuScene$sceneInit$lambda(this$sceneInit_0, closure$questionMark_0, continuation_0) {
     CoroutineImpl.call(this, continuation_0);
     this.exceptionState_0 = 1;
-    this.local$this$MainMenuScene = this$MainMenuScene_0;
+    this.local$this$sceneInit = this$sceneInit_0;
+    this.local$closure$questionMark = closure$questionMark_0;
   }
-  Coroutine$MainMenuScene$sceneInit$lambda$lambda.$metadata$ = {
+  Coroutine$MainMenuScene$sceneInit$lambda.$metadata$ = {
     kind: Kotlin.Kind.CLASS,
     simpleName: null,
     interfaces: [CoroutineImpl]
   };
-  Coroutine$MainMenuScene$sceneInit$lambda$lambda.prototype = Object.create(CoroutineImpl.prototype);
-  Coroutine$MainMenuScene$sceneInit$lambda$lambda.prototype.constructor = Coroutine$MainMenuScene$sceneInit$lambda$lambda;
-  Coroutine$MainMenuScene$sceneInit$lambda$lambda.prototype.doResume = function () {
+  Coroutine$MainMenuScene$sceneInit$lambda.prototype = Object.create(CoroutineImpl.prototype);
+  Coroutine$MainMenuScene$sceneInit$lambda.prototype.constructor = Coroutine$MainMenuScene$sceneInit$lambda;
+  Coroutine$MainMenuScene$sceneInit$lambda.prototype.doResume = function () {
+    do
+      try {
+        switch (this.state_0) {
+          case 0:
+            this.state_0 = 2;
+            this.result_0 = wait(this.local$this$sceneInit, TimeSpan.Companion.fromSeconds_14dthe$(2), this);
+            if (this.result_0 === COROUTINE_SUSPENDED)
+              return COROUTINE_SUSPENDED;
+            continue;
+          case 1:
+            throw this.exception_0;
+          case 2:
+            this.state_0 = 3;
+            this.result_0 = tween(this.local$closure$questionMark, [new V2_init(getPropertyCallableRef('color', 0, function ($receiver) {
+              return $receiver.color;
+            }.bind(null, this.local$closure$questionMark), function ($receiver, value) {
+              $receiver.color = value;
+            }.bind(null, this.local$closure$questionMark)), RGBA.Companion.float_7b5o5w$(numberToDouble(255), numberToDouble(255), numberToDouble(255), numberToDouble(0)), RGBA.Companion.float_7b5o5w$(numberToDouble(255), numberToDouble(255), numberToDouble(255), numberToDouble(1)), getCallableRef('_interpolateColor', function (ratio, l, r) {
+              return _interpolateColor(ratio, l, r);
+            }), true)], TimeSpan.Companion.fromSeconds_14dthe$(1), void 0, void 0, this);
+            if (this.result_0 === COROUTINE_SUSPENDED)
+              return COROUTINE_SUSPENDED;
+            continue;
+          case 3:
+            return this.result_0;
+          default:this.state_0 = 1;
+            throw new Error('State Machine Unreachable execution');
+        }
+      } catch (e) {
+        if (this.state_0 === 1) {
+          this.exceptionState_0 = this.state_0;
+          throw e;
+        } else {
+          this.state_0 = this.exceptionState_0;
+          this.exception_0 = e;
+        }
+      }
+     while (true);
+  };
+  function MainMenuScene$sceneInit$lambda(this$sceneInit_0, closure$questionMark_0) {
+    return function (continuation_0, suspended) {
+      var instance = new Coroutine$MainMenuScene$sceneInit$lambda(this$sceneInit_0, closure$questionMark_0, continuation_0);
+      if (suspended)
+        return instance;
+      else
+        return instance.doResume(null);
+    };
+  }
+  function Coroutine$MainMenuScene$sceneInit$lambda_0(this$MainMenuScene_0, it_0, continuation_0) {
+    CoroutineImpl.call(this, continuation_0);
+    this.exceptionState_0 = 1;
+    this.local$this$MainMenuScene = this$MainMenuScene_0;
+  }
+  Coroutine$MainMenuScene$sceneInit$lambda_0.$metadata$ = {
+    kind: Kotlin.Kind.CLASS,
+    simpleName: null,
+    interfaces: [CoroutineImpl]
+  };
+  Coroutine$MainMenuScene$sceneInit$lambda_0.prototype = Object.create(CoroutineImpl.prototype);
+  Coroutine$MainMenuScene$sceneInit$lambda_0.prototype.constructor = Coroutine$MainMenuScene$sceneInit$lambda_0;
+  Coroutine$MainMenuScene$sceneInit$lambda_0.prototype.doResume = function () {
     do
       try {
         switch (this.state_0) {
@@ -1521,28 +1749,28 @@
       }
      while (true);
   };
-  function MainMenuScene$sceneInit$lambda$lambda(this$MainMenuScene_0) {
+  function MainMenuScene$sceneInit$lambda_0(this$MainMenuScene_0) {
     return function (it_0, continuation_0, suspended) {
-      var instance = new Coroutine$MainMenuScene$sceneInit$lambda$lambda(this$MainMenuScene_0, it_0, continuation_0);
+      var instance = new Coroutine$MainMenuScene$sceneInit$lambda_0(this$MainMenuScene_0, it_0, continuation_0);
       if (suspended)
         return instance;
       else
         return instance.doResume(null);
     };
   }
-  function Coroutine$MainMenuScene$sceneInit$lambda$lambda_0(this$MainMenuScene_0, it_0, continuation_0) {
+  function Coroutine$MainMenuScene$sceneInit$lambda_1(this$MainMenuScene_0, it_0, continuation_0) {
     CoroutineImpl.call(this, continuation_0);
     this.exceptionState_0 = 1;
     this.local$this$MainMenuScene = this$MainMenuScene_0;
   }
-  Coroutine$MainMenuScene$sceneInit$lambda$lambda_0.$metadata$ = {
+  Coroutine$MainMenuScene$sceneInit$lambda_1.$metadata$ = {
     kind: Kotlin.Kind.CLASS,
     simpleName: null,
     interfaces: [CoroutineImpl]
   };
-  Coroutine$MainMenuScene$sceneInit$lambda$lambda_0.prototype = Object.create(CoroutineImpl.prototype);
-  Coroutine$MainMenuScene$sceneInit$lambda$lambda_0.prototype.constructor = Coroutine$MainMenuScene$sceneInit$lambda$lambda_0;
-  Coroutine$MainMenuScene$sceneInit$lambda$lambda_0.prototype.doResume = function () {
+  Coroutine$MainMenuScene$sceneInit$lambda_1.prototype = Object.create(CoroutineImpl.prototype);
+  Coroutine$MainMenuScene$sceneInit$lambda_1.prototype.constructor = Coroutine$MainMenuScene$sceneInit$lambda_1;
+  Coroutine$MainMenuScene$sceneInit$lambda_1.prototype.doResume = function () {
     do
       try {
         switch (this.state_0) {
@@ -1580,28 +1808,28 @@
       }
      while (true);
   };
-  function MainMenuScene$sceneInit$lambda$lambda_0(this$MainMenuScene_0) {
+  function MainMenuScene$sceneInit$lambda_1(this$MainMenuScene_0) {
     return function (it_0, continuation_0, suspended) {
-      var instance = new Coroutine$MainMenuScene$sceneInit$lambda$lambda_0(this$MainMenuScene_0, it_0, continuation_0);
+      var instance = new Coroutine$MainMenuScene$sceneInit$lambda_1(this$MainMenuScene_0, it_0, continuation_0);
       if (suspended)
         return instance;
       else
         return instance.doResume(null);
     };
   }
-  function Coroutine$MainMenuScene$sceneInit$lambda$lambda_1(this$MainMenuScene_0, it_0, continuation_0) {
+  function Coroutine$MainMenuScene$sceneInit$lambda_2(this$MainMenuScene_0, it_0, continuation_0) {
     CoroutineImpl.call(this, continuation_0);
     this.exceptionState_0 = 1;
     this.local$this$MainMenuScene = this$MainMenuScene_0;
   }
-  Coroutine$MainMenuScene$sceneInit$lambda$lambda_1.$metadata$ = {
+  Coroutine$MainMenuScene$sceneInit$lambda_2.$metadata$ = {
     kind: Kotlin.Kind.CLASS,
     simpleName: null,
     interfaces: [CoroutineImpl]
   };
-  Coroutine$MainMenuScene$sceneInit$lambda$lambda_1.prototype = Object.create(CoroutineImpl.prototype);
-  Coroutine$MainMenuScene$sceneInit$lambda$lambda_1.prototype.constructor = Coroutine$MainMenuScene$sceneInit$lambda$lambda_1;
-  Coroutine$MainMenuScene$sceneInit$lambda$lambda_1.prototype.doResume = function () {
+  Coroutine$MainMenuScene$sceneInit$lambda_2.prototype = Object.create(CoroutineImpl.prototype);
+  Coroutine$MainMenuScene$sceneInit$lambda_2.prototype.constructor = Coroutine$MainMenuScene$sceneInit$lambda_2;
+  Coroutine$MainMenuScene$sceneInit$lambda_2.prototype.doResume = function () {
     do
       try {
         switch (this.state_0) {
@@ -1639,52 +1867,201 @@
       }
      while (true);
   };
-  function MainMenuScene$sceneInit$lambda$lambda_1(this$MainMenuScene_0) {
+  function MainMenuScene$sceneInit$lambda_2(this$MainMenuScene_0) {
     return function (it_0, continuation_0, suspended) {
-      var instance = new Coroutine$MainMenuScene$sceneInit$lambda$lambda_1(this$MainMenuScene_0, it_0, continuation_0);
+      var instance = new Coroutine$MainMenuScene$sceneInit$lambda_2(this$MainMenuScene_0, it_0, continuation_0);
       if (suspended)
         return instance;
       else
         return instance.doResume(null);
     };
   }
-  MainMenuScene.prototype.sceneInit_st8p7j$ = function ($receiver, continuation) {
-    var text = 'SNAKE GAME!';
-    var color_0;
-    var font;
-    color_0 = color.Colors.WHITE;
-    font = Fonts.Companion.defaultFont;
-    var $receiver_0_0 = addTo(Text.Companion.invoke_8ii8iq$(text, 16.0, color_0, font), $receiver);
-    text$lambda($receiver_0_0);
-    position($receiver_0_0, 340, 200);
-    var $receiver_0_1 = addTo(new TextButton_init(128.0, 64.0, 'Button', get_defaultUISkin($receiver), get_defaultUIFont($receiver)), $receiver);
-    $receiver_0_1.text = 'SNAKE';
-    position($receiver_0_1, 340, 300);
-    var prop = getPropertyCallableRef('click', 1, function ($receiver_0) {
-      return $receiver_0.click;
-    });
-    var tmp$;
-    if ((tmp$ = $receiver_0_1 != null ? get_mouse($receiver_0_1) : null) != null) {
-      prop.get(tmp$).add_qlkmfe$(doMouseEvent$lambda$lambda(tmp$, MainMenuScene$sceneInit$lambda$lambda(this)));
-    }var $receiver_0_2 = addTo(new TextButton_init(128.0, 64.0, 'Button', get_defaultUISkin($receiver), get_defaultUIFont($receiver)), $receiver);
-    $receiver_0_2.text = 'PACMAN';
-    position($receiver_0_2, 340, 350);
-    var prop_0 = getPropertyCallableRef('click', 1, function ($receiver_0) {
-      return $receiver_0.click;
-    });
-    var tmp$_0;
-    if ((tmp$_0 = $receiver_0_2 != null ? get_mouse($receiver_0_2) : null) != null) {
-      prop_0.get(tmp$_0).add_qlkmfe$(doMouseEvent$lambda$lambda(tmp$_0, MainMenuScene$sceneInit$lambda$lambda_0(this)));
-    }var $receiver_0_3 = addTo(new TextButton_init(128.0, 64.0, 'Button', get_defaultUISkin($receiver), get_defaultUIFont($receiver)), $receiver);
-    $receiver_0_3.text = 'MARIO';
-    position($receiver_0_3, 340, 400);
-    var prop_1 = getPropertyCallableRef('click', 1, function ($receiver_0) {
-      return $receiver_0.click;
-    });
-    var tmp$_1;
-    if ((tmp$_1 = $receiver_0_3 != null ? get_mouse($receiver_0_3) : null) != null) {
-      prop_1.get(tmp$_1).add_qlkmfe$(doMouseEvent$lambda$lambda(tmp$_1, MainMenuScene$sceneInit$lambda$lambda_1(this)));
-    }};
+  function Coroutine$MainMenuScene$sceneInit$lambda_3(closure$mario_0, closure$pacman_0, it_0, continuation_0) {
+    CoroutineImpl.call(this, continuation_0);
+    this.exceptionState_0 = 1;
+    this.local$closure$mario = closure$mario_0;
+    this.local$closure$pacman = closure$pacman_0;
+    this.local$it = it_0;
+  }
+  Coroutine$MainMenuScene$sceneInit$lambda_3.$metadata$ = {
+    kind: Kotlin.Kind.CLASS,
+    simpleName: null,
+    interfaces: [CoroutineImpl]
+  };
+  Coroutine$MainMenuScene$sceneInit$lambda_3.prototype = Object.create(CoroutineImpl.prototype);
+  Coroutine$MainMenuScene$sceneInit$lambda_3.prototype.constructor = Coroutine$MainMenuScene$sceneInit$lambda_3;
+  Coroutine$MainMenuScene$sceneInit$lambda_3.prototype.doResume = function () {
+    do
+      try {
+        switch (this.state_0) {
+          case 0:
+            this.state_0 = 2;
+            this.result_0 = hide(this.local$it.view, TimeSpan.Companion.fromSeconds_14dthe$(0), void 0, this);
+            if (this.result_0 === COROUTINE_SUSPENDED)
+              return COROUTINE_SUSPENDED;
+            continue;
+          case 1:
+            throw this.exception_0;
+          case 2:
+            this.local$closure$mario.alpha = 1.0;
+            this.local$closure$pacman.alpha = 1.0;
+            return this.local$it.view.removeFromParent(), Unit;
+          default:this.state_0 = 1;
+            throw new Error('State Machine Unreachable execution');
+        }
+      } catch (e) {
+        if (this.state_0 === 1) {
+          this.exceptionState_0 = this.state_0;
+          throw e;
+        } else {
+          this.state_0 = this.exceptionState_0;
+          this.exception_0 = e;
+        }
+      }
+     while (true);
+  };
+  function MainMenuScene$sceneInit$lambda_3(closure$mario_0, closure$pacman_0) {
+    return function (it_0, continuation_0, suspended) {
+      var instance = new Coroutine$MainMenuScene$sceneInit$lambda_3(closure$mario_0, closure$pacman_0, it_0, continuation_0);
+      if (suspended)
+        return instance;
+      else
+        return instance.doResume(null);
+    };
+  }
+  function Coroutine$sceneInit_st8p7j$_1($this, $receiver_0, continuation_0) {
+    CoroutineImpl.call(this, continuation_0);
+    this.exceptionState_0 = 1;
+    this.$this = $this;
+    this.local$font = void 0;
+    this.local$pacman = void 0;
+    this.local$mario = void 0;
+    this.local$$receiver = $receiver_0;
+  }
+  Coroutine$sceneInit_st8p7j$_1.$metadata$ = {
+    kind: Kotlin.Kind.CLASS,
+    simpleName: null,
+    interfaces: [CoroutineImpl]
+  };
+  Coroutine$sceneInit_st8p7j$_1.prototype = Object.create(CoroutineImpl.prototype);
+  Coroutine$sceneInit_st8p7j$_1.prototype.constructor = Coroutine$sceneInit_st8p7j$_1;
+  Coroutine$sceneInit_st8p7j$_1.prototype.doResume = function () {
+    do
+      try {
+        switch (this.state_0) {
+          case 0:
+            this.state_0 = 2;
+            this.result_0 = tiledMap(this.local$$receiver, 1, this);
+            if (this.result_0 === COROUTINE_SUSPENDED)
+              return COROUTINE_SUSPENDED;
+            continue;
+          case 1:
+            throw this.exception_0;
+          case 2:
+            this.state_0 = 3;
+            this.result_0 = readBitmapFont(std.resourcesVfs.get_61zpoe$('I-pixel-u.fnt'), void 0, this);
+            if (this.result_0 === COROUTINE_SUSPENDED)
+              return COROUTINE_SUSPENDED;
+            continue;
+          case 3:
+            this.local$font = this.result_0;
+            var text = 'A CLASSIC SNAKE GAME';
+            var color_0;
+            color_0 = color.Colors.WHITE;
+            var $receiver_0_0 = addTo(Text.Companion.invoke_8ii8iq$(text, 32.0, color_0, this.local$font), this.local$$receiver);
+            text$lambda_0($receiver_0_0);
+            positionY(centerXOn($receiver_0_0, this.local$$receiver), 200);
+            var color_0_0;
+            color_0_0 = color.Colors.WHITE;
+            var $receiver_0_1 = addTo(Text.Companion.invoke_8ii8iq$('?', 32.0, color_0_0, this.local$font), this.local$$receiver);
+            text$lambda_0($receiver_0_1);
+            var questionMark = position($receiver_0_1, 632, 200);
+            questionMark.color = RGBA.Companion.float_7b5o5w$(numberToDouble(255), numberToDouble(255), numberToDouble(255), numberToDouble(0));
+            launch(this.$this, MainMenuScene$sceneInit$lambda(this.local$$receiver, questionMark));
+            var color_0_1;
+            color_0_1 = color.Colors.WHITE;
+            var $receiver_0_2 = addTo(Text.Companion.invoke_8ii8iq$('PLAY', 28.0, color_0_1, this.local$font), this.local$$receiver);
+            text$lambda_0($receiver_0_2);
+            var $receiver = positionY(centerXOn($receiver_0_2, this.local$$receiver), 350);
+            var prop = getPropertyCallableRef('click', 1, function ($receiver_0) {
+              return $receiver_0.click;
+            });
+            var tmp$;
+            if ((tmp$ = $receiver != null ? get_mouse($receiver) : null) != null) {
+              prop.get(tmp$).add_qlkmfe$(doMouseEvent$lambda$lambda(tmp$, MainMenuScene$sceneInit$lambda_0(this.$this)));
+            }
+            var color_0_2;
+            color_0_2 = color.Colors.WHITE;
+            var $receiver_0_3 = addTo(Text.Companion.invoke_8ii8iq$('PACMAN', 28.0, color_0_2, this.local$font), this.local$$receiver);
+            text$lambda_0($receiver_0_3);
+            var $receiver_1 = positionY(centerXOn($receiver_0_3, this.local$$receiver), 400);
+            var prop_0 = getPropertyCallableRef('click', 1, function ($receiver_0) {
+              return $receiver_0.click;
+            });
+            var tmp$_0;
+            if ((tmp$_0 = $receiver_1 != null ? get_mouse($receiver_1) : null) != null) {
+              prop_0.get(tmp$_0).add_qlkmfe$(doMouseEvent$lambda$lambda(tmp$_0, MainMenuScene$sceneInit$lambda_1(this.$this)));
+            }
+            this.local$pacman = ensureNotNull($receiver_1);
+            this.state_0 = 4;
+            this.result_0 = hide(this.local$pacman, TimeSpan.Companion.fromSeconds_14dthe$(0), void 0, this);
+            if (this.result_0 === COROUTINE_SUSPENDED)
+              return COROUTINE_SUSPENDED;
+            continue;
+          case 4:
+            var color_0_3;
+            color_0_3 = color.Colors.WHITE;
+            var $receiver_0_4 = addTo(Text.Companion.invoke_8ii8iq$('MARIO', 28.0, color_0_3, this.local$font), this.local$$receiver);
+            text$lambda_0($receiver_0_4);
+            var $receiver_2 = positionY(centerXOn($receiver_0_4, this.local$$receiver), 450);
+            var prop_1 = getPropertyCallableRef('click', 1, function ($receiver_0) {
+              return $receiver_0.click;
+            });
+            var tmp$_1;
+            if ((tmp$_1 = $receiver_2 != null ? get_mouse($receiver_2) : null) != null) {
+              prop_1.get(tmp$_1).add_qlkmfe$(doMouseEvent$lambda$lambda(tmp$_1, MainMenuScene$sceneInit$lambda_2(this.$this)));
+            }
+            this.local$mario = ensureNotNull($receiver_2);
+            this.state_0 = 5;
+            this.result_0 = hide(this.local$mario, TimeSpan.Companion.fromSeconds_14dthe$(0), void 0, this);
+            if (this.result_0 === COROUTINE_SUSPENDED)
+              return COROUTINE_SUSPENDED;
+            continue;
+          case 5:
+            var color_0_4;
+            color_0_4 = color.Colors.WHITE;
+            var $receiver_0_5 = addTo(Text.Companion.invoke_8ii8iq$('LEVELS', 28.0, color_0_4, this.local$font), this.local$$receiver);
+            text$lambda_0($receiver_0_5);
+            var $receiver_3 = positionY(centerXOn($receiver_0_5, this.local$$receiver), 400);
+            var prop_2 = getPropertyCallableRef('click', 1, function ($receiver_0) {
+              return $receiver_0.click;
+            });
+            var tmp$_2;
+            if ((tmp$_2 = $receiver_3 != null ? get_mouse($receiver_3) : null) != null) {
+              prop_2.get(tmp$_2).add_qlkmfe$(doMouseEvent$lambda$lambda(tmp$_2, MainMenuScene$sceneInit$lambda_3(this.local$mario, this.local$pacman)));
+            }
+            return;
+          default:this.state_0 = 1;
+            throw new Error('State Machine Unreachable execution');
+        }
+      } catch (e) {
+        if (this.state_0 === 1) {
+          this.exceptionState_0 = this.state_0;
+          throw e;
+        } else {
+          this.state_0 = this.exceptionState_0;
+          this.exception_0 = e;
+        }
+      }
+     while (true);
+  };
+  MainMenuScene.prototype.sceneInit_st8p7j$ = function ($receiver_0, continuation_0, suspended) {
+    var instance = new Coroutine$sceneInit_st8p7j$_1(this, $receiver_0, continuation_0);
+    if (suspended)
+      return instance;
+    else
+      return instance.doResume(null);
+  };
   MainMenuScene.$metadata$ = {
     kind: Kind_CLASS,
     simpleName: 'MainMenuScene',
@@ -1983,7 +2360,9 @@
   package$actors.MovementMode = MovementMode;
   $$importsForInline$$['korge-root-korge'] = $module$korge_root_korge;
   $$importsForInline$$.korgejam = _;
-  package$actors.snake_kx51pj$ = snake;
+  package$actors.snake_aoyxjh$ = snake;
+  package$actors.SnakeSkin = SnakeSkin;
+  package$actors.PacmanSnakeSkin = PacmanSnakeSkin;
   Object.defineProperty(package$snakegame, 'DESIRED_FPS', {
     get: function () {
       return DESIRED_FPS;
