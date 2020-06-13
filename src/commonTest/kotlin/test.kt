@@ -23,4 +23,10 @@ class MyTest : ViewsForTesting() {
         assertEquals(false, rect.isVisibleToUser())
         assertEquals(listOf("clicked"), log)
     }
+
+    @Test
+    fun testHead() {
+        val x = 32
+        val lastX = 0
+    }
 }
