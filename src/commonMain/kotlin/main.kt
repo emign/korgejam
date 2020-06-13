@@ -1,6 +1,4 @@
-import com.snakegame.scenes.GameScene
-import com.snakegame.scenes.LoadingScene
-import com.snakegame.scenes.MainMenuScene
+import com.snakegame.scenes.*
 import com.soywiz.korge.Korge
 import com.soywiz.korge.scene.Module
 import com.soywiz.korge.scene.Scene
@@ -17,13 +15,14 @@ object SnakeGameModule : Module() {
 	override val windowSize = SizeInt(800, 600)
 
 	override val bgcolor = Colors["#2b2b2b"]
-	override val mainScene: KClass<out Scene> = GameScene::class//LoadingScene::class
+	override val mainScene: KClass<out Scene> = LoadingScene::class//LoadingScene::class
 
 	override suspend fun init(injector: AsyncInjector): Unit = injector.run {
 		//mapInstance(Resources())
 		mapPrototype { LoadingScene(/*get()*/) }
 		mapPrototype { MainMenuScene(/*get()*/) }
-		mapPrototype { GameScene(/*get()*/) }
+		mapPrototype { SnakeGameScene(/*get()*/) }
+		mapPrototype { PacmanGameScene(/*get()*/) }
 	}
 }
 

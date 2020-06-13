@@ -14,10 +14,17 @@ class MainMenuScene() : Scene() {
     override suspend fun Container.sceneInit() {
         text("SNAKE GAME!").position(340,200)
         textButton {
-            text = "Start"
+            text = "SNAKE"
+            position(340, 250)
+            onClick {
+                sceneContainer.changeTo<SnakeGameScene>(1)
+            }
+        }
+        textButton {
+            text = "PACMAN"
             position(340, 400)
             onClick {
-                sceneContainer.changeTo<GameScene>(1)
+                sceneContainer.changeTo<PacmanGameScene>(1)
             }
         }
     }

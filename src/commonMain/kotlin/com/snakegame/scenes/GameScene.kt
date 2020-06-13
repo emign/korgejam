@@ -1,5 +1,6 @@
 package com.snakegame.scenes
 
+import com.snakegame.actors.MovementMode
 import com.snakegame.actors.apple
 import com.snakegame.actors.snake
 import com.snakegame.input.getButtonPressed
@@ -13,19 +14,17 @@ import com.soywiz.korge.scene.Scene
 import com.soywiz.korge.view.Container
 
 
-class GameScene() : Scene() {
+open class GameScene(val level:Int, val movementMode: MovementMode) : Scene() {
 
     override suspend fun Container.sceneInit() {
-        var key = 0
-
-        onKeyDown { key = key.setBits(getButtonPressed(it)) }
-        onKeyUp { key = key.unsetBits(getButtonPressed(it)) }
-
-
-        val tiledMap = tiledMap(1)
+        val tiledMap = tiledMap(level)
         val collisionChecker = CollisionChecker(tiledMap)
 
         apple(views)
-        snake(views, collisionChecker)
+        snake(views, collisionChecker, movementMode)
     }
 }
+
+class SnakeGameScene() : GameScene(1, MovementMode.SNAKE)
+class PacmanGameScene() : GameScene(2, MovementMode.PACMAN)
+

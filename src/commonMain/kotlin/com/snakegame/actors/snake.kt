@@ -1,6 +1,7 @@
 package com.snakegame.actors
 
 import com.snakegame.MILLISECONDS_PER_FRAME
+import com.snakegame.TILE_SIZE
 import com.snakegame.extensions.toBool
 import com.snakegame.input.*
 import com.snakegame.map.CollisionChecker
@@ -99,15 +100,16 @@ class Snake(
     }
 }
 
+enum class MovementMode { SNAKE, PACMAN }
 
-suspend fun Container.snake(views: Views, collisionChecker: CollisionChecker) {
+suspend fun Container.snake(views: Views, collisionChecker: CollisionChecker, movementMode:MovementMode = MovementMode.SNAKE) {
     val snakeAtlas = resourcesVfs["snake.atlas.json"].readAtlas(views)
     val headTile = snakeAtlas["snake_head_01.png"] as BitmapSlice<Bitmap>
     val bodyTile = snakeAtlas["snake_body.png"] as BitmapSlice<Bitmap>
     val tailTile = snakeAtlas["snake_body_tail.png"] as BitmapSlice<Bitmap>
 
-    val initialX = 100.0
-    val initialY = 100.0
+    val initialX = 2 * 32.0
+    val initialY = 1 * 32.0
     val snake = Snake(initialX, initialY, 2)
 
     var key = 0
@@ -142,9 +144,11 @@ suspend fun Container.snake(views: Views, collisionChecker: CollisionChecker) {
 
         var frames  =  0.0
         val speed  = 4.0
-        val tileSize = 32.0
+
         var newDirection = snake.direction
         var lockInput = false
+
+
 
         head.onCollision {
             if (it is Apple) {
@@ -168,22 +172,52 @@ suspend fun Container.snake(views: Views, collisionChecker: CollisionChecker) {
                 if((key and (BUTTON_RIGHT or BUTTON_LEFT or BUTTON_UP or BUTTON_DOWN)).toBool()) lockInput = true
             }
 
-            frames += speed //* deltaTime
+            when(movementMode){
+                MovementMode.SNAKE -> {
+                    frames += speed // * deltaTime
+                    if(frames >= TILE_SIZE) {
+                        lockInput = false
+                        frames = 0.0
+                        snake.lastDirection = snake.direction
+                        snake.direction = newDirection
+                        snake.move()
 
-            if(frames >= tileSize) {
-                lockInput = false
-                frames = 0.0
-                snake.lastDirection = snake.direction
-                snake.direction = newDirection
-                snake.move()
-
-                collisionChecker.checkCollision(snake.head.x, snake.head.y) {
-                    snake.head.x = 100.0
-                    snake.head.y = 100.0
+                        collisionChecker.checkCollision(snake.head.x, snake.head.y) {
+                            snake.head.x = 100.0
+                            snake.head.y = 100.0
+                        }
+                    } else {
+                        snake.interpolate(frames / TILE_SIZE)
+                    }
                 }
-            } else {
-                snake.interpolate(frames / tileSize)
+                MovementMode.PACMAN -> {
+                    frames += speed // * deltaTime
+
+                    if(collisionChecker.colides(
+                                    snake.head.x + newDirection.deltaX()* TILE_SIZE,
+                                    snake.head.y + newDirection.deltaY()* TILE_SIZE)) {
+                        lockInput = false
+                        newDirection = snake.direction
+                    }
+
+                    if (frames >= TILE_SIZE) {
+                        lockInput = false
+
+                        snake.lastDirection = snake.direction
+                        snake.direction = newDirection
+
+                        if(!collisionChecker.colides(
+                                        snake.head.x + newDirection.deltaX() * TILE_SIZE,
+                                        snake.head.y + newDirection.deltaY() * TILE_SIZE)) {
+                            snake.move()
+                            frames = 0.0
+                        }
+                    } else {
+                        snake.interpolate(frames / TILE_SIZE)
+                    }
+                }
             }
+
 
             bodyParts.forEachIndexed { index, image ->
                 image.x = snake.body[index].xpos
