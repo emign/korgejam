@@ -103,9 +103,9 @@ class Snake(
 
 suspend fun Container.snake(views: Views) {
     val snakeAtlas = resourcesVfs["snake.atlas.json"].readAtlas(views)
-    val head = snakeAtlas["head.png"].texture as BitmapSlice<Bitmap>
-    val body = snakeAtlas["body.png"].texture as BitmapSlice<Bitmap>
-    val tail = snakeAtlas["tail.png"].texture as BitmapSlice<Bitmap>
+    val head = snakeAtlas["head.png"] as BitmapSlice<Bitmap>
+    val body = snakeAtlas["body.png"] as BitmapSlice<Bitmap>
+    val tail = snakeAtlas["tail.png"] as BitmapSlice<Bitmap>
 
     val initialX = 100.0
     val initialY = 100.0
