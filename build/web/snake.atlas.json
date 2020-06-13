@@ -21,11 +21,137 @@
 			},
 			"trimmed": false
 		},
+		"Apple_02.png": {
+			"filename": "Apple_02.png",
+			"frame": {
+				"x": 2,
+				"y": 38,
+				"w": 32,
+				"h": 32
+			},
+			"rotated": false,
+			"sourceSize": {
+				"w": 32,
+				"h": 32
+			},
+			"spriteSourceSize": {
+				"x": 0,
+				"y": 0,
+				"w": 32,
+				"h": 32
+			},
+			"trimmed": false
+		},
+		"Apple_Toxic.png": {
+			"filename": "Apple_Toxic.png",
+			"frame": {
+				"x": 2,
+				"y": 74,
+				"w": 32,
+				"h": 32
+			},
+			"rotated": false,
+			"sourceSize": {
+				"w": 32,
+				"h": 32
+			},
+			"spriteSourceSize": {
+				"x": 0,
+				"y": 0,
+				"w": 32,
+				"h": 32
+			},
+			"trimmed": false
+		},
 		"body.png": {
 			"filename": "body.png",
 			"frame": {
 				"x": 2,
-				"y": 38,
+				"y": 110,
+				"w": 32,
+				"h": 32
+			},
+			"rotated": false,
+			"sourceSize": {
+				"w": 32,
+				"h": 32
+			},
+			"spriteSourceSize": {
+				"x": 0,
+				"y": 0,
+				"w": 32,
+				"h": 32
+			},
+			"trimmed": false
+		},
+		"Ghost_01.png": {
+			"filename": "Ghost_01.png",
+			"frame": {
+				"x": 2,
+				"y": 146,
+				"w": 32,
+				"h": 32
+			},
+			"rotated": false,
+			"sourceSize": {
+				"w": 32,
+				"h": 32
+			},
+			"spriteSourceSize": {
+				"x": 0,
+				"y": 0,
+				"w": 32,
+				"h": 32
+			},
+			"trimmed": false
+		},
+		"Ghost_02.png": {
+			"filename": "Ghost_02.png",
+			"frame": {
+				"x": 2,
+				"y": 182,
+				"w": 32,
+				"h": 32
+			},
+			"rotated": false,
+			"sourceSize": {
+				"w": 32,
+				"h": 32
+			},
+			"spriteSourceSize": {
+				"x": 0,
+				"y": 0,
+				"w": 32,
+				"h": 32
+			},
+			"trimmed": false
+		},
+		"Ghost_03.png": {
+			"filename": "Ghost_03.png",
+			"frame": {
+				"x": 2,
+				"y": 218,
+				"w": 32,
+				"h": 32
+			},
+			"rotated": false,
+			"sourceSize": {
+				"w": 32,
+				"h": 32
+			},
+			"spriteSourceSize": {
+				"x": 0,
+				"y": 0,
+				"w": 32,
+				"h": 32
+			},
+			"trimmed": false
+		},
+		"Ghost_04.png": {
+			"filename": "Ghost_04.png",
+			"frame": {
+				"x": 2,
+				"y": 254,
 				"w": 32,
 				"h": 32
 			},
@@ -46,7 +172,175 @@
 			"filename": "head.png",
 			"frame": {
 				"x": 2,
-				"y": 74,
+				"y": 290,
+				"w": 32,
+				"h": 32
+			},
+			"rotated": false,
+			"sourceSize": {
+				"w": 32,
+				"h": 32
+			},
+			"spriteSourceSize": {
+				"x": 0,
+				"y": 0,
+				"w": 32,
+				"h": 32
+			},
+			"trimmed": false
+		},
+		"PacMan_Snake_Bdoy_01.png": {
+			"filename": "PacMan_Snake_Bdoy_01.png",
+			"frame": {
+				"x": 2,
+				"y": 326,
+				"w": 32,
+				"h": 32
+			},
+			"rotated": false,
+			"sourceSize": {
+				"w": 32,
+				"h": 32
+			},
+			"spriteSourceSize": {
+				"x": 0,
+				"y": 0,
+				"w": 32,
+				"h": 32
+			},
+			"trimmed": false
+		},
+		"PacMan_Snake_Bdoy_02.png": {
+			"filename": "PacMan_Snake_Bdoy_02.png",
+			"frame": {
+				"x": 2,
+				"y": 362,
+				"w": 32,
+				"h": 32
+			},
+			"rotated": false,
+			"sourceSize": {
+				"w": 32,
+				"h": 32
+			},
+			"spriteSourceSize": {
+				"x": 0,
+				"y": 0,
+				"w": 32,
+				"h": 32
+			},
+			"trimmed": false
+		},
+		"PacMan_Snake_Head_01.png": {
+			"filename": "PacMan_Snake_Head_01.png",
+			"frame": {
+				"x": 2,
+				"y": 398,
+				"w": 32,
+				"h": 32
+			},
+			"rotated": false,
+			"sourceSize": {
+				"w": 32,
+				"h": 32
+			},
+			"spriteSourceSize": {
+				"x": 0,
+				"y": 0,
+				"w": 32,
+				"h": 32
+			},
+			"trimmed": false
+		},
+		"PacMan_Snake_Head_02.png": {
+			"filename": "PacMan_Snake_Head_02.png",
+			"frame": {
+				"x": 2,
+				"y": 434,
+				"w": 32,
+				"h": 32
+			},
+			"rotated": false,
+			"sourceSize": {
+				"w": 32,
+				"h": 32
+			},
+			"spriteSourceSize": {
+				"x": 0,
+				"y": 0,
+				"w": 32,
+				"h": 32
+			},
+			"trimmed": false
+		},
+		"PacMan_Snake_Tail.png": {
+			"filename": "PacMan_Snake_Tail.png",
+			"frame": {
+				"x": 2,
+				"y": 470,
+				"w": 32,
+				"h": 32
+			},
+			"rotated": false,
+			"sourceSize": {
+				"w": 32,
+				"h": 32
+			},
+			"spriteSourceSize": {
+				"x": 0,
+				"y": 0,
+				"w": 32,
+				"h": 32
+			},
+			"trimmed": false
+		},
+		"PacoMan_01.png": {
+			"filename": "PacoMan_01.png",
+			"frame": {
+				"x": 2,
+				"y": 506,
+				"w": 32,
+				"h": 32
+			},
+			"rotated": false,
+			"sourceSize": {
+				"w": 32,
+				"h": 32
+			},
+			"spriteSourceSize": {
+				"x": 0,
+				"y": 0,
+				"w": 32,
+				"h": 32
+			},
+			"trimmed": false
+		},
+		"PacoMan_02.png": {
+			"filename": "PacoMan_02.png",
+			"frame": {
+				"x": 2,
+				"y": 542,
+				"w": 32,
+				"h": 32
+			},
+			"rotated": false,
+			"sourceSize": {
+				"w": 32,
+				"h": 32
+			},
+			"spriteSourceSize": {
+				"x": 0,
+				"y": 0,
+				"w": 32,
+				"h": 32
+			},
+			"trimmed": false
+		},
+		"PacoMan_Dot.png": {
+			"filename": "PacoMan_Dot.png",
+			"frame": {
+				"x": 2,
+				"y": 578,
 				"w": 32,
 				"h": 32
 			},
@@ -67,7 +361,28 @@
 			"filename": "snake_body.png",
 			"frame": {
 				"x": 2,
-				"y": 110,
+				"y": 614,
+				"w": 32,
+				"h": 32
+			},
+			"rotated": false,
+			"sourceSize": {
+				"w": 32,
+				"h": 32
+			},
+			"spriteSourceSize": {
+				"x": 0,
+				"y": 0,
+				"w": 32,
+				"h": 32
+			},
+			"trimmed": false
+		},
+		"snake_body_2.png": {
+			"filename": "snake_body_2.png",
+			"frame": {
+				"x": 2,
+				"y": 650,
 				"w": 32,
 				"h": 32
 			},
@@ -88,7 +403,7 @@
 			"filename": "snake_body_tail.png",
 			"frame": {
 				"x": 2,
-				"y": 146,
+				"y": 686,
 				"w": 32,
 				"h": 32
 			},
@@ -109,7 +424,7 @@
 			"filename": "snake_body_turn.png",
 			"frame": {
 				"x": 2,
-				"y": 182,
+				"y": 722,
 				"w": 32,
 				"h": 32
 			},
@@ -130,7 +445,7 @@
 			"filename": "snake_eyebrows.png",
 			"frame": {
 				"x": 2,
-				"y": 218,
+				"y": 758,
 				"w": 12,
 				"h": 7
 			},
@@ -151,7 +466,7 @@
 			"filename": "snake_hat.png",
 			"frame": {
 				"x": 18,
-				"y": 218,
+				"y": 758,
 				"w": 32,
 				"h": 32
 			},
@@ -255,7 +570,7 @@
 			"trimmed": false
 		},
 		{
-			"filename": "body.png",
+			"filename": "Apple_02.png",
 			"frame": {
 				"x": 2,
 				"y": 38,
@@ -276,7 +591,7 @@
 			"trimmed": false
 		},
 		{
-			"filename": "head.png",
+			"filename": "Apple_Toxic.png",
 			"frame": {
 				"x": 2,
 				"y": 74,
@@ -297,7 +612,7 @@
 			"trimmed": false
 		},
 		{
-			"filename": "snake_body.png",
+			"filename": "body.png",
 			"frame": {
 				"x": 2,
 				"y": 110,
@@ -318,7 +633,7 @@
 			"trimmed": false
 		},
 		{
-			"filename": "snake_body_tail.png",
+			"filename": "Ghost_01.png",
 			"frame": {
 				"x": 2,
 				"y": 146,
@@ -339,7 +654,7 @@
 			"trimmed": false
 		},
 		{
-			"filename": "snake_body_turn.png",
+			"filename": "Ghost_02.png",
 			"frame": {
 				"x": 2,
 				"y": 182,
@@ -360,10 +675,325 @@
 			"trimmed": false
 		},
 		{
-			"filename": "snake_eyebrows.png",
+			"filename": "Ghost_03.png",
 			"frame": {
 				"x": 2,
 				"y": 218,
+				"w": 32,
+				"h": 32
+			},
+			"rotated": false,
+			"sourceSize": {
+				"w": 32,
+				"h": 32
+			},
+			"spriteSourceSize": {
+				"x": 0,
+				"y": 0,
+				"w": 32,
+				"h": 32
+			},
+			"trimmed": false
+		},
+		{
+			"filename": "Ghost_04.png",
+			"frame": {
+				"x": 2,
+				"y": 254,
+				"w": 32,
+				"h": 32
+			},
+			"rotated": false,
+			"sourceSize": {
+				"w": 32,
+				"h": 32
+			},
+			"spriteSourceSize": {
+				"x": 0,
+				"y": 0,
+				"w": 32,
+				"h": 32
+			},
+			"trimmed": false
+		},
+		{
+			"filename": "head.png",
+			"frame": {
+				"x": 2,
+				"y": 290,
+				"w": 32,
+				"h": 32
+			},
+			"rotated": false,
+			"sourceSize": {
+				"w": 32,
+				"h": 32
+			},
+			"spriteSourceSize": {
+				"x": 0,
+				"y": 0,
+				"w": 32,
+				"h": 32
+			},
+			"trimmed": false
+		},
+		{
+			"filename": "PacMan_Snake_Bdoy_01.png",
+			"frame": {
+				"x": 2,
+				"y": 326,
+				"w": 32,
+				"h": 32
+			},
+			"rotated": false,
+			"sourceSize": {
+				"w": 32,
+				"h": 32
+			},
+			"spriteSourceSize": {
+				"x": 0,
+				"y": 0,
+				"w": 32,
+				"h": 32
+			},
+			"trimmed": false
+		},
+		{
+			"filename": "PacMan_Snake_Bdoy_02.png",
+			"frame": {
+				"x": 2,
+				"y": 362,
+				"w": 32,
+				"h": 32
+			},
+			"rotated": false,
+			"sourceSize": {
+				"w": 32,
+				"h": 32
+			},
+			"spriteSourceSize": {
+				"x": 0,
+				"y": 0,
+				"w": 32,
+				"h": 32
+			},
+			"trimmed": false
+		},
+		{
+			"filename": "PacMan_Snake_Head_01.png",
+			"frame": {
+				"x": 2,
+				"y": 398,
+				"w": 32,
+				"h": 32
+			},
+			"rotated": false,
+			"sourceSize": {
+				"w": 32,
+				"h": 32
+			},
+			"spriteSourceSize": {
+				"x": 0,
+				"y": 0,
+				"w": 32,
+				"h": 32
+			},
+			"trimmed": false
+		},
+		{
+			"filename": "PacMan_Snake_Head_02.png",
+			"frame": {
+				"x": 2,
+				"y": 434,
+				"w": 32,
+				"h": 32
+			},
+			"rotated": false,
+			"sourceSize": {
+				"w": 32,
+				"h": 32
+			},
+			"spriteSourceSize": {
+				"x": 0,
+				"y": 0,
+				"w": 32,
+				"h": 32
+			},
+			"trimmed": false
+		},
+		{
+			"filename": "PacMan_Snake_Tail.png",
+			"frame": {
+				"x": 2,
+				"y": 470,
+				"w": 32,
+				"h": 32
+			},
+			"rotated": false,
+			"sourceSize": {
+				"w": 32,
+				"h": 32
+			},
+			"spriteSourceSize": {
+				"x": 0,
+				"y": 0,
+				"w": 32,
+				"h": 32
+			},
+			"trimmed": false
+		},
+		{
+			"filename": "PacoMan_01.png",
+			"frame": {
+				"x": 2,
+				"y": 506,
+				"w": 32,
+				"h": 32
+			},
+			"rotated": false,
+			"sourceSize": {
+				"w": 32,
+				"h": 32
+			},
+			"spriteSourceSize": {
+				"x": 0,
+				"y": 0,
+				"w": 32,
+				"h": 32
+			},
+			"trimmed": false
+		},
+		{
+			"filename": "PacoMan_02.png",
+			"frame": {
+				"x": 2,
+				"y": 542,
+				"w": 32,
+				"h": 32
+			},
+			"rotated": false,
+			"sourceSize": {
+				"w": 32,
+				"h": 32
+			},
+			"spriteSourceSize": {
+				"x": 0,
+				"y": 0,
+				"w": 32,
+				"h": 32
+			},
+			"trimmed": false
+		},
+		{
+			"filename": "PacoMan_Dot.png",
+			"frame": {
+				"x": 2,
+				"y": 578,
+				"w": 32,
+				"h": 32
+			},
+			"rotated": false,
+			"sourceSize": {
+				"w": 32,
+				"h": 32
+			},
+			"spriteSourceSize": {
+				"x": 0,
+				"y": 0,
+				"w": 32,
+				"h": 32
+			},
+			"trimmed": false
+		},
+		{
+			"filename": "snake_body.png",
+			"frame": {
+				"x": 2,
+				"y": 614,
+				"w": 32,
+				"h": 32
+			},
+			"rotated": false,
+			"sourceSize": {
+				"w": 32,
+				"h": 32
+			},
+			"spriteSourceSize": {
+				"x": 0,
+				"y": 0,
+				"w": 32,
+				"h": 32
+			},
+			"trimmed": false
+		},
+		{
+			"filename": "snake_body_2.png",
+			"frame": {
+				"x": 2,
+				"y": 650,
+				"w": 32,
+				"h": 32
+			},
+			"rotated": false,
+			"sourceSize": {
+				"w": 32,
+				"h": 32
+			},
+			"spriteSourceSize": {
+				"x": 0,
+				"y": 0,
+				"w": 32,
+				"h": 32
+			},
+			"trimmed": false
+		},
+		{
+			"filename": "snake_body_tail.png",
+			"frame": {
+				"x": 2,
+				"y": 686,
+				"w": 32,
+				"h": 32
+			},
+			"rotated": false,
+			"sourceSize": {
+				"w": 32,
+				"h": 32
+			},
+			"spriteSourceSize": {
+				"x": 0,
+				"y": 0,
+				"w": 32,
+				"h": 32
+			},
+			"trimmed": false
+		},
+		{
+			"filename": "snake_body_turn.png",
+			"frame": {
+				"x": 2,
+				"y": 722,
+				"w": 32,
+				"h": 32
+			},
+			"rotated": false,
+			"sourceSize": {
+				"w": 32,
+				"h": 32
+			},
+			"spriteSourceSize": {
+				"x": 0,
+				"y": 0,
+				"w": 32,
+				"h": 32
+			},
+			"trimmed": false
+		},
+		{
+			"filename": "snake_eyebrows.png",
+			"frame": {
+				"x": 2,
+				"y": 758,
 				"w": 12,
 				"h": 7
 			},
@@ -384,7 +1014,7 @@
 			"filename": "snake_hat.png",
 			"frame": {
 				"x": 18,
-				"y": 218,
+				"y": 758,
 				"w": 32,
 				"h": 32
 			},
@@ -472,7 +1102,7 @@
 		"scale": 1.0,
 		"size": {
 			"w": 72,
-			"h": 252
+			"h": 792
 		},
 		"version": "1.0.0"
 	}
