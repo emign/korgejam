@@ -52,6 +52,7 @@
   var ArrayList_init = Kotlin.kotlin.collections.ArrayList_init_287e2$;
   var addTo = $module$korge_root_korge.com.soywiz.korge.view.addTo_fct211$;
   var numberToInt = Kotlin.numberToInt;
+  var Collection = Kotlin.kotlin.collections.Collection;
   var checkIndexOverflow = Kotlin.kotlin.collections.checkIndexOverflow_za3lpa$;
   var getPropertyCallableRef = Kotlin.getPropertyCallableRef;
   var get_keys = $module$korge_root_korge.com.soywiz.korge.input.get_keys_gohfi1$;
@@ -106,6 +107,8 @@
   SnakeGameScene.prototype.constructor = SnakeGameScene;
   PacmanGameScene.prototype = Object.create(GameScene.prototype);
   PacmanGameScene.prototype.constructor = PacmanGameScene;
+  MarioGameScene.prototype = Object.create(GameScene.prototype);
+  MarioGameScene.prototype.constructor = MarioGameScene;
   LoadingScene.prototype = Object.create(Scene.prototype);
   LoadingScene.prototype.constructor = LoadingScene;
   MainMenuScene.prototype = Object.create(Scene.prototype);
@@ -407,6 +410,7 @@
     };
     MovementMode$SNAKE_instance = new MovementMode('SNAKE', 0);
     MovementMode$PACMAN_instance = new MovementMode('PACMAN', 1);
+    MovementMode$MARIO_instance = new MovementMode('MARIO', 2);
   }
   var MovementMode$SNAKE_instance;
   function MovementMode$SNAKE_getInstance() {
@@ -418,13 +422,18 @@
     MovementMode_initFields();
     return MovementMode$PACMAN_instance;
   }
+  var MovementMode$MARIO_instance;
+  function MovementMode$MARIO_getInstance() {
+    MovementMode_initFields();
+    return MovementMode$MARIO_instance;
+  }
   MovementMode.$metadata$ = {
     kind: Kind_CLASS,
     simpleName: 'MovementMode',
     interfaces: [Enum]
   };
   function MovementMode$values() {
-    return [MovementMode$SNAKE_getInstance(), MovementMode$PACMAN_getInstance()];
+    return [MovementMode$SNAKE_getInstance(), MovementMode$PACMAN_getInstance(), MovementMode$MARIO_getInstance()];
   }
   MovementMode.values = MovementMode$values;
   function MovementMode$valueOf(name) {
@@ -433,6 +442,8 @@
         return MovementMode$SNAKE_getInstance();
       case 'PACMAN':
         return MovementMode$PACMAN_getInstance();
+      case 'MARIO':
+        return MovementMode$MARIO_getInstance();
       default:throwISE('No enum constant com.snakegame.actors.MovementMode.' + name);
     }
   }
@@ -623,7 +634,7 @@
         closure$newDirection.v = tmp$;
         if (numberToInt(closure$key.v & (BUTTON_RIGHT | BUTTON_LEFT | BUTTON_UP | BUTTON_DOWN)) !== 0)
           closure$lockInput.v = true;
-      }switch (closure$movementMode.name) {
+      }loop_label: switch (closure$movementMode.name) {
         case 'SNAKE':
           closure$frames.v += closure$speed;
           if (closure$frames.v >= TILE_SIZE) {
@@ -637,7 +648,7 @@
             closure$snake.interpolate_14dthe$(closure$frames.v / TILE_SIZE);
           }
 
-          break;
+          break loop_label;
         case 'PACMAN':
           closure$frames.v += closure$speed;
           if (closure$collisionChecker.colides_lu1900$(closure$snake.head.x + Kotlin.imul(closure$newDirection.v.deltaX(), TILE_SIZE), closure$snake.head.y + Kotlin.imul(closure$newDirection.v.deltaY(), TILE_SIZE))) {
@@ -655,14 +666,53 @@
             closure$snake.interpolate_14dthe$(closure$frames.v / TILE_SIZE);
           }
 
-          break;
+          break loop_label;
+        case 'MARIO':
+          closure$frames.v += closure$speed;
+          var $receiver_0 = closure$snake.body;
+          var any$result;
+          any$break: do {
+            var tmp$_0;
+            if (Kotlin.isType($receiver_0, Collection) && $receiver_0.isEmpty()) {
+              any$result = false;
+              break any$break;
+            }tmp$_0 = $receiver_0.iterator();
+            while (tmp$_0.hasNext()) {
+              var element = tmp$_0.next();
+              if (closure$collisionChecker.colides_lu1900$(element.x, element.y + TILE_SIZE)) {
+                any$result = true;
+                break any$break;
+              }}
+            any$result = false;
+          }
+           while (false);
+          var onGround = any$result;
+          if (!onGround) {
+            closure$newDirection.v = Direction$DOWN_getInstance();
+          }
+          if (closure$collisionChecker.colides_lu1900$(closure$snake.head.x + Kotlin.imul(closure$newDirection.v.deltaX(), TILE_SIZE), closure$snake.head.y + Kotlin.imul(closure$newDirection.v.deltaY(), TILE_SIZE))) {
+            closure$lockInput.v = false;
+            closure$newDirection.v = closure$snake.direction;
+          }
+          if (closure$frames.v >= TILE_SIZE) {
+            closure$lockInput.v = false;
+            closure$snake.lastDirection = closure$snake.direction;
+            closure$snake.direction = closure$newDirection.v;
+            if (!closure$collisionChecker.colides_lu1900$(closure$snake.head.x + Kotlin.imul(closure$newDirection.v.deltaX(), TILE_SIZE), closure$snake.head.y + Kotlin.imul(closure$newDirection.v.deltaY(), TILE_SIZE))) {
+              closure$snake.move();
+              closure$frames.v = 0.0;
+            }} else {
+            closure$snake.interpolate_14dthe$(closure$frames.v / TILE_SIZE);
+          }
+
+          break loop_label;
       }
-      var $receiver_0 = closure$bodyParts;
-      var tmp$_0, tmp$_0_0;
+      var $receiver_1 = closure$bodyParts;
+      var tmp$_1, tmp$_0_0;
       var index = 0;
-      tmp$_0 = $receiver_0.iterator();
-      while (tmp$_0.hasNext()) {
-        var item = tmp$_0.next();
+      tmp$_1 = $receiver_1.iterator();
+      while (tmp$_1.hasNext()) {
+        var item = tmp$_1.next();
         var closure$snake_0 = closure$snake;
         var index_0 = checkIndexOverflow((tmp$_0_0 = index, index = tmp$_0_0 + 1 | 0, tmp$_0_0));
         item.x = closure$snake_0.body.get_za3lpa$(index_0).xpos;
@@ -1021,6 +1071,14 @@
     simpleName: 'PacmanGameScene',
     interfaces: [GameScene]
   };
+  function MarioGameScene() {
+    GameScene.call(this, 3, MovementMode$MARIO_getInstance());
+  }
+  MarioGameScene.$metadata$ = {
+    kind: Kind_CLASS,
+    simpleName: 'MarioGameScene',
+    interfaces: [GameScene]
+  };
   function image$lambda_1($receiver) {
     return Unit;
   }
@@ -1364,6 +1422,65 @@
         return instance.doResume(null);
     };
   }
+  function Coroutine$MainMenuScene$sceneInit$lambda$lambda_1(this$MainMenuScene_0, it_0, continuation_0) {
+    CoroutineImpl.call(this, continuation_0);
+    this.exceptionState_0 = 1;
+    this.local$this$MainMenuScene = this$MainMenuScene_0;
+  }
+  Coroutine$MainMenuScene$sceneInit$lambda$lambda_1.$metadata$ = {
+    kind: Kotlin.Kind.CLASS,
+    simpleName: null,
+    interfaces: [CoroutineImpl]
+  };
+  Coroutine$MainMenuScene$sceneInit$lambda$lambda_1.prototype = Object.create(CoroutineImpl.prototype);
+  Coroutine$MainMenuScene$sceneInit$lambda$lambda_1.prototype.constructor = Coroutine$MainMenuScene$sceneInit$lambda$lambda_1;
+  Coroutine$MainMenuScene$sceneInit$lambda$lambda_1.prototype.doResume = function () {
+    do
+      try {
+        switch (this.state_0) {
+          case 0:
+            var $this = this.local$this$MainMenuScene.sceneContainer;
+            var injects = [1];
+            var time;
+            var transition;
+            if (time === void 0) {
+              time = TimeSpan_0.Companion.fromSeconds_14dthe$(0);
+            }
+            if (transition === void 0)
+              transition = $this.defaultTransition;
+            this.state_0 = 2;
+            this.result_0 = $this.changeTo_oszfv1$(getKClass(MarioGameScene), injects.slice(), time, transition, this);
+            if (this.result_0 === COROUTINE_SUSPENDED)
+              return COROUTINE_SUSPENDED;
+            continue;
+          case 1:
+            throw this.exception_0;
+          case 2:
+            this.result_0;
+            return this.result_0;
+          default:this.state_0 = 1;
+            throw new Error('State Machine Unreachable execution');
+        }
+      } catch (e) {
+        if (this.state_0 === 1) {
+          this.exceptionState_0 = this.state_0;
+          throw e;
+        } else {
+          this.state_0 = this.exceptionState_0;
+          this.exception_0 = e;
+        }
+      }
+     while (true);
+  };
+  function MainMenuScene$sceneInit$lambda$lambda_1(this$MainMenuScene_0) {
+    return function (it_0, continuation_0, suspended) {
+      var instance = new Coroutine$MainMenuScene$sceneInit$lambda$lambda_1(this$MainMenuScene_0, it_0, continuation_0);
+      if (suspended)
+        return instance;
+      else
+        return instance.doResume(null);
+    };
+  }
   MainMenuScene.prototype.sceneInit_st8p7j$ = function ($receiver, continuation) {
     var text = 'SNAKE GAME!';
     var color_0;
@@ -1375,7 +1492,7 @@
     position($receiver_0_0, 340, 200);
     var $receiver_0_1 = addTo(new TextButton_init(128.0, 64.0, 'Button', get_defaultUISkin($receiver), get_defaultUIFont($receiver)), $receiver);
     $receiver_0_1.text = 'SNAKE';
-    position($receiver_0_1, 340, 250);
+    position($receiver_0_1, 340, 300);
     var prop = getPropertyCallableRef('click', 1, function ($receiver_0) {
       return $receiver_0.click;
     });
@@ -1384,13 +1501,22 @@
       prop.get(tmp$).add_qlkmfe$(doMouseEvent$lambda$lambda(tmp$, MainMenuScene$sceneInit$lambda$lambda(this)));
     }var $receiver_0_2 = addTo(new TextButton_init(128.0, 64.0, 'Button', get_defaultUISkin($receiver), get_defaultUIFont($receiver)), $receiver);
     $receiver_0_2.text = 'PACMAN';
-    position($receiver_0_2, 340, 400);
+    position($receiver_0_2, 340, 350);
     var prop_0 = getPropertyCallableRef('click', 1, function ($receiver_0) {
       return $receiver_0.click;
     });
     var tmp$_0;
     if ((tmp$_0 = $receiver_0_2 != null ? get_mouse($receiver_0_2) : null) != null) {
       prop_0.get(tmp$_0).add_qlkmfe$(doMouseEvent$lambda$lambda(tmp$_0, MainMenuScene$sceneInit$lambda$lambda_0(this)));
+    }var $receiver_0_3 = addTo(new TextButton_init(128.0, 64.0, 'Button', get_defaultUISkin($receiver), get_defaultUIFont($receiver)), $receiver);
+    $receiver_0_3.text = 'MARIO';
+    position($receiver_0_3, 340, 400);
+    var prop_1 = getPropertyCallableRef('click', 1, function ($receiver_0) {
+      return $receiver_0.click;
+    });
+    var tmp$_1;
+    if ((tmp$_1 = $receiver_0_3 != null ? get_mouse($receiver_0_3) : null) != null) {
+      prop_1.get(tmp$_1).add_qlkmfe$(doMouseEvent$lambda$lambda(tmp$_1, MainMenuScene$sceneInit$lambda$lambda_1(this)));
     }};
   MainMenuScene.$metadata$ = {
     kind: Kind_CLASS,
@@ -1407,7 +1533,7 @@
     this.size_ywotrd$_0 = SizeInt.Companion.invoke_vux9f0$(800, 600);
     this.windowSize_t2n2jd$_0 = SizeInt.Companion.invoke_vux9f0$(800, 600);
     this.bgcolor_k9kn70$_0 = color_0.Colors.get_61zpoe$('#2b2b2b');
-    this.mainScene_isvq47$_0 = getKClass(LoadingScene);
+    this.mainScene_isvq47$_0 = getKClass(MainMenuScene);
   }
   Object.defineProperty(SnakeGameModule.prototype, 'title', {
     get: function () {
@@ -1598,11 +1724,53 @@
     else
       return instance.doResume(null);
   }
+  function Coroutine$SnakeGameModule$init$lambda$lambda_3($receiver_0, controller, continuation_0) {
+    CoroutineImpl.call(this, continuation_0);
+    this.$controller = controller;
+    this.exceptionState_0 = 1;
+  }
+  Coroutine$SnakeGameModule$init$lambda$lambda_3.$metadata$ = {
+    kind: Kotlin.Kind.CLASS,
+    simpleName: null,
+    interfaces: [CoroutineImpl]
+  };
+  Coroutine$SnakeGameModule$init$lambda$lambda_3.prototype = Object.create(CoroutineImpl.prototype);
+  Coroutine$SnakeGameModule$init$lambda$lambda_3.prototype.constructor = Coroutine$SnakeGameModule$init$lambda$lambda_3;
+  Coroutine$SnakeGameModule$init$lambda$lambda_3.prototype.doResume = function () {
+    do
+      try {
+        switch (this.state_0) {
+          case 0:
+            return new MarioGameScene();
+          case 1:
+            throw this.exception_0;
+          default:this.state_0 = 1;
+            throw new Error('State Machine Unreachable execution');
+        }
+      } catch (e) {
+        if (this.state_0 === 1) {
+          this.exceptionState_0 = this.state_0;
+          throw e;
+        } else {
+          this.state_0 = this.exceptionState_0;
+          this.exception_0 = e;
+        }
+      }
+     while (true);
+  };
+  function SnakeGameModule$init$lambda$lambda_3($receiver_0, continuation_0, suspended) {
+    var instance = new Coroutine$SnakeGameModule$init$lambda$lambda_3($receiver_0, this, continuation_0);
+    if (suspended)
+      return instance;
+    else
+      return instance.doResume(null);
+  }
   SnakeGameModule.prototype.init_y6n311$ = function (injector, continuation) {
     injector.mapPrototype_siz2e9$(getKClass(LoadingScene), SnakeGameModule$init$lambda$lambda);
     injector.mapPrototype_siz2e9$(getKClass(MainMenuScene), SnakeGameModule$init$lambda$lambda_0);
     injector.mapPrototype_siz2e9$(getKClass(SnakeGameScene), SnakeGameModule$init$lambda$lambda_1);
     injector.mapPrototype_siz2e9$(getKClass(PacmanGameScene), SnakeGameModule$init$lambda$lambda_2);
+    injector.mapPrototype_siz2e9$(getKClass(MarioGameScene), SnakeGameModule$init$lambda$lambda_3);
     return Unit;
   };
   SnakeGameModule.$metadata$ = {
@@ -1641,6 +1809,9 @@
   });
   Object.defineProperty(MovementMode, 'PACMAN', {
     get: MovementMode$PACMAN_getInstance
+  });
+  Object.defineProperty(MovementMode, 'MARIO', {
+    get: MovementMode$MARIO_getInstance
   });
   package$actors.MovementMode = MovementMode;
   $$importsForInline$$['korge-root-korge'] = $module$korge_root_korge;
@@ -1722,6 +1893,7 @@
   package$scenes.GameScene = GameScene;
   package$scenes.SnakeGameScene = SnakeGameScene;
   package$scenes.PacmanGameScene = PacmanGameScene;
+  package$scenes.MarioGameScene = MarioGameScene;
   package$scenes.LoadingScene = LoadingScene;
   package$scenes.MainMenuScene = MainMenuScene;
   _.main = main;
