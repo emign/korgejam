@@ -1,0 +1,75 @@
+{
+	"frames": {
+		"body.png": {
+			"frame": {
+				"x": 2,
+				"y": 2,
+				"w": 36,
+				"h": 36
+			},
+			"rotated": false,
+			"sourceSize": {
+				"w": 36,
+				"h": 36
+			},
+			"spriteSourceSize": {
+				"x": 0,
+				"y": 0,
+				"w": 36,
+				"h": 36
+			},
+			"trimmed": false
+		},
+		"head.png": {
+			"frame": {
+				"x": 2,
+				"y": 38,
+				"w": 36,
+				"h": 36
+			},
+			"rotated": false,
+			"sourceSize": {
+				"w": 36,
+				"h": 36
+			},
+			"spriteSourceSize": {
+				"x": 0,
+				"y": 0,
+				"w": 36,
+				"h": 36
+			},
+			"trimmed": false
+		},
+		"tail.png": {
+			"frame": {
+				"x": 2,
+				"y": 74,
+				"w": 36,
+				"h": 36
+			},
+			"rotated": false,
+			"sourceSize": {
+				"w": 36,
+				"h": 36
+			},
+			"spriteSourceSize": {
+				"x": 0,
+				"y": 0,
+				"w": 36,
+				"h": 36
+			},
+			"trimmed": false
+		}
+	},
+	"meta": {
+		"app": "korge",
+		"format": "RGBA8888",
+		"image": "snake.atlas.png",
+		"scale": 1.0,
+		"size": {
+			"w": 36,
+			"h": 108
+		},
+		"version": "1.0.0"
+	}
+}
