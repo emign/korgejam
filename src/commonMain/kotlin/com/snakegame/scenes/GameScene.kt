@@ -8,18 +8,40 @@ import com.snakegame.actors.snake
 import com.snakegame.input.getButtonPressed
 import com.snakegame.map.CollisionChecker
 import com.snakegame.map.tiledMap
+import com.soywiz.klock.milliseconds
+import com.soywiz.klock.seconds
+import com.soywiz.klock.timesPerSecond
 import com.soywiz.kmem.clamp
 import com.soywiz.kmem.setBits
 import com.soywiz.kmem.unsetBits
+import com.soywiz.korge.atlas.readAtlas
 import com.soywiz.korge.input.onKeyDown
 import com.soywiz.korge.input.onKeyUp
 import com.soywiz.korge.scene.Scene
-import com.soywiz.korge.view.Container
-import com.soywiz.korge.view.addFixedUpdater
-import com.soywiz.korge.view.camera
+import com.soywiz.korge.tween.get
+import com.soywiz.korge.tween.tween
+import com.soywiz.korge.view.*
+import com.soywiz.korim.bitmap.Bitmap
+import com.soywiz.korim.color.RGBA
+import com.soywiz.korio.async.launch
+import com.soywiz.korio.file.std.resourcesVfs
 
 
 open class GameScene(val level:Int, val movementMode: MovementMode, val scroll:Boolean) : Scene() {
+
+    fun Container.fade(){
+        val fadeRect = solidRect(1000.0, 1000.0, RGBA.float(0, 0, 0, 0))
+        launch {
+            fadeRect.tween(fadeRect::alpha[0.0, 1.0], time = 2.seconds)
+        }
+    }
+
+    fun Container.unFade(){
+        val fadeRect = solidRect(1000.0, 1000.0, RGBA.float(0, 0, 0, 1))
+        launch {
+            fadeRect.tween(fadeRect::alpha[1.0, 0.0], time = 2.seconds)
+        }
+    }
 
     override suspend fun Container.sceneInit() {
         camera{
@@ -48,6 +70,7 @@ open class GameScene(val level:Int, val movementMode: MovementMode, val scroll:B
                 }
             }
         }
+        unFade()
     }
 }
 
