@@ -147,9 +147,9 @@ suspend fun Container.snake(views: Views, skin:SnakeSkin, collisionChecker: Coll
 
     container {
         val bodyParts = mutableListOf(
-                image(headTile),
-                image(bodyTile),
-                image(tailTile)
+                image(headTile).apply { smoothing = false },
+                image(bodyTile).apply { smoothing = false },
+                image(tailTile).apply { smoothing = false }
         )
 
         val head = bodyParts.first()
@@ -159,7 +159,7 @@ suspend fun Container.snake(views: Views, skin:SnakeSkin, collisionChecker: Coll
             val lastPart = body[body.size - 1]
             body.add(SnakeBodyPart(lastPart.x, lastPart.y))
             bodyParts.last().bitmap = bodyTile
-            bodyParts.add(image(tailTile))
+            bodyParts.add(image(tailTile).apply { smoothing = false })
         }
 
         onKeyDown {
