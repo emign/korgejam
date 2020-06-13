@@ -23,6 +23,7 @@ import com.soywiz.korge.tween.tween
 import com.soywiz.korge.view.*
 import com.soywiz.korim.bitmap.Bitmap
 import com.soywiz.korim.color.RGBA
+import com.soywiz.korim.font.readBitmapFont
 import com.soywiz.korio.async.launch
 import com.soywiz.korio.file.std.resourcesVfs
 
@@ -42,6 +43,8 @@ open class GameScene(val level:Int, val movementMode: MovementMode, val scroll:B
             fadeRect.tween(fadeRect::alpha[1.0, 0.0], time = 2.seconds)
         }
     }
+
+    open suspend fun Container.customInit(){}
 
     override suspend fun Container.sceneInit() {
         camera{
@@ -70,11 +73,17 @@ open class GameScene(val level:Int, val movementMode: MovementMode, val scroll:B
                 }
             }
         }
+        customInit()
         unFade()
     }
 }
 
-class SnakeGameScene() : GameScene(1, MovementMode.SNAKE, false)
+class SnakeGameScene() : GameScene(1, MovementMode.SNAKE, false){
+    override suspend fun Container.customInit() {
+        val font = resourcesVfs["I-pixel-u.fnt"].readBitmapFont()
+        text("00023", 32.0, font = font).position(25, 15)
+    }
+}
 class PacmanGameScene() : GameScene(2, MovementMode.PACMAN, false)
 class MarioGameScene() : GameScene(3, MovementMode.MARIO, true)
 
