@@ -1,8 +1,8 @@
 (function (root, factory) {
   if (typeof define === 'function' && define.amd)
-    define(['exports', 'kotlin', 'korge-root-korge', 'korio-root-korio', 'korim-root-korim', 'kmem-root-kmem', 'korgw-root-korgw', 'klock-root-klock', 'korma-root-korma', 'korinject-root-korinject'], factory);
+    define(['exports', 'kotlin', 'korge-root-korge', 'korio-root-korio', 'kmem-root-kmem', 'korgw-root-korgw', 'klock-root-klock', 'korim-root-korim', 'korma-root-korma', 'korinject-root-korinject'], factory);
   else if (typeof exports === 'object')
-    factory(module.exports, require('kotlin'), require('korge-root-korge'), require('korio-root-korio'), require('korim-root-korim'), require('kmem-root-kmem'), require('korgw-root-korgw'), require('klock-root-klock'), require('korma-root-korma'), require('korinject-root-korinject'));
+    factory(module.exports, require('kotlin'), require('korge-root-korge'), require('korio-root-korio'), require('kmem-root-kmem'), require('korgw-root-korgw'), require('klock-root-klock'), require('korim-root-korim'), require('korma-root-korma'), require('korinject-root-korinject'));
   else {
     if (typeof kotlin === 'undefined') {
       throw new Error("Error loading module 'korgejam'. Its dependency 'kotlin' was not found. Please, check whether 'kotlin' is loaded prior to 'korgejam'.");
@@ -10,21 +10,21 @@
       throw new Error("Error loading module 'korgejam'. Its dependency 'korge-root-korge' was not found. Please, check whether 'korge-root-korge' is loaded prior to 'korgejam'.");
     }if (typeof this['korio-root-korio'] === 'undefined') {
       throw new Error("Error loading module 'korgejam'. Its dependency 'korio-root-korio' was not found. Please, check whether 'korio-root-korio' is loaded prior to 'korgejam'.");
-    }if (typeof this['korim-root-korim'] === 'undefined') {
-      throw new Error("Error loading module 'korgejam'. Its dependency 'korim-root-korim' was not found. Please, check whether 'korim-root-korim' is loaded prior to 'korgejam'.");
     }if (typeof this['kmem-root-kmem'] === 'undefined') {
       throw new Error("Error loading module 'korgejam'. Its dependency 'kmem-root-kmem' was not found. Please, check whether 'kmem-root-kmem' is loaded prior to 'korgejam'.");
     }if (typeof this['korgw-root-korgw'] === 'undefined') {
       throw new Error("Error loading module 'korgejam'. Its dependency 'korgw-root-korgw' was not found. Please, check whether 'korgw-root-korgw' is loaded prior to 'korgejam'.");
     }if (typeof this['klock-root-klock'] === 'undefined') {
       throw new Error("Error loading module 'korgejam'. Its dependency 'klock-root-klock' was not found. Please, check whether 'klock-root-klock' is loaded prior to 'korgejam'.");
+    }if (typeof this['korim-root-korim'] === 'undefined') {
+      throw new Error("Error loading module 'korgejam'. Its dependency 'korim-root-korim' was not found. Please, check whether 'korim-root-korim' is loaded prior to 'korgejam'.");
     }if (typeof this['korma-root-korma'] === 'undefined') {
       throw new Error("Error loading module 'korgejam'. Its dependency 'korma-root-korma' was not found. Please, check whether 'korma-root-korma' is loaded prior to 'korgejam'.");
     }if (typeof this['korinject-root-korinject'] === 'undefined') {
       throw new Error("Error loading module 'korgejam'. Its dependency 'korinject-root-korinject' was not found. Please, check whether 'korinject-root-korinject' is loaded prior to 'korgejam'.");
-    }root.korgejam = factory(typeof korgejam === 'undefined' ? {} : korgejam, kotlin, this['korge-root-korge'], this['korio-root-korio'], this['korim-root-korim'], this['kmem-root-kmem'], this['korgw-root-korgw'], this['klock-root-klock'], this['korma-root-korma'], this['korinject-root-korinject']);
+    }root.korgejam = factory(typeof korgejam === 'undefined' ? {} : korgejam, kotlin, this['korge-root-korge'], this['korio-root-korio'], this['kmem-root-kmem'], this['korgw-root-korgw'], this['klock-root-klock'], this['korim-root-korim'], this['korma-root-korma'], this['korinject-root-korinject']);
   }
-}(this, function (_, Kotlin, $module$korge_root_korge, $module$korio_root_korio, $module$korim_root_korim, $module$kmem_root_kmem, $module$korgw_root_korgw, $module$klock_root_klock, $module$korma_root_korma, $module$korinject_root_korinject) {
+}(this, function (_, Kotlin, $module$korge_root_korge, $module$korio_root_korio, $module$kmem_root_kmem, $module$korgw_root_korgw, $module$klock_root_klock, $module$korim_root_korim, $module$korma_root_korma, $module$korinject_root_korinject) {
   'use strict';
   var $$importsForInline$$ = _.$$importsForInline$$ || (_.$$importsForInline$$ = {});
   var IntRange = Kotlin.kotlin.ranges.IntRange;
@@ -34,8 +34,6 @@
   var CoroutineImpl = Kotlin.kotlin.coroutines.CoroutineImpl;
   var std = $module$korio_root_korio.com.soywiz.korio.file.std;
   var readAtlas = $module$korge_root_korge.com.soywiz.korge.atlas.readAtlas_s70ap7$;
-  var BitmapSlice = $module$korim_root_korim.com.soywiz.korim.bitmap.BitmapSlice;
-  var throwCCE = Kotlin.throwCCE;
   var Random = Kotlin.kotlin.random.Random;
   var random = Kotlin.kotlin.ranges.random_xmiyix$;
   var Enum = Kotlin.kotlin.Enum;
@@ -68,6 +66,7 @@
   var Image_init = $module$korge_root_korge.com.soywiz.korge.view.Image_init_8drxwf$;
   var TiledMapView_init = $module$korge_root_korge.com.soywiz.korge.tiled.TiledMapView;
   var Scene = $module$korge_root_korge.com.soywiz.korge.scene.Scene;
+  var Camera_init = $module$korge_root_korge.com.soywiz.korge.view.Camera;
   var anchor = $module$korge_root_korge.com.soywiz.korge.view.anchor_11wmr3$;
   var scale = $module$korge_root_korge.com.soywiz.korge.view.scale_2cbtc5$;
   var position = $module$korge_root_korge.com.soywiz.korge.view.position_ajix5r$;
@@ -146,7 +145,6 @@
       try {
         switch (this.state_0) {
           case 0:
-            var tmp$;
             this.state_0 = 2;
             this.result_0 = readAtlas(std.resourcesVfs.get_61zpoe$('snake.atlas.json'), this.local$views, this);
             if (this.result_0 === COROUTINE_SUSPENDED)
@@ -156,7 +154,7 @@
             throw this.exception_0;
           case 2:
             var snakeAtlas = this.result_0;
-            var appleTile = Kotlin.isType(tmp$ = snakeAtlas.get_61zpoe$('apple.png'), BitmapSlice) ? tmp$ : throwCCE();
+            var appleTile = snakeAtlas.get_61zpoe$('apple.png');
             this.local$$receiver.addChild_l5rad2$(new Apple(appleTile));
             return;
           default:this.state_0 = 1;
@@ -743,7 +741,6 @@
           case 0:
             if (this.local$movementMode === void 0)
               this.local$movementMode = MovementMode$SNAKE_getInstance();
-            var tmp$, tmp$_0, tmp$_1;
             this.state_0 = 2;
             this.result_0 = readAtlas(std.resourcesVfs.get_61zpoe$('snake.atlas.json'), this.local$views, this);
             if (this.result_0 === COROUTINE_SUSPENDED)
@@ -753,9 +750,9 @@
             throw this.exception_0;
           case 2:
             var snakeAtlas = this.result_0;
-            var headTile = Kotlin.isType(tmp$ = snakeAtlas.get_61zpoe$('snake_head_01.png'), BitmapSlice) ? tmp$ : throwCCE();
-            var bodyTile = Kotlin.isType(tmp$_0 = snakeAtlas.get_61zpoe$('snake_body.png'), BitmapSlice) ? tmp$_0 : throwCCE();
-            var tailTile = Kotlin.isType(tmp$_1 = snakeAtlas.get_61zpoe$('snake_body_tail.png'), BitmapSlice) ? tmp$_1 : throwCCE();
+            var headTile = snakeAtlas.get_61zpoe$('snake_head_01.png');
+            var bodyTile = snakeAtlas.get_61zpoe$('snake_body.png');
+            var tailTile = snakeAtlas.get_61zpoe$('snake_body_tail.png');
             var initialX = 2 * 32.0;
             var initialY = 1 * 32.0;
             var snake = new Snake(initialX, initialY, 2);
@@ -763,16 +760,16 @@
             var prop = getPropertyCallableRef('onKeyDown', 1, function ($receiver) {
               return $receiver.onKeyDown;
             });
-            var tmp$_2;
-            if ((tmp$_2 = this.local$$receiver != null ? get_keys(this.local$$receiver) : null) != null) {
-              prop.get(tmp$_2).add_25kf2w$(snake$lambda(key));
+            var tmp$;
+            if ((tmp$ = this.local$$receiver != null ? get_keys(this.local$$receiver) : null) != null) {
+              prop.get(tmp$).add_25kf2w$(snake$lambda(key));
             }
             var prop_0 = getPropertyCallableRef('onKeyUp', 1, function ($receiver) {
               return $receiver.onKeyUp;
             });
-            var tmp$_3;
-            if ((tmp$_3 = this.local$$receiver != null ? get_keys(this.local$$receiver) : null) != null) {
-              prop_0.get(tmp$_3).add_25kf2w$(snake$lambda_0(key));
+            var tmp$_0;
+            if ((tmp$_0 = this.local$$receiver != null ? get_keys(this.local$$receiver) : null) != null) {
+              prop_0.get(tmp$_0).add_25kf2w$(snake$lambda_0(key));
             }
             var $receiver_0 = addTo(new Container_init(), this.local$$receiver);
             var $receiver_0_0 = addTo(new Image(headTile, 0.0, 0.0), $receiver_0);
@@ -787,9 +784,9 @@
             var prop_1 = getPropertyCallableRef('onKeyDown', 1, function ($receiver) {
               return $receiver.onKeyDown;
             });
-            var tmp$_4;
-            if ((tmp$_4 = $receiver_0 != null ? get_keys($receiver_0) : null) != null) {
-              prop_1.get(tmp$_4).add_25kf2w$(snake$lambda$lambda(addBodyPart));
+            var tmp$_1;
+            if ((tmp$_1 = $receiver_0 != null ? get_keys($receiver_0) : null) != null) {
+              prop_1.get(tmp$_1).add_25kf2w$(snake$lambda$lambda(addBodyPart));
             }
             var frames = {v: 0.0};
             var speed = 4.0;
@@ -797,7 +794,7 @@
             var lockInput = {v: false};
             onCollision(head, void 0, void 0, void 0, snake$lambda$lambda_0(addBodyPart));
             addFixedUpdater($receiver_0, MILLISECONDS_PER_FRAME, false, void 0, snake$lambda$lambda_1(lockInput, key, newDirection, this.local$movementMode, speed, frames, snake, this.local$collisionChecker, bodyParts));
-            return;
+            return snake;
           default:this.state_0 = 1;
             throw new Error('State Machine Unreachable execution');
         }
@@ -982,15 +979,39 @@
     else
       return instance.doResume(null);
   }
-  function GameScene(level, movementMode) {
+  function camera$lambda($receiver) {
+    return Unit;
+  }
+  function GameScene(level, movementMode, scroll) {
     Scene.call(this);
     this.level = level;
     this.movementMode = movementMode;
+    this.scroll = scroll;
+  }
+  function GameScene$sceneInit$lambda$lambda(closure$cameraCenter, closure$player, closure$cameraSpeed, closure$tiledMap, closure$screenSize) {
+    return function ($receiver) {
+      var target = closure$cameraCenter - closure$player.head.xpos;
+      if ($receiver.x < target) {
+        $receiver.x += closure$cameraSpeed;
+        if ($receiver.x > target)
+          $receiver.x = target;
+      } else if ($receiver.x > target) {
+        $receiver.x -= closure$cameraSpeed;
+        if ($receiver.x < target)
+          $receiver.x = target;
+      }if ($receiver.x > 0)
+        $receiver.x = 0.0;
+      if ($receiver.x < -(closure$tiledMap.width - closure$screenSize))
+        $receiver.x = -(closure$tiledMap.width - closure$screenSize);
+      return Unit;
+    };
   }
   function Coroutine$sceneInit_st8p7j$($this, $receiver_0, continuation_0) {
     CoroutineImpl.call(this, continuation_0);
     this.exceptionState_0 = 1;
     this.$this = $this;
+    this.local$$receiver_0 = void 0;
+    this.local$tiledMap = void 0;
     this.local$collisionChecker = void 0;
     this.local$$receiver = $receiver_0;
   }
@@ -1006,28 +1027,36 @@
       try {
         switch (this.state_0) {
           case 0:
+            this.local$$receiver_0 = addTo(new Camera_init(), this.local$$receiver);
             this.state_0 = 2;
-            this.result_0 = tiledMap(this.local$$receiver, this.$this.level, this);
+            this.result_0 = tiledMap(this.local$$receiver_0, this.$this.level, this);
             if (this.result_0 === COROUTINE_SUSPENDED)
               return COROUTINE_SUSPENDED;
             continue;
           case 1:
             throw this.exception_0;
           case 2:
-            var tiledMap_0 = this.result_0;
-            this.local$collisionChecker = new CollisionChecker(tiledMap_0);
+            this.local$tiledMap = this.result_0;
+            this.local$collisionChecker = new CollisionChecker(this.local$tiledMap);
             this.state_0 = 3;
-            this.result_0 = apple(this.local$$receiver, this.$this.views, this);
+            this.result_0 = apple(this.local$$receiver_0, this.$this.views, this);
             if (this.result_0 === COROUTINE_SUSPENDED)
               return COROUTINE_SUSPENDED;
             continue;
           case 3:
             this.state_0 = 4;
-            this.result_0 = snake(this.local$$receiver, this.$this.views, this.local$collisionChecker, this.$this.movementMode, this);
+            this.result_0 = snake(this.local$$receiver_0, this.$this.views, this.local$collisionChecker, this.$this.movementMode, this);
             if (this.result_0 === COROUTINE_SUSPENDED)
               return COROUTINE_SUSPENDED;
             continue;
           case 4:
+            var player = this.result_0;
+            if (this.$this.scroll) {
+              var cameraSpeed = 4;
+              var cameraCenter = 400;
+              var screenSize = 800;
+              addFixedUpdater(this.local$$receiver_0, MILLISECONDS_PER_FRAME, void 0, void 0, GameScene$sceneInit$lambda$lambda(cameraCenter, player, cameraSpeed, this.local$tiledMap, screenSize));
+            }
             return;
           default:this.state_0 = 1;
             throw new Error('State Machine Unreachable execution');
@@ -1056,7 +1085,7 @@
     interfaces: [Scene]
   };
   function SnakeGameScene() {
-    GameScene.call(this, 1, MovementMode$SNAKE_getInstance());
+    GameScene.call(this, 1, MovementMode$SNAKE_getInstance(), false);
   }
   SnakeGameScene.$metadata$ = {
     kind: Kind_CLASS,
@@ -1064,7 +1093,7 @@
     interfaces: [GameScene]
   };
   function PacmanGameScene() {
-    GameScene.call(this, 2, MovementMode$PACMAN_getInstance());
+    GameScene.call(this, 2, MovementMode$PACMAN_getInstance(), false);
   }
   PacmanGameScene.$metadata$ = {
     kind: Kind_CLASS,
@@ -1072,7 +1101,7 @@
     interfaces: [GameScene]
   };
   function MarioGameScene() {
-    GameScene.call(this, 3, MovementMode$MARIO_getInstance());
+    GameScene.call(this, 3, MovementMode$MARIO_getInstance(), true);
   }
   MarioGameScene.$metadata$ = {
     kind: Kind_CLASS,
