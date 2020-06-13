@@ -88,6 +88,12 @@ class Snake(
 
         head.x = head.x + direction.deltaX() * width
         head.y = head.y + direction.deltaY() * width
+
+        body.forEach {
+            it.xpos = it.lastX
+            it.ypos = it.lastY
+        }
+
     }
 
     fun interpolate(delta:Double){
@@ -175,7 +181,7 @@ suspend fun Container.snake(views: Views, collisionChecker: CollisionChecker, mo
             when(movementMode){
                 MovementMode.SNAKE -> {
                     frames += speed // * deltaTime
-                    if(frames >= TILE_SIZE) {
+                    if(frames >= TILE_SIZE ) {
                         lockInput = false
                         frames = 0.0
                         snake.lastDirection = snake.direction
@@ -183,8 +189,8 @@ suspend fun Container.snake(views: Views, collisionChecker: CollisionChecker, mo
                         snake.move()
 
                         collisionChecker.checkCollision(snake.head.x, snake.head.y) {
-                            snake.head.x = 100.0
-                            snake.head.y = 100.0
+                            snake.head.x = 128.0
+                            snake.head.y = 128.0
                         }
                     } else {
                         snake.interpolate(frames / TILE_SIZE)
