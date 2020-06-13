@@ -20,7 +20,7 @@ class Apple(bitmap:BmpSlice) : Image(bitmap) {
 
 suspend fun Container.apple(views: Views) {
     val snakeAtlas = resourcesVfs["snake.atlas.json"].readAtlas(views)
-    val appleTile = snakeAtlas["apple.png"]
+    val appleTile = snakeAtlas["Apple_02.png"]
 
     addChild(Apple(appleTile))
 }

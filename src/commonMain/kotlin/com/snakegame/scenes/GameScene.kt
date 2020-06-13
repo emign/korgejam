@@ -2,9 +2,7 @@ package com.snakegame.scenes
 
 import com.snakegame.MILLISECONDS_PER_FRAME
 import com.snakegame.TILE_SIZE
-import com.snakegame.actors.MovementMode
-import com.snakegame.actors.apple
-import com.snakegame.actors.snake
+import com.snakegame.actors.*
 import com.snakegame.input.getButtonPressed
 import com.snakegame.map.CollisionChecker
 import com.snakegame.map.tiledMap
@@ -28,7 +26,7 @@ import com.soywiz.korio.async.launch
 import com.soywiz.korio.file.std.resourcesVfs
 
 
-open class GameScene(val level:Int, val movementMode: MovementMode, val scroll:Boolean) : Scene() {
+open class GameScene(val level:Int, val movementMode: MovementMode, val snakeSkin: SnakeSkin, val scroll:Boolean) : Scene() {
 
     fun Container.fade(){
         val fadeRect = solidRect(1000.0, 1000.0, RGBA.float(0, 0, 0, 0))
@@ -52,7 +50,7 @@ open class GameScene(val level:Int, val movementMode: MovementMode, val scroll:B
             val collisionChecker = CollisionChecker(tiledMap)
 
             apple(views)
-            val player = snake(views, collisionChecker, movementMode)
+            val player = snake(views, snakeSkin, collisionChecker, movementMode)
 
             if (scroll) {
                 val cameraSpeed = 4
@@ -78,13 +76,14 @@ open class GameScene(val level:Int, val movementMode: MovementMode, val scroll:B
     }
 }
 
-class SnakeGameScene() : GameScene(1, MovementMode.SNAKE, false){
+class SnakeGameScene() : GameScene(1, MovementMode.SNAKE, SnakeSkin(),false){
     override suspend fun Container.customInit() {
         val font = resourcesVfs["I-pixel-u.fnt"].readBitmapFont()
         text("00023", 32.0, font = font).position(25, 15)
     }
 }
-class PacmanGameScene() : GameScene(2, MovementMode.PACMAN, false)
-class MarioGameScene() : GameScene(3, MovementMode.MARIO, true)
+
+class PacmanGameScene() : GameScene(2, MovementMode.PACMAN, PacmanSnakeSkin(),false)
+class MarioGameScene() : GameScene(3, MovementMode.MARIO, SnakeSkin(), true)
 
 
