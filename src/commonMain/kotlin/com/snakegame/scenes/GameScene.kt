@@ -1,25 +1,14 @@
 package com.snakegame.scenes
 
 import com.snakegame.MILLISECONDS_PER_FRAME
-import com.snakegame.TILE_SIZE
 import com.snakegame.actors.*
-import com.snakegame.input.getButtonPressed
 import com.snakegame.map.CollisionChecker
 import com.snakegame.map.tiledMap
-import com.soywiz.klock.milliseconds
 import com.soywiz.klock.seconds
-import com.soywiz.klock.timesPerSecond
-import com.soywiz.kmem.clamp
-import com.soywiz.kmem.setBits
-import com.soywiz.kmem.unsetBits
-import com.soywiz.korge.atlas.readAtlas
-import com.soywiz.korge.input.onKeyDown
-import com.soywiz.korge.input.onKeyUp
 import com.soywiz.korge.scene.Scene
 import com.soywiz.korge.tween.get
 import com.soywiz.korge.tween.tween
 import com.soywiz.korge.view.*
-import com.soywiz.korim.bitmap.Bitmap
 import com.soywiz.korim.color.RGBA
 import com.soywiz.korim.font.readBitmapFont
 import com.soywiz.korio.async.launch
@@ -78,7 +67,7 @@ open class GameScene(val level:Int, val movementMode: MovementMode, val snakeSki
 
 class SnakeGameScene() : GameScene(1, MovementMode.SNAKE, SnakeSkin(),false){
     override suspend fun Container.customInit() {
-        val font = resourcesVfs["I-pixel-u.fnt"].readBitmapFont()
+        val font = resourcesVfs["texts/I-pixel-u.fnt"].readBitmapFont()
         text("00023", 32.0, font = font).position(25, 15)
     }
 }
