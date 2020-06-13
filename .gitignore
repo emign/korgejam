@@ -10,6 +10,7 @@
 /build/web/ir
 /build/web/kotlin
 /build/web/kotlinx
+/build/web/META-INF
 /build/web/linkdata
 /build/web/org
 *.iml
