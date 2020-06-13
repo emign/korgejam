@@ -14,6 +14,7 @@ import com.soywiz.korge.view.*
 import com.soywiz.korim.bitmap.Bitmap
 import com.soywiz.korim.bitmap.BitmapSlice
 import com.soywiz.korio.file.std.resourcesVfs
+import kotlin.math.max
 
 
 data class SnakeBodyPart (
@@ -74,13 +75,32 @@ class Snake(
     }
 
     fun move() {
+        head.direction = direction
+
         for (i in body.size - 1 downTo 1) {
             val current = body[i]
             val (x, y) = body[i - 1]
+
+            val previous = body[i - 1]
+            var direction = direction
+
+            if (previous.x == current.x && previous.y>current.y) {
+                current.direction = Direction.DOWN
+            } else if (previous.x == current.x && previous.y < current.y) {
+                current.direction = Direction.UP
+            } else if (previous.x < current.x && previous.y == current.y) {
+                current.direction = Direction.LEFT
+            } else if (previous.x > current.x && previous.y==current.y) {
+                current.direction = Direction.RIGHT
+            }
+
+
+
             current.lastX = current.x
             current.lastY = current.y
             current.x = x
             current.y = y
+            //current.direction = direction
         }
 
         head.lastX = head.x
@@ -262,8 +282,40 @@ suspend fun Container.snake(views: Views, collisionChecker: CollisionChecker, mo
 
 
             bodyParts.forEachIndexed { index, image ->
-                image.x = snake.body[index].xpos
-                image.y = snake.body[index].ypos
+                val bodyPart = snake.body[index]
+                image.x = bodyPart.xpos + TILE_SIZE/2
+                image.y = bodyPart.ypos + TILE_SIZE/2
+
+                /*image.scaleX = when(bodyPart.direction) {
+                    Direction.RIGHT ->  1.0
+                    Direction.LEFT -> 1.0
+                    Direction.UP -> 1.0
+                    Direction.DOWN -> 1.0
+                }*/
+                image.scaleY = when(bodyPart.direction) {
+                    Direction.RIGHT ->  1.0
+                    Direction.LEFT -> 1.0
+                    Direction.UP -> -1.0
+                    Direction.DOWN -> 1.0
+                }
+                image.rotationDegrees = when(bodyPart.direction) {
+                    Direction.RIGHT ->  270.0
+                    Direction.LEFT -> 90.0
+                    Direction.UP -> 0.0
+                    Direction.DOWN -> 0.0
+                }
+                image.anchor(0.5, 0.5)
+                /*image.anchor(when(bodyPart.direction) {
+                    Direction.RIGHT ->  0.5
+                    Direction.LEFT -> 0.5
+                    Direction.UP -> 0.5
+                    Direction.DOWN -> 0.5
+                }, when(bodyPart.direction) {
+                    Direction.RIGHT ->  0.5
+                    Direction.LEFT -> 0.5
+                    Direction.UP -> 0.5
+                    Direction.DOWN -> 0.5
+                })*/
             }
         }
     }
