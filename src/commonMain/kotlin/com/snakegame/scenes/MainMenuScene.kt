@@ -15,16 +15,23 @@ class MainMenuScene() : Scene() {
         text("SNAKE GAME!").position(340,200)
         textButton {
             text = "SNAKE"
-            position(340, 250)
+            position(340, 300)
             onClick {
                 sceneContainer.changeTo<SnakeGameScene>(1)
             }
         }
         textButton {
             text = "PACMAN"
-            position(340, 400)
+            position(340, 350)
             onClick {
                 sceneContainer.changeTo<PacmanGameScene>(1)
+            }
+        }
+        textButton {
+            text = "MARIO"
+            position(340, 400)
+            onClick {
+                sceneContainer.changeTo<MarioGameScene>(1)
             }
         }
     }

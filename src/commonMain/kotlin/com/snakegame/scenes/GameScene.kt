@@ -27,4 +27,6 @@ open class GameScene(val level:Int, val movementMode: MovementMode) : Scene() {
 
 class SnakeGameScene() : GameScene(1, MovementMode.SNAKE)
 class PacmanGameScene() : GameScene(2, MovementMode.PACMAN)
+class MarioGameScene() : GameScene(3, MovementMode.MARIO)
+
 

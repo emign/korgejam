@@ -100,7 +100,7 @@ class Snake(
     }
 }
 
-enum class MovementMode { SNAKE, PACMAN }
+enum class MovementMode { SNAKE, PACMAN, MARIO }
 
 suspend fun Container.snake(views: Views, collisionChecker: CollisionChecker, movementMode:MovementMode = MovementMode.SNAKE) {
     val snakeAtlas = resourcesVfs["snake.atlas.json"].readAtlas(views)
@@ -192,6 +192,42 @@ suspend fun Container.snake(views: Views, collisionChecker: CollisionChecker, mo
                 }
                 MovementMode.PACMAN -> {
                     frames += speed // * deltaTime
+
+                    if(collisionChecker.colides(
+                                    snake.head.x + newDirection.deltaX()* TILE_SIZE,
+                                    snake.head.y + newDirection.deltaY()* TILE_SIZE)) {
+                        lockInput = false
+                        newDirection = snake.direction
+                    }
+
+                    if (frames >= TILE_SIZE) {
+                        lockInput = false
+
+                        snake.lastDirection = snake.direction
+                        snake.direction = newDirection
+
+                        if(!collisionChecker.colides(
+                                        snake.head.x + newDirection.deltaX() * TILE_SIZE,
+                                        snake.head.y + newDirection.deltaY() * TILE_SIZE)) {
+                            snake.move()
+                            frames = 0.0
+                        }
+                    } else {
+                        snake.interpolate(frames / TILE_SIZE)
+                    }
+                }
+                MovementMode.MARIO -> {
+                    frames += speed // * deltaTime
+
+                    //CheckGround
+                    val onGround = snake.body.any{
+                        collisionChecker.colides(it.x, it.y + TILE_SIZE)
+                    }
+
+                    if(!onGround) {
+                        newDirection = Direction.DOWN
+                    }
+
 
                     if(collisionChecker.colides(
                                     snake.head.x + newDirection.deltaX()* TILE_SIZE,
