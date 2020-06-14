@@ -290,7 +290,7 @@ suspend fun Container.snake(views: Views, pos: Point, skin:SnakeSkin, collisionC
             if(ghostsAndPacmanCounter <= 0) {
                 warpEnabled = false
                 val arrow = image(snakeAtlas["arrow.png"])
-                        .position(22* TILE_SIZE,8* TILE_SIZE)
+                        .position(23 * TILE_SIZE - 8,8* TILE_SIZE)
                 var time = 0
 
                 arrow.addFixedUpdater(MILLISECONDS_PER_FRAME){
@@ -475,15 +475,15 @@ suspend fun Container.snake(views: Views, pos: Point, skin:SnakeSkin, collisionC
                         snake.interpolate(frames / TILE_SIZE)
                     }
 
-                    if(warpEnabled) {
-                        val tail = snake.body.last()
-                        if (snake.direction == Direction.LEFT && tail.x < -TILE_SIZE) {
-                            snake.warp(800, Direction.LEFT)
-                        }
-                        if (snake.direction == Direction.RIGHT && tail.x > 800) {
-                            snake.warp(0, Direction.RIGHT)
-                        }
+
+                    val tail = snake.body.last()
+                    if (snake.direction == Direction.LEFT && tail.x < -TILE_SIZE) {
+                        snake.warp(800, Direction.LEFT)
                     }
+                    if (warpEnabled && snake.direction == Direction.RIGHT && tail.x > 800) {
+                        snake.warp(-TILE_SIZE, Direction.RIGHT)
+                    }
+
 
                 }
                 MovementMode.MARIO -> {
