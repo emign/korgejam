@@ -78,7 +78,7 @@ open class GameScene(val stageConfig: StageConfig) : Scene() {
                 getReady.visible = false
                 currentGameState.paused = false
 
-                apple(views)
+                apple(views, collisionChecker)
             }
         }
         customInit()
