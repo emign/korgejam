@@ -76,9 +76,6 @@ class Snake(
     val head by lazy { body[0] }
     var lastDirection = direction
 
-    var lastPosX = startX
-    var lastPosY = startY
-
     lateinit var bocadilloSmall: Image
     lateinit var bocadilloBig: Image
 
@@ -154,14 +151,18 @@ class Snake(
         return false
     }
 
-    fun warp(x:Int, newDirection:Direction){
+    fun warp(x:Int, y:Int, newDirection:Direction){
         body.forEach {
             it.x = x.toDouble()
             it.xpos = x.toDouble()
             it.lastX = x.toDouble()
+            it.y = y.toDouble()
+            it.ypos = y.toDouble()
+            it.lastY = y.toDouble()
             it.direction = newDirection
         }
         direction = newDirection
+        lastDirection = newDirection
     }
 }
 
@@ -412,6 +413,15 @@ suspend fun Container.snake(views: Views, pos: Point, skin:SnakeSkin, collisionC
                 if (disable) newDirection = snake.direction
             }
 
+            fun disableWarpWalking() {
+                if(snake.head.x < 0 && newDirection != Direction.LEFT){
+                    newDirection = Direction.RIGHT
+                }
+                if(snake.head.x> 800 - TILE_SIZE && newDirection != Direction.RIGHT){
+                    newDirection = Direction.LEFT
+                }
+            }
+
             when (movementMode) {
                 MovementMode.SNAKE -> {
                     disableWalkingBackwards()
@@ -448,6 +458,8 @@ suspend fun Container.snake(views: Views, pos: Point, skin:SnakeSkin, collisionC
                 }
                 MovementMode.PACMAN -> {
                     disableWalkingBackwards()
+                    disableWarpWalking()
+
                     frames += speed // * deltaTime
 
                     if (collisionChecker.colides(
@@ -477,11 +489,11 @@ suspend fun Container.snake(views: Views, pos: Point, skin:SnakeSkin, collisionC
 
 
                     val tail = snake.body.last()
-                    if (snake.direction == Direction.LEFT && tail.x < -TILE_SIZE) {
-                        snake.warp(800, Direction.LEFT)
+                    if (snake.head.x < -TILE_SIZE && tail.x < -TILE_SIZE) {
+                        snake.warp(800, 10 * TILE_SIZE, Direction.LEFT)
                     }
-                    if (warpEnabled && snake.direction == Direction.RIGHT && tail.x > 800) {
-                        snake.warp(-TILE_SIZE, Direction.RIGHT)
+                    if (warpEnabled && snake.head.x>800 && tail.x > 800) {
+                        snake.warp(-TILE_SIZE, 10 * TILE_SIZE, Direction.RIGHT)
                     }
 
 
