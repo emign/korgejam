@@ -3,7 +3,6 @@ package com.snakegame.actors
 import com.snakegame.MILLISECONDS_PER_FRAME
 import com.snakegame.TILE_SIZE
 import com.snakegame.extensions.toBool
-import com.snakegame.gameplay.GameState
 import com.snakegame.gameplay.currentGameState
 import com.snakegame.input.*
 import com.snakegame.map.CollisionChecker
@@ -11,26 +10,19 @@ import com.snakegame.resources.Resources
 import com.soywiz.klock.seconds
 import com.soywiz.kmem.unsetBits
 import com.soywiz.korev.Key
-import com.soywiz.korge.atlas.readAtlas
 import com.soywiz.korge.input.onKeyDown
 import com.soywiz.korge.input.onKeyUp
-import com.soywiz.korge.time.timeout
 import com.soywiz.korge.time.wait
 import com.soywiz.korge.tween.hide
 import com.soywiz.korge.tween.show
 import com.soywiz.korge.view.*
-import com.soywiz.korim.bitmap.Bitmap
-import com.soywiz.korim.bitmap.BitmapSlice
 import com.soywiz.korim.color.Colors
 import com.soywiz.korim.font.BitmapFont
-import com.soywiz.korim.font.readBitmapFont
 import com.soywiz.korim.format.readNativeImage
 import com.soywiz.korio.async.launch
-import com.soywiz.korio.async.launchImmediately
 import com.soywiz.korio.file.std.resourcesVfs
 import com.soywiz.korma.geom.Point
 import kotlin.coroutines.coroutineContext
-import kotlin.math.max
 
 
 data class SnakeBodyPart (
@@ -184,10 +176,10 @@ suspend fun Container.snake(views: Views, pos: Point, skin:SnakeSkin, collisionC
                 image(tailTile).apply { smoothing = false }
         )
 
-        val bocadilloSmall = image(resourcesVfs["texts/bocadillo_02.png"].readNativeImage())
+        val bocadilloSmall = image(snakeAtlas["bocadillo_02.png"])
         bocadilloSmall.addChild(text("!?", 16.0, color = Colors.BLACK, font = font).centerXOn(bocadilloSmall))
         bocadilloSmall.hide(0.seconds)
-        val bocadilloBig = image(resourcesVfs["texts/bocadillo_01.png"].readNativeImage())
+        val bocadilloBig = image(snakeAtlas["bocadillo_01.png"])
         bocadilloBig.scale(1.5, 1.5)
         bocadilloBig.addChild(text("Grrrr...", 10.0, color = Colors.BLACK, font = font).position(5, 5))
         bocadilloBig.hide(0.seconds)
