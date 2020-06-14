@@ -2,6 +2,7 @@ package com.snakegame.resources
 
 import com.soywiz.korau.format.mp3.JavaMp3Decoder
 import com.soywiz.korau.sound.NativeSound
+import com.soywiz.korau.sound.NativeSoundChannel
 import com.soywiz.korau.sound.readMusic
 import com.soywiz.korau.sound.readSound
 import com.soywiz.korge.atlas.Atlas
@@ -19,6 +20,7 @@ class Resources(val views: Views) {
         lateinit var appleSound: NativeSound
         lateinit var bubbleTalk: NativeSound
         lateinit var explosion: NativeSound
+        lateinit var larrioMusicChannel: NativeSoundChannel
         lateinit var larrioMusic: NativeSound
         lateinit var levelWarp: NativeSound
         lateinit var pacmanDead: NativeSound
@@ -35,6 +37,8 @@ class Resources(val views: Views) {
         bubbleTalk = resourcesVfs["sounds/BubbleTalk.wav"].readSound()
         explosion = resourcesVfs["sounds/Explosion.wav"].readSound()
         larrioMusic = resourcesVfs["sounds/LarrioMusic.wav"].readMusic()
+        larrioMusicChannel = larrioMusic.play()
+        larrioMusicChannel.stop()
         levelWarp = resourcesVfs["sounds/LevelWarp.wav"].readSound()
         pacmanDead = resourcesVfs["sounds/PacmanDead.wav"].readSound()
     }

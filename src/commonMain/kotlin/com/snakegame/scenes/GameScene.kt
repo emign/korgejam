@@ -219,7 +219,8 @@ class PacmanGameScene() : GameScene(PacmanStageConfig){
 }
 class MarioGameScene() : GameScene(MarioStageConfig){
     override suspend fun Container.customInit() {
-        Resources.larrioMusic.playForever()
+        Resources.larrioMusicChannel.stop()
+        Resources.larrioMusicChannel = Resources.larrioMusic.play()
     }
 }
 
