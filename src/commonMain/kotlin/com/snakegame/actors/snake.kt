@@ -14,23 +14,11 @@ import com.soywiz.kmem.unsetBits
 import com.soywiz.korev.Key
 import com.soywiz.korge.input.onKeyDown
 import com.soywiz.korge.input.onKeyUp
-import com.soywiz.korge.time.delay
 import com.soywiz.korge.time.timeout
-import com.soywiz.korge.time.wait
-import com.soywiz.korge.tween.get
-import com.soywiz.korge.tween.hide
-import com.soywiz.korge.tween.show
-import com.soywiz.korge.tween.tween
 import com.soywiz.korge.view.*
 import com.soywiz.korim.color.Colors
 import com.soywiz.korim.font.BitmapFont
-import com.soywiz.korim.format.readNativeImage
-import com.soywiz.korio.async.launch
-import com.soywiz.korio.file.std.resourcesVfs
-import com.soywiz.korio.lang.Cancellable
 import com.soywiz.korma.geom.Point
-import kotlin.coroutines.CoroutineContext
-import kotlin.coroutines.coroutineContext
 
 
 data class SnakeBodyPart (
@@ -455,6 +443,66 @@ suspend fun Container.snake(views: Views, pos: Point, skin:SnakeSkin, collisionC
                 }
             }
 
+            fun paintCurves() {
+                val positions = snake.body.map {
+                    Point(it.x / TILE_SIZE, it.y / TILE_SIZE)
+                }
+                val curves = mutableListOf<Pair<CURVES,Point>>()
+
+
+
+                positions.forEachIndexed { index, it ->
+                    if(index>=positions.lastIndex-1) return@forEachIndexed
+                    if(index>0) {
+                        val next = positions[index+1]
+                        if (it.x == next.x) { //Vertical
+                            val next2 = positions[index+2]
+                            if(it.x < next2.x){ //Vertical left
+                                if(it.y<next2.y)
+                                    curves.add(Pair(CURVES.LU, next)) //LU
+                                else
+                                    curves.add(Pair(CURVES.LD, next)) //LD
+                            } else if(it.x > next2.x) { //Vertical right
+                                if(it.y<next2.y)
+                                    curves.add(Pair(CURVES.RU, next))//RU
+                                else
+                                    curves.add(Pair(CURVES.RD, next))//RD
+                            }
+                        } else if (it.y == next.y) { //Horizontal
+                            val next2 = positions[index+2]
+                            if(it.y < next2.y){ //Horizontal UP
+                                if(it.x<next2.x)
+                                    curves.add(Pair(CURVES.UL, next))//!
+                                else
+                                    curves.add(Pair(CURVES.UR, next))
+                            } else if(it.y > next2.y) { //Horizontal DOWN
+                                if(it.x<next2.x)
+                                    curves.add(Pair(CURVES.DL, next))
+                                else
+                                    curves.add(Pair(CURVES.DR, next))
+                            }
+                        }
+                    }
+                }
+                snakeCurvesContainer.removeChildren()
+                curves.forEach {
+                    val tile = when(it.first) {
+                        CURVES.DR, CURVES.LU -> turnTileDR_LU
+                        CURVES.RD, CURVES.UL -> turnTileRD_UL
+                        CURVES.RU, CURVES.DL -> turnTileRU_DL
+                        CURVES.UR, CURVES.LD -> turnTileUR_LD
+                        else -> headTile
+                    }
+
+                    snakeCurvesContainer.addChild(
+                            image(tile).apply {
+                                smoothing = false
+                                position(it.second * TILE_SIZE)
+                            }
+                    )
+                }
+            }
+
             when (movementMode) {
                 MovementMode.SNAKE -> {
                     disableWalkingBackwards()
@@ -501,6 +549,8 @@ suspend fun Container.snake(views: Views, pos: Point, skin:SnakeSkin, collisionC
                     } else {
                         snake.interpolate(frames / TILE_SIZE)
                     }
+
+                    paintCurves()
                 }
                 MovementMode.PACMAN -> {
                     disableWalkingBackwards()
@@ -529,67 +579,7 @@ suspend fun Container.snake(views: Views, pos: Point, skin:SnakeSkin, collisionC
                         }
 
                         if (snake.colides()) onDied()
-
-                        fun getCurvas() {
-                            val positions = snake.body.map {
-                                Point(it.x / TILE_SIZE, it.y / TILE_SIZE)
-                            }
-                            val curves = mutableListOf<Pair<CURVES,Point>>()
-
-
-
-                            positions.forEachIndexed { index, it ->
-                                if(index>=positions.lastIndex-1) return@forEachIndexed
-                                if(index>0) {
-                                    val next = positions[index+1]
-                                    if (it.x == next.x) { //Vertical
-                                        val next2 = positions[index+2]
-                                        if(it.x < next2.x){ //Vertical left
-                                            if(it.y<next2.y)
-                                                curves.add(Pair(CURVES.LU, next)) //LU
-                                            else
-                                                curves.add(Pair(CURVES.LD, next)) //LD
-                                        } else if(it.x > next2.x) { //Vertical right
-                                            if(it.y<next2.y)
-                                                curves.add(Pair(CURVES.RU, next))//RU
-                                            else
-                                                curves.add(Pair(CURVES.RD, next))//RD
-                                        }
-                                    } else if (it.y == next.y) { //Horizontal
-                                        val next2 = positions[index+2]
-                                        if(it.y < next2.y){ //Horizontal UP
-                                            if(it.x<next2.x)
-                                                curves.add(Pair(CURVES.UL, next))//!
-                                            else
-                                                curves.add(Pair(CURVES.UR, next))
-                                        } else if(it.y > next2.y) { //Horizontal DOWN
-                                            if(it.x<next2.x)
-                                                curves.add(Pair(CURVES.DL, next))
-                                            else
-                                                curves.add(Pair(CURVES.DR, next))
-                                        }
-                                    }
-                                }
-                            }
-                            snakeCurvesContainer.removeChildren()
-                            curves.forEach {
-                                val tile = when(it.first) {
-                                    CURVES.DR, CURVES.LU -> turnTileDR_LU
-                                    CURVES.RD, CURVES.UL -> turnTileRD_UL
-                                    CURVES.RU, CURVES.DL -> turnTileRU_DL
-                                    CURVES.UR, CURVES.LD -> turnTileUR_LD
-                                    else -> headTile
-                                }
-
-                                snakeCurvesContainer.addChild(
-                                    image(tile).apply {
-                                        smoothing = false
-                                        position(it.second * TILE_SIZE)
-                                    }
-                                )
-                            }
-                        }
-                        getCurvas()
+                        paintCurves()
 
                     } else {
                         snake.interpolate(frames / TILE_SIZE)
@@ -644,6 +634,7 @@ suspend fun Container.snake(views: Views, pos: Point, skin:SnakeSkin, collisionC
                     } else {
                         snake.interpolate(frames / TILE_SIZE)
                     }
+                    paintCurves()
                 }
             }
 
