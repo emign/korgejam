@@ -60,7 +60,7 @@ open class GameScene(val stageConfig: StageConfig) : Scene() {
             val collisionChecker = CollisionChecker(tiledMap, stageConfig.horizontalLimit)
 
             if(stageConfig == PacmanStageConfig){
-                ItemSpawner(tiledMap).getSpawnPositions().forEach {
+                ItemSpawner(tiledMap, stageConfig.itemLayer).getSpawnPositions().forEach {
                     dot(views, it * TILE_SIZE)
                 }
                 ghost(collisionChecker, 1)
@@ -69,6 +69,11 @@ open class GameScene(val stageConfig: StageConfig) : Scene() {
                 ghost(collisionChecker, 4)
                 pacoman(collisionChecker)
 
+            }
+            if(stageConfig == MarioStageConfig){
+                ItemSpawner(tiledMap, stageConfig.itemLayer).getSpawnPositions().forEach {
+                    coin(views, it * TILE_SIZE)
+                }
             }
 
             val player = snake(views, stageConfig.startingPoint, stageConfig.snakeSkin, collisionChecker, font, stageConfig.movementMode,
@@ -81,7 +86,14 @@ open class GameScene(val stageConfig: StageConfig) : Scene() {
                         sleep(1.seconds)
                         //currentGameState.paused = false
                         currentGameState.restarting = true
-                        sceneContainer.changeTo<RestartSnakeScene>()
+
+                        when(stageConfig) {
+                            SnakeStageConfig->sceneContainer.changeTo<RestartSnakeScene>()
+                            PacmanStageConfig->sceneContainer.changeTo<RestartPacmanScene>()
+                        }
+
+
+
                     }
                 },onItemEaten = {
                     onItemEaten()
@@ -191,7 +203,15 @@ class SnakeGameScene() : GameScene(SnakeStageConfig){
     }
 }
 
-class PacmanGameScene() : GameScene(PacmanStageConfig)
+class PacmanGameScene() : GameScene(PacmanStageConfig){
+    override suspend fun nextLevel() {
+        fadeOff = true
+        launch {
+            delay(1.seconds)
+            sceneContainer.changeTo<TransitionToMarioScene>(1)
+        }
+    }
+}
 class MarioGameScene() : GameScene(MarioStageConfig)
 
 

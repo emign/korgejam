@@ -7,6 +7,7 @@ import com.soywiz.korma.geom.Point
 
 data class StageConfig(
     val level:Int = 1,
+    val itemLayer:Int = 0,
     val startingPoint:Point = Point(12, 8),
     val movementMode: MovementMode = MovementMode.SNAKE,
     val snakeSkin: SnakeSkin = SnakeSkin(),
@@ -16,6 +17,7 @@ data class StageConfig(
 
 val SnakeStageConfig = StageConfig(
     level = 1,
+    itemLayer = 0,
     startingPoint = Point(8, 8),
     movementMode = MovementMode.SNAKE,
     snakeSkin = SnakeSkin(),
@@ -25,6 +27,7 @@ val SnakeStageConfig = StageConfig(
 
 val PacmanStageConfig = StageConfig(
     level = 2,
+    itemLayer = 0,
     startingPoint = Point(0, 10),
     movementMode = MovementMode.PACMAN,
     snakeSkin = PacmanSnakeSkin(),
@@ -34,6 +37,7 @@ val PacmanStageConfig = StageConfig(
 
 val MarioStageConfig = StageConfig(
     level = 3,
+    itemLayer = 1,
     startingPoint = Point(0, 10),
     movementMode = MovementMode.MARIO,
     snakeSkin = SnakeSkin(),

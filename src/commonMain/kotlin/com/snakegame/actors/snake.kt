@@ -273,6 +273,18 @@ suspend fun Container.snake(views: Views, pos: Point, skin:SnakeSkin, collisionC
         var newDirection = snake.direction
         var lockInput = false
 
+        val dotsToGrow = 5
+        var remainingToGrow = dotsToGrow
+        var ghostsAndPacmanCounter = 5
+        fun enemyPacmanEaten() {
+            ghostsAndPacmanCounter--
+            if(ghostsAndPacmanCounter <= 0){
+                //currentGameState.paused = true
+                nextLevel()
+            }
+        }
+
+
         head.onCollision {
             if (it is Apple) {
                 it.spawn()
@@ -284,6 +296,28 @@ suspend fun Container.snake(views: Views, pos: Point, skin:SnakeSkin, collisionC
             }
             if (it is Dot) {
                 it.die()
+                remainingToGrow--
+                if(remainingToGrow==0) {
+                    remainingToGrow = dotsToGrow
+                    addBodyPart()
+                }
+                onItemEaten()
+            }
+            if (it is Ghost) {
+                it.die()
+                addBodyPart()
+                onItemEaten()
+                enemyPacmanEaten()
+            }
+            if (it is Pacoman) {
+                it.die()
+                addBodyPart()
+                onItemEaten()
+                enemyPacmanEaten()
+            }
+            if (it is Coin) {
+                it.die()
+                addBodyPart()
                 onItemEaten()
             }
         }
@@ -377,6 +411,8 @@ suspend fun Container.snake(views: Views, pos: Point, skin:SnakeSkin, collisionC
                             snake.move()
                             frames = 0.0
                         }
+
+                        if (snake.colides()) onDied()
                     } else {
                         snake.interpolate(frames / TILE_SIZE)
                     }

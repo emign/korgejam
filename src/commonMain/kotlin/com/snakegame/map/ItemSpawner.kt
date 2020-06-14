@@ -4,9 +4,9 @@ import com.snakegame.TILE_SIZE
 import com.soywiz.korge.tiled.TiledMapView
 import com.soywiz.korma.geom.Point
 
-class ItemSpawner(tiledMapView: TiledMapView)
+class ItemSpawner(tiledMapView: TiledMapView, layer:Int)
 {
-    private val collisionLayer = tiledMapView.tiledMap.data.patternLayers.first()
+    private val collisionLayer = tiledMapView.tiledMap.data.patternLayers[layer]
 
     fun getSpawnPositions():List<Point>{
         val list = mutableListOf<Point>()

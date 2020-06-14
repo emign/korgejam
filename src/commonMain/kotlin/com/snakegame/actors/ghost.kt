@@ -18,6 +18,10 @@ class Ghost(bitmap:BmpSlice, val collisionChecker: CollisionChecker) : Image(bit
     fun spawn() {
         position(collisionChecker.getRandomSpawnPoint())
     }
+
+    fun die() {
+        removeFromParent()
+    }
 }
 
 suspend fun Container.ghost(collisionChecker: CollisionChecker, ghostType:Int) {
