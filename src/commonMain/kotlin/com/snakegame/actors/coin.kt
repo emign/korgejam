@@ -24,7 +24,7 @@ suspend fun Container.coin(views: Views, point:Point) {
     val snakeAtlas = Resources.snakeAtlas
     val appleTile = snakeAtlas["Apple_02.png"]
 
-    addChild(Dot(appleTile).apply {
+    addChild(Coin(appleTile).apply {
         position(point.x, point.y)
         smoothing = false
     })

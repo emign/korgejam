@@ -292,6 +292,11 @@ suspend fun Container.snake(views: Views, pos: Point, skin:SnakeSkin, collisionC
                 onItemEaten()
                 enemyPacmanEaten()
             }
+            if (it is Coin) {
+                it.die()
+                addBodyPart()
+                onItemEaten()
+            }
         }
 
         addFixedUpdater(MILLISECONDS_PER_FRAME, false) {
