@@ -275,7 +275,7 @@ suspend fun Container.snake(views: Views, pos: Point, skin:SnakeSkin, collisionC
 
         onKeyDown {
             if (it.key == Key.SPACE) {
-                eat()
+                addBodyPart()
             }
         }
 
