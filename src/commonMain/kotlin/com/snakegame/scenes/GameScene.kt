@@ -196,8 +196,10 @@ class SnakeGameScene() : GameScene(SnakeStageConfig){
 
     override suspend fun nextLevel() {
         fadeOff = true
+
         launch {
             delay(1.seconds)
+            currentGameState.paused = true
             sceneContainer.changeTo<TransitionToPacmanScene>(1)
         }
     }
