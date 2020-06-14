@@ -122,6 +122,8 @@
   var internal = Kotlin.kotlin.coroutines.js.internal;
   Apple.prototype = Object.create(Image.prototype);
   Apple.prototype.constructor = Apple;
+  Coin.prototype = Object.create(Image.prototype);
+  Coin.prototype.constructor = Coin;
   Dot.prototype = Object.create(Image.prototype);
   Dot.prototype.constructor = Dot;
   Ghost.prototype = Object.create(Image.prototype);
@@ -177,6 +179,26 @@
     var snakeAtlas = Resources$Companion_getInstance().snakeAtlas;
     var appleTile = snakeAtlas.get_61zpoe$('Apple_02.png');
     var $receiver_0 = new Apple(appleTile, collisionChecker);
+    $receiver_0.smoothing = false;
+    $receiver.addChild_l5rad2$($receiver_0);
+  }
+  function Coin(bitmap) {
+    Image.call(this, bitmap);
+    this.smoothing = false;
+  }
+  Coin.prototype.die = function () {
+    this.removeFromParent();
+  };
+  Coin.$metadata$ = {
+    kind: Kind_CLASS,
+    simpleName: 'Coin',
+    interfaces: [Image]
+  };
+  function coin($receiver, views, point, continuation) {
+    var snakeAtlas = Resources$Companion_getInstance().snakeAtlas;
+    var appleTile = snakeAtlas.get_61zpoe$('Apple_02.png');
+    var $receiver_0 = new Dot(appleTile);
+    position($receiver_0, point.x, point.y);
     $receiver_0.smoothing = false;
     $receiver.addChild_l5rad2$($receiver_0);
   }
@@ -1440,9 +1462,11 @@
     interfaces: []
   };
   var currentGameState;
-  function StageConfig(level, startingPoint, movementMode, snakeSkin, scroll, horizontalLimit) {
+  function StageConfig(level, itemLayer, startingPoint, movementMode, snakeSkin, scroll, horizontalLimit) {
     if (level === void 0)
       level = 1;
+    if (itemLayer === void 0)
+      itemLayer = 0;
     if (startingPoint === void 0) {
       startingPoint = new Point(12, 8);
     }if (movementMode === void 0)
@@ -1454,6 +1478,7 @@
     if (horizontalLimit === void 0)
       horizontalLimit = true;
     this.level = level;
+    this.itemLayer = itemLayer;
     this.startingPoint = startingPoint;
     this.movementMode = movementMode;
     this.snakeSkin = snakeSkin;
@@ -1469,29 +1494,33 @@
     return this.level;
   };
   StageConfig.prototype.component2 = function () {
-    return this.startingPoint;
+    return this.itemLayer;
   };
   StageConfig.prototype.component3 = function () {
-    return this.movementMode;
+    return this.startingPoint;
   };
   StageConfig.prototype.component4 = function () {
-    return this.snakeSkin;
+    return this.movementMode;
   };
   StageConfig.prototype.component5 = function () {
-    return this.scroll;
+    return this.snakeSkin;
   };
   StageConfig.prototype.component6 = function () {
+    return this.scroll;
+  };
+  StageConfig.prototype.component7 = function () {
     return this.horizontalLimit;
   };
-  StageConfig.prototype.copy_29yp27$ = function (level, startingPoint, movementMode, snakeSkin, scroll, horizontalLimit) {
-    return new StageConfig(level === void 0 ? this.level : level, startingPoint === void 0 ? this.startingPoint : startingPoint, movementMode === void 0 ? this.movementMode : movementMode, snakeSkin === void 0 ? this.snakeSkin : snakeSkin, scroll === void 0 ? this.scroll : scroll, horizontalLimit === void 0 ? this.horizontalLimit : horizontalLimit);
+  StageConfig.prototype.copy_itgynf$ = function (level, itemLayer, startingPoint, movementMode, snakeSkin, scroll, horizontalLimit) {
+    return new StageConfig(level === void 0 ? this.level : level, itemLayer === void 0 ? this.itemLayer : itemLayer, startingPoint === void 0 ? this.startingPoint : startingPoint, movementMode === void 0 ? this.movementMode : movementMode, snakeSkin === void 0 ? this.snakeSkin : snakeSkin, scroll === void 0 ? this.scroll : scroll, horizontalLimit === void 0 ? this.horizontalLimit : horizontalLimit);
   };
   StageConfig.prototype.toString = function () {
-    return 'StageConfig(level=' + Kotlin.toString(this.level) + (', startingPoint=' + Kotlin.toString(this.startingPoint)) + (', movementMode=' + Kotlin.toString(this.movementMode)) + (', snakeSkin=' + Kotlin.toString(this.snakeSkin)) + (', scroll=' + Kotlin.toString(this.scroll)) + (', horizontalLimit=' + Kotlin.toString(this.horizontalLimit)) + ')';
+    return 'StageConfig(level=' + Kotlin.toString(this.level) + (', itemLayer=' + Kotlin.toString(this.itemLayer)) + (', startingPoint=' + Kotlin.toString(this.startingPoint)) + (', movementMode=' + Kotlin.toString(this.movementMode)) + (', snakeSkin=' + Kotlin.toString(this.snakeSkin)) + (', scroll=' + Kotlin.toString(this.scroll)) + (', horizontalLimit=' + Kotlin.toString(this.horizontalLimit)) + ')';
   };
   StageConfig.prototype.hashCode = function () {
     var result = 0;
     result = result * 31 + Kotlin.hashCode(this.level) | 0;
+    result = result * 31 + Kotlin.hashCode(this.itemLayer) | 0;
     result = result * 31 + Kotlin.hashCode(this.startingPoint) | 0;
     result = result * 31 + Kotlin.hashCode(this.movementMode) | 0;
     result = result * 31 + Kotlin.hashCode(this.snakeSkin) | 0;
@@ -1500,7 +1529,7 @@
     return result;
   };
   StageConfig.prototype.equals = function (other) {
-    return this === other || (other !== null && (typeof other === 'object' && (Object.getPrototypeOf(this) === Object.getPrototypeOf(other) && (Kotlin.equals(this.level, other.level) && Kotlin.equals(this.startingPoint, other.startingPoint) && Kotlin.equals(this.movementMode, other.movementMode) && Kotlin.equals(this.snakeSkin, other.snakeSkin) && Kotlin.equals(this.scroll, other.scroll) && Kotlin.equals(this.horizontalLimit, other.horizontalLimit)))));
+    return this === other || (other !== null && (typeof other === 'object' && (Object.getPrototypeOf(this) === Object.getPrototypeOf(other) && (Kotlin.equals(this.level, other.level) && Kotlin.equals(this.itemLayer, other.itemLayer) && Kotlin.equals(this.startingPoint, other.startingPoint) && Kotlin.equals(this.movementMode, other.movementMode) && Kotlin.equals(this.snakeSkin, other.snakeSkin) && Kotlin.equals(this.scroll, other.scroll) && Kotlin.equals(this.horizontalLimit, other.horizontalLimit)))));
   };
   var SnakeStageConfig;
   var PacmanStageConfig;
@@ -1644,7 +1673,7 @@
     else
       return instance.doResume(null);
   }
-  function ItemSpawner(tiledMapView) {
+  function ItemSpawner(tiledMapView, layer) {
     var $receiver = tiledMapView.tiledMap.data.allLayers;
     var destination = ArrayList_init();
     var tmp$;
@@ -1654,7 +1683,7 @@
       if (Kotlin.isType(element, TiledMap$Layer$Patterns))
         destination.add_11rb$(element);
     }
-    this.collisionLayer_0 = first(destination);
+    this.collisionLayer_0 = destination.get_za3lpa$(layer);
   }
   ItemSpawner.prototype.getSpawnPositions = function () {
     var list = ArrayList_init();
@@ -2286,6 +2315,7 @@
     this.local$tiledMap = void 0;
     this.local$collisionChecker = void 0;
     this.local$tmp$ = void 0;
+    this.local$tmp$_0 = void 0;
     this.local$$receiver = $receiver_0;
   }
   Coroutine$sceneInit_st8p7j$.$metadata$ = {
@@ -2311,7 +2341,7 @@
             this.local$font = Resources$Companion_getInstance().font;
             addUpdater(this.local$$receiver, GameScene$sceneInit$lambda(this.$this));
             this.local$$receiver_0 = addTo(new Camera_init(), this.local$$receiver);
-            var tmp$;
+            var tmp$, tmp$_0;
             this.state_0 = 3;
             this.result_0 = tiledMap(this.local$$receiver_0, this.$this.stageConfig.level, this);
             if (this.result_0 === COROUTINE_SUSPENDED)
@@ -2321,7 +2351,7 @@
             this.local$tiledMap = this.result_0;
             this.local$collisionChecker = new CollisionChecker(this.local$tiledMap, this.$this.stageConfig.horizontalLimit);
             if ((tmp$ = this.$this.stageConfig) != null ? tmp$.equals(PacmanStageConfig) : null) {
-              this.local$tmp$ = (new ItemSpawner(this.local$tiledMap)).getSpawnPositions().iterator();
+              this.local$tmp$ = (new ItemSpawner(this.local$tiledMap, this.$this.stageConfig.itemLayer)).getSpawnPositions().iterator();
               this.state_0 = 4;
               continue;
             } else {
@@ -2377,12 +2407,39 @@
             this.state_0 = 12;
             continue;
           case 12:
+            if ((tmp$_0 = this.$this.stageConfig) != null ? tmp$_0.equals(MarioStageConfig) : null) {
+              this.local$tmp$_0 = (new ItemSpawner(this.local$tiledMap, this.$this.stageConfig.itemLayer)).getSpawnPositions().iterator();
+              this.state_0 = 13;
+              continue;
+            } else {
+              this.state_0 = 16;
+              continue;
+            }
+
+          case 13:
+            if (!this.local$tmp$_0.hasNext()) {
+              this.state_0 = 15;
+              continue;
+            }
+            var element_0 = this.local$tmp$_0.next();
+            this.state_0 = 14;
+            this.result_0 = coin(this.local$$receiver_0, this.$this.views, element_0.times_za3lpa$(TILE_SIZE), this);
+            if (this.result_0 === COROUTINE_SUSPENDED)
+              return COROUTINE_SUSPENDED;
+            continue;
+          case 14:
             this.state_0 = 13;
+            continue;
+          case 15:
+            this.state_0 = 16;
+            continue;
+          case 16:
+            this.state_0 = 17;
             this.result_0 = snake(this.local$$receiver_0, this.$this.views, this.$this.stageConfig.startingPoint, this.$this.stageConfig.snakeSkin, this.local$collisionChecker, this.local$font, this.$this.stageConfig.movementMode, GameScene$sceneInit$lambda$lambda(this.local$font, this.local$$receiver_0, this.$this), GameScene$sceneInit$lambda$lambda_0(this.$this), GameScene$sceneInit$lambda$lambda_1(this.$this), this);
             if (this.result_0 === COROUTINE_SUSPENDED)
               return COROUTINE_SUSPENDED;
             continue;
-          case 13:
+          case 17:
             var player = this.result_0;
             var fallen = {v: false};
             addUpdater(this.local$$receiver_0, GameScene$sceneInit$lambda$lambda_2(this.$this, fallen, player));
@@ -2403,27 +2460,27 @@
             $receiver.visible = false;
             var getReady = $receiver;
             launch_0(this.$this, GameScene$sceneInit$lambda$lambda_4(getReady, this.$this, this.local$collisionChecker, this.local$$receiver_0));
-            this.state_0 = 14;
+            this.state_0 = 18;
             this.result_0 = this.$this.customInit_st8p7j$(this.local$$receiver, this);
             if (this.result_0 === COROUTINE_SUSPENDED)
               return COROUTINE_SUSPENDED;
             continue;
-          case 14:
+          case 18:
             if (!currentGameState.restarting) {
-              this.state_0 = 15;
+              this.state_0 = 19;
               this.result_0 = this.$this.unFade_st8p7j$(this.local$$receiver, this);
               if (this.result_0 === COROUTINE_SUSPENDED)
                 return COROUTINE_SUSPENDED;
               continue;
             } else {
-              this.state_0 = 16;
+              this.state_0 = 20;
               continue;
             }
 
-          case 15:
-            this.state_0 = 16;
+          case 19:
+            this.state_0 = 20;
             continue;
-          case 16:
+          case 20:
             return;
           default:this.state_0 = 1;
             throw new Error('State Machine Unreachable execution');
@@ -4146,6 +4203,8 @@
   var package$actors = package$snakegame.actors || (package$snakegame.actors = {});
   package$actors.Apple = Apple;
   package$actors.apple_27fpe4$ = apple;
+  package$actors.Coin = Coin;
+  package$actors.coin_odin9u$ = coin;
   package$actors.Dot = Dot;
   package$actors.dot_odin9u$ = dot;
   package$actors.Ghost = Ghost;
@@ -4311,9 +4370,9 @@
   MILLISECONDS_PER_FRAME = TimeSpan.Companion.fromMilliseconds_14dthe$($receiver_1);
   TILE_SIZE = 32;
   currentGameState = new GameState();
-  SnakeStageConfig = new StageConfig(1, new Point(8, 8), MovementMode$SNAKE_getInstance(), new SnakeSkin(), false, true);
-  PacmanStageConfig = new StageConfig(2, new Point(0, 10), MovementMode$PACMAN_getInstance(), new PacmanSnakeSkin(), false, false);
-  MarioStageConfig = new StageConfig(3, new Point(0, 10), MovementMode$MARIO_getInstance(), new SnakeSkin(), true, true);
+  SnakeStageConfig = new StageConfig(1, 0, new Point(8, 8), MovementMode$SNAKE_getInstance(), new SnakeSkin(), false, true);
+  PacmanStageConfig = new StageConfig(2, 0, new Point(0, 10), MovementMode$PACMAN_getInstance(), new PacmanSnakeSkin(), false, false);
+  MarioStageConfig = new StageConfig(3, 1, new Point(0, 10), MovementMode$MARIO_getInstance(), new SnakeSkin(), true, true);
   BUTTON_UP = 1;
   BUTTON_DOWN = 2;
   BUTTON_LEFT = 4;
