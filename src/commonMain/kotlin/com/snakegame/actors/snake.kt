@@ -249,10 +249,6 @@ suspend fun Container.snake(views: Views, pos: Point, skin:SnakeSkin, collisionC
             bodyParts.add(image(tailTile).apply { smoothing = false })
         }
 
-        fun setHead(){
-            bodyParts.first().bitmap = eatingHeadTile
-        }
-
         var frames  =  0.0
         val speed  = 4.0
         val fatBodies = mutableListOf<Pair<Double, Image>>()
@@ -288,6 +284,10 @@ suspend fun Container.snake(views: Views, pos: Point, skin:SnakeSkin, collisionC
         head.onCollision {
             if (it is Apple) {
                 it.spawn()
+                bodyParts.first().bitmap = eatingHeadTile
+                timeout(MILLISECONDS_PER_FRAME * speed){
+                    bodyParts.first().bitmap = headTile
+                }
                 timeout(MILLISECONDS_PER_FRAME * speed) {
                     eat()
                 }
@@ -296,6 +296,10 @@ suspend fun Container.snake(views: Views, pos: Point, skin:SnakeSkin, collisionC
             }
             if (it is Dot) {
                 it.die()
+                bodyParts.first().bitmap = eatingHeadTile
+                timeout(MILLISECONDS_PER_FRAME * speed){
+                    bodyParts.first().bitmap = headTile
+                }
                 remainingToGrow--
                 if(remainingToGrow==0) {
                     remainingToGrow = dotsToGrow
@@ -305,18 +309,30 @@ suspend fun Container.snake(views: Views, pos: Point, skin:SnakeSkin, collisionC
             }
             if (it is Ghost) {
                 it.die()
+                bodyParts.first().bitmap = eatingHeadTile
+                timeout(MILLISECONDS_PER_FRAME * speed){
+                    bodyParts.first().bitmap = headTile
+                }
                 addBodyPart()
                 onItemEaten()
                 enemyPacmanEaten()
             }
             if (it is Pacoman) {
                 it.die()
+                bodyParts.first().bitmap = eatingHeadTile
+                timeout(MILLISECONDS_PER_FRAME * speed){
+                    bodyParts.first().bitmap = headTile
+                }
                 addBodyPart()
                 onItemEaten()
                 enemyPacmanEaten()
             }
             if (it is Coin) {
                 it.die()
+                bodyParts.first().bitmap = eatingHeadTile
+                timeout(MILLISECONDS_PER_FRAME * speed){
+                    bodyParts.first().bitmap = headTile
+                }
                 addBodyPart()
                 onItemEaten()
             }
