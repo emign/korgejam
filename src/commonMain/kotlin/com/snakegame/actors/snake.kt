@@ -198,8 +198,19 @@ suspend fun Container.snake(views: Views, skin:SnakeSkin, collisionChecker: Coll
                 if((key and (BUTTON_RIGHT or BUTTON_LEFT or BUTTON_UP or BUTTON_DOWN)).toBool()) lockInput = true
             }
 
+            fun disableWalkingBackwards(){
+                val disable = when(newDirection) {
+                    Direction.LEFT -> snake.direction==Direction.RIGHT
+                    Direction.RIGHT -> snake.direction==Direction.LEFT
+                    Direction.UP -> snake.direction==Direction.DOWN
+                    Direction.DOWN -> snake.direction==Direction.UP
+                }
+                if (disable) newDirection = snake.direction
+            }
+
             when(movementMode){
                 MovementMode.SNAKE -> {
+                    disableWalkingBackwards()
                     frames += speed // * deltaTime
                     if(frames >= TILE_SIZE ) {
                         lockInput = false
@@ -217,6 +228,7 @@ suspend fun Container.snake(views: Views, skin:SnakeSkin, collisionChecker: Coll
                     }
                 }
                 MovementMode.PACMAN -> {
+                    disableWalkingBackwards()
                     frames += speed // * deltaTime
 
                     if(collisionChecker.colides(
