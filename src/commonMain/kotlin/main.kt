@@ -1,3 +1,4 @@
+import com.snakegame.gameplay.GameState
 import com.snakegame.scenes.*
 import com.soywiz.korge.Korge
 import com.soywiz.korge.scene.Module
@@ -18,7 +19,7 @@ object SnakeGameModule : Module() {
 	override val mainScene: KClass<out Scene> = MainMenuScene::class//LoadingScene::class
 
 	override suspend fun init(injector: AsyncInjector): Unit = injector.run {
-		//mapInstance(Resources())
+		mapInstance(GameState())
 		mapPrototype { LoadingScene(/*get()*/) }
 		mapPrototype { MainMenuScene(/*get()*/) }
 		mapPrototype { SnakeGameScene(/*get()*/) }

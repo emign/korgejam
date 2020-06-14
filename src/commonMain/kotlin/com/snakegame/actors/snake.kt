@@ -3,6 +3,7 @@ package com.snakegame.actors
 import com.snakegame.MILLISECONDS_PER_FRAME
 import com.snakegame.TILE_SIZE
 import com.snakegame.extensions.toBool
+import com.snakegame.gameplay.currentGameState
 import com.snakegame.input.*
 import com.snakegame.map.CollisionChecker
 import com.soywiz.kmem.unsetBits
@@ -14,6 +15,7 @@ import com.soywiz.korge.view.*
 import com.soywiz.korim.bitmap.Bitmap
 import com.soywiz.korim.bitmap.BitmapSlice
 import com.soywiz.korio.file.std.resourcesVfs
+import com.soywiz.korma.geom.Point
 import kotlin.math.max
 
 
@@ -128,14 +130,14 @@ class Snake(
 
 enum class MovementMode { SNAKE, PACMAN, MARIO }
 
-suspend fun Container.snake(views: Views, skin:SnakeSkin, collisionChecker: CollisionChecker, movementMode:MovementMode = MovementMode.SNAKE):Snake {
+suspend fun Container.snake(views: Views, pos: Point, skin:SnakeSkin, collisionChecker: CollisionChecker, movementMode:MovementMode = MovementMode.SNAKE):Snake {
     val snakeAtlas = resourcesVfs["snake.atlas.json"].readAtlas(views)
     val headTile = snakeAtlas[skin.headTile]
     val bodyTile = snakeAtlas[skin.bodyTile]
     val tailTile = snakeAtlas[skin.tailTile]
 
-    val initialX = 2 * 32.0
-    val initialY = 3 * 32.0
+    val initialX = pos.x * 32.0
+    val initialY = pos.y * 32.0
     val snake = Snake(initialX, initialY, 2)
 
     var key = 0
@@ -184,6 +186,7 @@ suspend fun Container.snake(views: Views, skin:SnakeSkin, collisionChecker: Coll
         }
 
         addFixedUpdater(MILLISECONDS_PER_FRAME, false) {
+            if(currentGameState.paused) return@addFixedUpdater
         //addUpdater { it ->
         //    val deltaTime:Double = if (it.milliseconds == 0.0) 0.0 else (it.milliseconds / 16.666666)
 
