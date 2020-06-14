@@ -160,7 +160,9 @@ suspend fun Container.snake(views: Views, pos: Point, skin:SnakeSkin, collisionC
     val snakeAtlas = Resources.snakeAtlas
     val headTile = snakeAtlas[skin.headTile]
     val bodyTile = snakeAtlas[skin.bodyTile]
+    val bodyFatTile = snakeAtlas[skin.bodyFatTile]
     val tailTile = snakeAtlas[skin.tailTile]
+    val eatingHeadTile = snakeAtlas[skin.eatingHeadTile]
 
     val initialX = pos.x * 32.0
     val initialY = pos.y * 32.0
@@ -189,32 +191,32 @@ suspend fun Container.snake(views: Views, pos: Point, skin:SnakeSkin, collisionC
         bocadilloBig.addChild(text("Grrrr...", 10.0, color = Colors.BLACK, font = font).position(5, 5))
         //bocadilloBig.hide(0.seconds)
 
-        fun updateBodyParts(body: MutableList<SnakeBodyPart>){
-            bodyParts.forEachIndexed { index, image ->
-                val bodyPart = body[index]
-                image.x = bodyPart.xpos + TILE_SIZE / 2
-                image.y = bodyPart.ypos + TILE_SIZE / 2
+        fun Image.updatePart(bodyPart: SnakeBodyPart): Image{
+            x = bodyPart.xpos + TILE_SIZE / 2
+            y = bodyPart.ypos + TILE_SIZE / 2
 
-                /*image.scaleX = when(bodyPart.direction) {
-                Direction.RIGHT ->  1.0
+            /*image.scaleX = when(bodyPart.direction) {
+            Direction.RIGHT ->  1.0
+            Direction.LEFT -> 1.0
+            Direction.UP -> 1.0
+            Direction.DOWN -> 1.0
+        }*/
+            scaleY = when (bodyPart.direction) {
+                Direction.RIGHT -> 1.0
                 Direction.LEFT -> 1.0
-                Direction.UP -> 1.0
+                Direction.UP -> -1.0
                 Direction.DOWN -> 1.0
-            }*/
-                image.scaleY = when (bodyPart.direction) {
-                    Direction.RIGHT -> 1.0
-                    Direction.LEFT -> 1.0
-                    Direction.UP -> -1.0
-                    Direction.DOWN -> 1.0
-                }
-                image.rotationDegrees = when (bodyPart.direction) {
-                    Direction.RIGHT -> 270.0
-                    Direction.LEFT -> 90.0
-                    Direction.UP -> 0.0
-                    Direction.DOWN -> 0.0
-                }
-                image.anchor(0.5, 0.5)
-                /*image.anchor(when(bodyPart.direction) {
+            }
+            rotationDegrees = when (bodyPart.direction) {
+                Direction.RIGHT -> 270.0
+                Direction.LEFT -> 90.0
+                Direction.UP -> 0.0
+                Direction.DOWN -> 0.0
+            }
+            anchor(0.5, 0.5)
+
+            return this
+            /*image.anchor(when(bodyPart.direction) {
                 Direction.RIGHT ->  0.5
                 Direction.LEFT -> 0.5
                 Direction.UP -> 0.5
@@ -225,6 +227,12 @@ suspend fun Container.snake(views: Views, pos: Point, skin:SnakeSkin, collisionC
                 Direction.UP -> 0.5
                 Direction.DOWN -> 0.5
             })*/
+        }
+
+        fun updateBodyParts(body: MutableList<SnakeBodyPart>){
+            bodyParts.forEachIndexed { index, image ->
+                val bodyPart = body[index]
+                image.updatePart(bodyPart)
             }
         }
         snake.updateBodyParts = ::updateBodyParts
@@ -241,18 +249,29 @@ suspend fun Container.snake(views: Views, pos: Point, skin:SnakeSkin, collisionC
             bodyParts.add(image(tailTile).apply { smoothing = false })
         }
 
-        onKeyDown {
-            if (it.key == Key.SPACE) {
-                addBodyPart()
-            }
+        fun setHead(){
+            bodyParts.first().bitmap = eatingHeadTile
         }
 
         var frames  =  0.0
         val speed  = 4.0
+        val fatBodies = mutableListOf<Pair<Double, Image>>()
+
+        fun eat(){
+            val part = snake.body.get(1)
+            fatBodies.add(Pair(8.0 * (bodyParts.size - 1), image(bodyFatTile).apply {
+                smoothing = false
+            }.updatePart(part).position(bodyParts.first().pos)))
+        }
+
+        onKeyDown {
+            if (it.key == Key.SPACE) {
+                eat()
+            }
+        }
 
         var newDirection = snake.direction
         var lockInput = false
-
 
         val dotsToGrow = 5
         var remainingToGrow = dotsToGrow
@@ -265,9 +284,13 @@ suspend fun Container.snake(views: Views, pos: Point, skin:SnakeSkin, collisionC
             }
         }
 
+
         head.onCollision {
             if (it is Apple) {
                 it.spawn()
+                timeout(MILLISECONDS_PER_FRAME * speed) {
+                    eat()
+                }
                 addBodyPart()
                 onItemEaten()
             }
@@ -306,6 +329,12 @@ suspend fun Container.snake(views: Views, pos: Point, skin:SnakeSkin, collisionC
             }
             //addUpdater { it ->
             //    val deltaTime:Double = if (it.milliseconds == 0.0) 0.0 else (it.milliseconds / 16.666666)
+
+            fatBodies.toList().forEachIndexed {index, it->
+                if (it.first <= 0.0)
+                    it.second.alpha = 0.0
+                else fatBodies[index] = Pair(it.first - 1, it.second)
+            }
 
             if (lockInput == false) {
                 newDirection = when (key) {
