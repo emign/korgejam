@@ -1,10 +1,13 @@
 package com.snakegame.scenes
 
 import com.snakegame.MILLISECONDS_PER_FRAME
+import com.snakegame.TILE_SIZE
 import com.snakegame.actors.*
 import com.snakegame.gameplay.*
 import com.snakegame.map.CollisionChecker
+import com.snakegame.map.ItemSpawner
 import com.snakegame.map.tiledMap
+import com.snakegame.resources.Resources
 import com.soywiz.klock.milliseconds
 import com.soywiz.klock.seconds
 import com.soywiz.korge.scene.Scene
@@ -41,7 +44,9 @@ open class GameScene(val stageConfig: StageConfig) : Scene() {
     open suspend fun Container.customInit(){}
 
     override suspend fun Container.sceneInit() {
-        val font = resourcesVfs["texts/I-pixel-u.fnt"].readBitmapFont()
+        Resources(views).loadAll()
+
+        val font = Resources.font
 
         addUpdater {
             if(fadeOff){
@@ -52,6 +57,13 @@ open class GameScene(val stageConfig: StageConfig) : Scene() {
         camera{
             val tiledMap = tiledMap(stageConfig.level)
             val collisionChecker = CollisionChecker(tiledMap)
+
+            if(stageConfig== PacmanStageConfig){
+                ItemSpawner(tiledMap).getSpawnPositions().forEach {
+                    dot(views, it * TILE_SIZE)
+                }
+            }
+
 
             val player = snake(views, stageConfig.startingPoint, stageConfig.snakeSkin, collisionChecker, font, stageConfig.movementMode,
                 onDied = {
@@ -121,7 +133,7 @@ class SnakeGameScene() : GameScene(SnakeStageConfig){
     var apples = 0
 
     override suspend fun Container.customInit() {
-        val font = resourcesVfs["texts/I-pixel-u.fnt"].readBitmapFont()
+        val font = Resources.font
         scoreText = text("000000", 32.0, font = font).position(25, 15)
         updateScore()
     }

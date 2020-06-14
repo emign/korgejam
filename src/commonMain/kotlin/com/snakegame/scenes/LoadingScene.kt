@@ -1,5 +1,6 @@
 package com.snakegame.scenes
 
+import com.snakegame.resources.Resources
 import com.soywiz.klock.seconds
 import com.soywiz.korge.scene.Scene
 import com.soywiz.korge.tween.get
@@ -17,6 +18,8 @@ class LoadingScene() : Scene() {
     val maxDegrees = (+16).degrees
 
     override suspend fun Container.sceneInit() {
+        Resources(views).loadAll()
+
         val image = image(resourcesVfs["korge.png"].readBitmap()) {
             rotation = maxDegrees
             anchor(.5, .5)

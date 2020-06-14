@@ -7,6 +7,7 @@ import com.snakegame.gameplay.GameState
 import com.snakegame.gameplay.currentGameState
 import com.snakegame.input.*
 import com.snakegame.map.CollisionChecker
+import com.snakegame.resources.Resources
 import com.soywiz.klock.seconds
 import com.soywiz.kmem.unsetBits
 import com.soywiz.korev.Key
@@ -160,7 +161,7 @@ suspend fun Image.talk(text: String){
 }
 
 suspend fun Container.snake(views: Views, pos: Point, skin:SnakeSkin, collisionChecker: CollisionChecker, font: BitmapFont, movementMode:MovementMode = MovementMode.SNAKE, onDied:()->Unit, onItemEaten: ()->Unit):Snake {
-    val snakeAtlas = resourcesVfs["snake.atlas.json"].readAtlas(views)
+    val snakeAtlas = Resources.snakeAtlas
     val headTile = snakeAtlas[skin.headTile]
     val bodyTile = snakeAtlas[skin.bodyTile]
     val tailTile = snakeAtlas[skin.tailTile]
@@ -221,6 +222,10 @@ suspend fun Container.snake(views: Views, pos: Point, skin:SnakeSkin, collisionC
             if (it is Apple) {
                 it.spawn()
                 addBodyPart()
+                onItemEaten()
+            }
+            if (it is Dot) {
+                it.die()
                 onItemEaten()
             }
         }

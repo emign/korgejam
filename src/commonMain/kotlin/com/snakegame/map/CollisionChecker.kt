@@ -6,7 +6,7 @@ import com.soywiz.korma.geom.Point
 
 class CollisionChecker(tiledMapView:TiledMapView)
 {
-    private val collisionLayer = tiledMapView.tiledMap.data.patternLayers.get(0)
+    private val collisionLayer = tiledMapView.tiledMap.data.patternLayers.last()
 
     fun checkCollision(x:Double, y:Double, block:()->Unit) {
         if(colides(x,y)){

@@ -2,6 +2,7 @@ package com.snakegame.scenes
 
 import com.snakegame.gameplay.currentGameState
 import com.snakegame.map.tiledMap
+import com.snakegame.resources.Resources
 import com.soywiz.klock.seconds
 import com.soywiz.korge.input.onClick
 import com.soywiz.korge.scene.Scene
@@ -19,9 +20,10 @@ import com.soywiz.korio.file.std.resourcesVfs
 class MainMenuScene() : Scene() {
 
     override suspend fun Container.sceneInit() {
+        Resources(views).loadAll()
         currentGameState.reset()
         tiledMap(1)
-        val font = resourcesVfs["texts/I-pixel-u.fnt"].readBitmapFont()
+        val font = Resources.font
         text("A CLASSIC SNAKE GAME", 32.0, font = font).centerXOn(this).positionY(200)
         val questionMark = text("?", 32.0, font = font).position(632, 200)
         questionMark.color = RGBA.float(255, 255,255, 0)
