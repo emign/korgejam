@@ -344,6 +344,9 @@ suspend fun Container.snake(views: Views, pos: Point, skin:SnakeSkin, collisionC
                 timeout(MILLISECONDS_PER_FRAME * speed){
                     bodyParts.first().bitmap = headTile
                 }
+                timeout(MILLISECONDS_PER_FRAME * speed) {
+                    eat()
+                }
                 addBodyPart()
                 onItemEaten()
                 enemyPacmanEaten()
@@ -354,6 +357,9 @@ suspend fun Container.snake(views: Views, pos: Point, skin:SnakeSkin, collisionC
                 bodyParts.first().bitmap = eatingHeadTile
                 timeout(MILLISECONDS_PER_FRAME * speed){
                     bodyParts.first().bitmap = headTile
+                }
+                timeout(MILLISECONDS_PER_FRAME * speed) {
+                    eat()
                 }
                 addBodyPart()
                 onItemEaten()
