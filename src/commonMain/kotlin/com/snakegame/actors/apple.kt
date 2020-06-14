@@ -10,6 +10,7 @@ import com.soywiz.korio.file.std.resourcesVfs
 class Apple(bitmap:BmpSlice) : Image(bitmap) {
     init {
         spawn()
+        smoothing=false
     }
 
     fun spawn() {
