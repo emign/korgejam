@@ -197,7 +197,7 @@
   function coin($receiver, views, point, continuation) {
     var snakeAtlas = Resources$Companion_getInstance().snakeAtlas;
     var appleTile = snakeAtlas.get_61zpoe$('Apple_02.png');
-    var $receiver_0 = new Dot(appleTile);
+    var $receiver_0 = new Coin(appleTile);
     position($receiver_0, point.x, point.y);
     $receiver_0.smoothing = false;
     $receiver.addChild_l5rad2$($receiver_0);
@@ -1014,6 +1014,10 @@
         closure$addBodyPart();
         closure$onItemEaten();
         closure$enemyPacmanEaten();
+      }if (Kotlin.isType(it, Coin)) {
+        it.die();
+        closure$addBodyPart();
+        closure$onItemEaten();
       }return Unit;
     };
   }
