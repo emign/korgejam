@@ -85,6 +85,10 @@ open class GameScene(val stageConfig: StageConfig) : Scene() {
                     }
                 },onItemEaten = {
                     onItemEaten()
+                },nextLevel = {
+                    launchImmediately {
+                        nextLevel()
+                    }
                 }
             )
 
@@ -135,6 +139,10 @@ open class GameScene(val stageConfig: StageConfig) : Scene() {
     open fun onItemEaten() {
         currentGameState.score += 100
     }
+
+    open suspend fun nextLevel(){
+
+    }
 }
 
 class SnakeGameScene() : GameScene(SnakeStageConfig){
@@ -156,13 +164,13 @@ class SnakeGameScene() : GameScene(SnakeStageConfig){
         super.onItemEaten()
         updateScore()
         apples++
-        if (apples >= 2) {
-            launch {
-                fadeOff = true
-                currentGameState.paused = true
-                sleep(1.seconds)
-                sceneContainer.changeTo<TransitionToPacmanScene>(1)
-            }
+    }
+
+    override suspend fun nextLevel() {
+        fadeOff = true
+        launch {
+            delay(1.seconds)
+            sceneContainer.changeTo<TransitionToPacmanScene>(1)
         }
     }
 }

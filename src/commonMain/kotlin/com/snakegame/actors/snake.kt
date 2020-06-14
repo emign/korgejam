@@ -156,7 +156,7 @@ class Snake(
 
 enum class MovementMode { SNAKE, PACMAN, MARIO }
 
-suspend fun Container.snake(views: Views, pos: Point, skin:SnakeSkin, collisionChecker: CollisionChecker, font: BitmapFont, movementMode:MovementMode = MovementMode.SNAKE, onDied:()->Unit, onItemEaten: ()->Unit):Snake {
+suspend fun Container.snake(views: Views, pos: Point, skin:SnakeSkin, collisionChecker: CollisionChecker, font: BitmapFont, movementMode:MovementMode = MovementMode.SNAKE, onDied:()->Unit, onItemEaten: ()->Unit, nextLevel: ()->Unit):Snake {
     val snakeAtlas = Resources.snakeAtlas
     val headTile = snakeAtlas[skin.headTile]
     val bodyTile = snakeAtlas[skin.bodyTile]
@@ -315,7 +315,10 @@ suspend fun Container.snake(views: Views, pos: Point, skin:SnakeSkin, collisionC
                             snake.move()
 
                         collisionChecker.checkCollision(snake.head.x, snake.head.y) {
-                            onDied()
+                            if(snake.goRight)
+                                nextLevel()
+                            else
+                                onDied()
                         }
 
                         if (snake.colides()) onDied()

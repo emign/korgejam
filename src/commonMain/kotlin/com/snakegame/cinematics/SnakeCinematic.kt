@@ -19,8 +19,6 @@ import kotlin.coroutines.CoroutineContext
 
 class SnakeCinematic(container: Container, private val player: Snake, private val coroutineContext: CoroutineContext){
 
-    var lockInput = false
-
     init {
         container.container {
             player.bocadilloSmall.alpha = 0.0
