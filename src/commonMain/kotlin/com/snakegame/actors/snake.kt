@@ -446,6 +446,7 @@ suspend fun Container.snake(views: Views, pos: Point, skin:SnakeSkin, collisionC
             val hideIndexes = mutableListOf<Int>()
             val freezeIndexes = mutableListOf<Int>()
             val duplicateIndexes = mutableListOf<Int>()
+            val curveIndexes = mutableListOf<Int>()
 
             fun paintCurves() {
                 val positions = snake.body.map {
@@ -456,6 +457,7 @@ suspend fun Container.snake(views: Views, pos: Point, skin:SnakeSkin, collisionC
 
                 positions.forEachIndexed { index, it ->
                     fun addIndexes() {
+                        curveIndexes.add(index+1)
                         hideIndexes.add(index+1)
                         freezeIndexes.add(index)
                         duplicateIndexes.add(index+2)
@@ -664,11 +666,12 @@ suspend fun Container.snake(views: Views, pos: Point, skin:SnakeSkin, collisionC
                 bodyParts.forEach {
                     it.visible = true
                 }
-                freezeIndexes.forEach {
+                freezeIndexes.filter{!curveIndexes.contains(it)}.forEach {
                     bodyParts[it].x = snake.body[it].x + 16
                     bodyParts[it].y = snake.body[it].y + 16
                 }
-                duplicateIndexes.forEach {
+                duplicateIndexes.filter{!curveIndexes.contains(it)}.forEach {
+
                     val kdddd = bodyParts[it].clone()
                     kdddd.x = snake.body[it].x + 16
                     kdddd.y = snake.body[it].y + 16
