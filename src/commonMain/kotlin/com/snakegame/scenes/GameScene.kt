@@ -124,7 +124,11 @@ open class GameScene(val stageConfig: StageConfig) : Scene() {
 
             when(stageConfig.level){
                 1->SnakeCinematic(this@sceneInit, player, coroutineContext)
-                3-> EndCinematic(this@sceneInit, player, coroutineContext)
+                3-> EndCinematic(this@sceneInit, player, coroutineContext){
+                    launchImmediately {
+                        sceneContainer.changeTo<LoadingScene>(1)
+                    }
+                }
             }
 
             if (stageConfig.scroll) {

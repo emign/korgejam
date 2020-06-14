@@ -15,7 +15,7 @@ import com.soywiz.korio.async.launch
 import com.soywiz.korio.file.std.resourcesVfs
 import kotlin.coroutines.CoroutineContext
 
-class EndCinematic(container: Container, private val player: Snake, private val coroutineContext: CoroutineContext) {
+class EndCinematic(container: Container, private val player: Snake, private val coroutineContext: CoroutineContext, private val menu: ()->Unit) {
 
     lateinit var finalImg: Image
     lateinit var fadeRect: SolidRect
@@ -43,6 +43,10 @@ class EndCinematic(container: Container, private val player: Snake, private val 
             timeout(2.seconds) {
                 launch(coroutineContext) {
                     finalImg.show(0.seconds)
+                }
+
+                timeout(2.seconds) {
+                    menu()
                 }
             }
         }
