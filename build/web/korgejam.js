@@ -52,49 +52,52 @@
   var IntRange = Kotlin.kotlin.ranges.IntRange;
   var CoroutineImpl = Kotlin.kotlin.coroutines.CoroutineImpl;
   var unsetBits = $module$kmem_root_kmem.com.soywiz.kmem.unsetBits_dqglrj$;
-  var mutableListOf = Kotlin.kotlin.collections.mutableListOf_i5x0yv$;
+  var reversed = Kotlin.kotlin.collections.reversed_7wnvza$;
   var color = $module$korim_root_korim.com.soywiz.korim.color;
   var centerXOn = $module$korge_root_korge.com.soywiz.korge.view.centerXOn_apzp43$;
   var scale = $module$korge_root_korge.com.soywiz.korge.view.scale_2cbtc5$;
+  var mutableListOf = Kotlin.kotlin.collections.mutableListOf_i5x0yv$;
   var getCallableRef = Kotlin.getCallableRef;
   var first = Kotlin.kotlin.collections.first_2p1efm$;
-  var last = Kotlin.kotlin.collections.last_2p1efm$;
   var Pair = Kotlin.kotlin.Pair;
   var Key = $module$korgw_root_korgw.com.soywiz.korev.Key;
+  var last = Kotlin.kotlin.collections.last_2p1efm$;
   var timeout = $module$korge_root_korge.com.soywiz.korge.time.timeout_7ghvt3$;
   var toList = Kotlin.kotlin.collections.toList_7wnvza$;
   var Point = $module$korma_root_korma.com.soywiz.korma.geom.Point;
   var ArrayList_init = Kotlin.kotlin.collections.ArrayList_init_287e2$;
   var checkIndexOverflow = Kotlin.kotlin.collections.checkIndexOverflow_za3lpa$;
+  var TimeSpan = $module$klock_root_klock.com.soywiz.klock.TimeSpan;
   var numberToInt = Kotlin.numberToInt;
   var Collection = Kotlin.kotlin.collections.Collection;
   var Text = $module$korge_root_korge.com.soywiz.korge.view.Text;
   var getPropertyCallableRef = Kotlin.getPropertyCallableRef;
   var get_keys = $module$korge_root_korge.com.soywiz.korge.input.get_keys_gohfi1$;
-  var throwCCE = Kotlin.throwCCE;
   var show = $module$korge_root_korge.com.soywiz.korge.tween.show_yz29kn$;
-  var wait = $module$korge_root_korge.com.soywiz.korge.time.wait_f287ec$;
-  var hide = $module$korge_root_korge.com.soywiz.korge.tween.hide_yz29kn$;
   var COROUTINE_SUSPENDED = Kotlin.kotlin.coroutines.intrinsics.COROUTINE_SUSPENDED;
   var launch = $module$korio_root_korio.com.soywiz.korio.async.launch_ykkwzu$;
-  var TimeSpan = $module$klock_root_klock.com.soywiz.klock.TimeSpan;
+  var RGBA = $module$korim_root_korim.com.soywiz.korim.color.RGBA;
+  var std = $module$korio_root_korio.com.soywiz.korio.file.std;
+  var readBitmap = $module$korim_root_korim.com.soywiz.korim.format.readBitmap_vi5npc$;
+  var numberToDouble = Kotlin.numberToDouble;
+  var SolidRect_init = $module$korge_root_korge.com.soywiz.korge.view.SolidRect;
+  var Image_init = $module$korge_root_korge.com.soywiz.korge.view.Image_init_8drxwf$;
+  var throwCCE = Kotlin.throwCCE;
+  var wait = $module$korge_root_korge.com.soywiz.korge.time.wait_f287ec$;
+  var hide = $module$korge_root_korge.com.soywiz.korge.tween.hide_yz29kn$;
   var defineInlineFunction = Kotlin.defineInlineFunction;
   var wrapFunction = Kotlin.wrapFunction;
   var umod = $module$kmem_root_kmem.com.soywiz.kmem.umod_dqglrj$;
   var UInt_init = Kotlin.kotlin.UInt;
   var TiledMap$Layer$Patterns = $module$korge_root_korge.com.soywiz.korge.tiled.TiledMap.Layer.Patterns;
   var random_0 = Kotlin.kotlin.ranges.random_xmiyix$;
-  var std = $module$korio_root_korio.com.soywiz.korio.file.std;
-  var readBitmap = $module$korim_root_korim.com.soywiz.korim.format.readBitmap_vi5npc$;
   var readTiledMap = $module$korge_root_korge.com.soywiz.korge.tiled.readTiledMap_utz4xw$;
-  var Image_init = $module$korge_root_korge.com.soywiz.korge.view.Image_init_8drxwf$;
   var TiledMapView_init = $module$korge_root_korge.com.soywiz.korge.tiled.TiledMapView;
   var Kind_OBJECT = Kotlin.Kind.OBJECT;
   var readAtlas = $module$korge_root_korge.com.soywiz.korge.atlas.readAtlas_s70ap7$;
   var readBitmapFont = $module$korim_root_korim.com.soywiz.korim.font.readBitmapFont_2axf5n$;
   var readSound = $module$korau_root_korau.com.soywiz.korau.sound.readSound_rbebel$;
   var readMusic = $module$korau_root_korau.com.soywiz.korau.sound.readMusic_fotfka$;
-  var RGBA = $module$korim_root_korim.com.soywiz.korim.color.RGBA;
   var tween = $module$korge_root_korge.com.soywiz.korge.tween.tween_t8t7it$;
   var launch_0 = $module$korio_root_korio.com.soywiz.korio.async.launch_hilpzi$;
   var addUpdater = $module$korge_root_korge.com.soywiz.korge.view.addUpdater_t24ukx$;
@@ -107,8 +110,6 @@
   var padStart = Kotlin.kotlin.text.padStart_vrc1nu$;
   var _interpolate = $module$korge_root_korge.com.soywiz.korge.tween._interpolate_yvo9jy$;
   var V2_init = $module$korge_root_korge.com.soywiz.korge.tween.V2;
-  var numberToDouble = Kotlin.numberToDouble;
-  var SolidRect_init = $module$korge_root_korge.com.soywiz.korge.view.SolidRect;
   var color_0 = $module$korge_root_korge.$$importsForInline$$['korim-root-korim'].com.soywiz.korim.color;
   var centerBetween = $module$korge_root_korge.com.soywiz.korge.view.centerBetween_wgq76x$;
   var TimeSpan_0 = $module$korge_root_korge.$$importsForInline$$['klock-root-klock'].com.soywiz.klock.TimeSpan;
@@ -466,10 +467,10 @@
   function image$lambda($receiver) {
     return Unit;
   }
-  function text$lambda($receiver) {
+  function container$lambda_0($receiver) {
     return Unit;
   }
-  function container$lambda_0($receiver) {
+  function text$lambda($receiver) {
     return Unit;
   }
   function SnakeBodyPart(x, y, xpos, ypos, lastX, lastY, direction) {
@@ -634,8 +635,6 @@
     this.body = ArrayList_init();
     this.head_amlc5h$_0 = lazy(Snake$head$lambda(this));
     this.lastDirection = this.direction;
-    this.lastPosX = startX;
-    this.lastPosY = startY;
     this.bocadilloSmall_ipuq8t$_0 = this.bocadilloSmall_ipuq8t$_0;
     this.bocadilloBig_2ytzic$_0 = this.bocadilloBig_2ytzic$_0;
     this.cinematicMode = false;
@@ -732,7 +731,7 @@
       }}
     return false;
   };
-  Snake.prototype.warp_5mfw0y$ = function (x, newDirection) {
+  Snake.prototype.warp_okwv88$ = function (x, y, newDirection) {
     var tmp$;
     tmp$ = this.body.iterator();
     while (tmp$.hasNext()) {
@@ -740,9 +739,13 @@
       element.x = x;
       element.xpos = x;
       element.lastX = x;
+      element.y = y;
+      element.ypos = y;
+      element.lastY = y;
       element.direction = newDirection;
     }
     this.direction = newDirection;
+    this.lastDirection = newDirection;
   };
   function Snake_init$lambda(it) {
     return Unit;
@@ -948,21 +951,19 @@
       }
     };
   }
-  function snake$lambda$addBodyPart(closure$snake, closure$bodyTile, closure$bodyParts, closure$tailTile, this$) {
+  function snake$lambda$addBodyPart(closure$snake, closure$bodyTile, closure$snakeContainer, closure$bodyParts) {
     return function () {
       var body = closure$snake.body;
       var lastPart = body.get_za3lpa$(body.size - 1 | 0);
       body.add_11rb$(new SnakeBodyPart(lastPart.x, lastPart.y));
-      last(closure$bodyParts).bitmap = closure$bodyTile;
-      var tmp$ = closure$bodyParts;
-      var $receiver = this$;
-      var $receiver_0 = addTo(new Image(closure$tailTile, 0.0, 0.0), $receiver);
-      image$lambda($receiver_0);
-      $receiver_0.smoothing = false;
-      tmp$.add_11rb$($receiver_0);
+      var $receiver = new Image(closure$bodyTile);
+      $receiver.smoothing = false;
+      var newPart = $receiver;
+      closure$snakeContainer.addChildAt_pwlnko$(newPart, 1);
+      closure$bodyParts.add_wxm5ur$(1, newPart);
     };
   }
-  function snake$lambda$eat(closure$snake, closure$fatBodies, closure$bodyParts, closure$bodyFatTile, this$, closure$updatePart) {
+  function snake$lambda$eat(closure$snake, closure$fatBodies, closure$bodyParts, closure$bodyFatTile, this$, closure$updatePart, closure$head) {
     return function () {
       var part = closure$snake.body.get_za3lpa$(1);
       var tmp$ = closure$fatBodies;
@@ -973,7 +974,7 @@
       image$lambda($receiver_0);
       $receiver_0.smoothing = false;
       var $receiver_1 = tmp$_1($receiver_0, part);
-      var point = first(closure$bodyParts).pos;
+      var point = closure$head.pos;
       tmp$.add_11rb$(new Pair(tmp$_0, position($receiver_1, get_x(point), get_y(point))));
     };
   }
@@ -1050,14 +1051,14 @@
         var $receiver = this$;
         var $receiver_0 = addTo(new Image(closure$snakeAtlas.get_61zpoe$('arrow.png'), 0.0, 0.0), $receiver);
         image$lambda($receiver_0);
-        var arrow = position_0($receiver_0, (23 * TILE_SIZE | 0) - 8 | 0, 8 * TILE_SIZE | 0);
+        var arrow = position_0($receiver_0, (23 * TILE_SIZE | 0) - 8 | 0, (10 * TILE_SIZE | 0) - 8 | 0);
         var time = {v: 0};
         addFixedUpdater(arrow, MILLISECONDS_PER_FRAME, void 0, void 0, snake$lambda$enemyPacmanEaten$lambda(time, closure$snake, closure$nextLevel));
       }};
   }
-  function snake$lambda$lambda$lambda(closure$headTile, closure$bodyParts) {
+  function snake$lambda$lambda$lambda(closure$headTile, closure$head) {
     return function () {
-      first(closure$bodyParts).bitmap = closure$headTile;
+      closure$head.bitmap = closure$headTile;
       return Unit;
     };
   }
@@ -1067,15 +1068,15 @@
       return Unit;
     };
   }
-  function snake$lambda$lambda$lambda_1(closure$headTile, closure$bodyParts) {
+  function snake$lambda$lambda$lambda_1(closure$headTile, closure$head) {
     return function () {
-      first(closure$bodyParts).bitmap = closure$headTile;
+      closure$head.bitmap = closure$headTile;
       return Unit;
     };
   }
-  function snake$lambda$lambda$lambda_2(closure$headTile, closure$bodyParts) {
+  function snake$lambda$lambda$lambda_2(closure$headTile, closure$head) {
     return function () {
-      first(closure$bodyParts).bitmap = closure$headTile;
+      closure$head.bitmap = closure$headTile;
       return Unit;
     };
   }
@@ -1085,9 +1086,9 @@
       return Unit;
     };
   }
-  function snake$lambda$lambda$lambda_4(closure$headTile, closure$bodyParts) {
+  function snake$lambda$lambda$lambda_4(closure$headTile, closure$head) {
     return function () {
-      first(closure$bodyParts).bitmap = closure$headTile;
+      closure$head.bitmap = closure$headTile;
       return Unit;
     };
   }
@@ -1097,28 +1098,28 @@
       return Unit;
     };
   }
-  function snake$lambda$lambda$lambda_6(closure$headTile, closure$bodyParts) {
+  function snake$lambda$lambda$lambda_6(closure$headTile, closure$head) {
     return function () {
-      first(closure$bodyParts).bitmap = closure$headTile;
+      closure$head.bitmap = closure$headTile;
       return Unit;
     };
   }
-  function snake$lambda$lambda_0(closure$eatingHeadTile, closure$bodyParts, closure$speed, closure$headTile, closure$eat, closure$addBodyPart, closure$onItemEaten, closure$remainingToGrow, closure$dotsToGrow, closure$enemyPacmanEaten) {
+  function snake$lambda$lambda_0(closure$eatingHeadTile, closure$head, closure$speed, closure$headTile, closure$eat, closure$addBodyPart, closure$onItemEaten, closure$remainingToGrow, closure$dotsToGrow, closure$enemyPacmanEaten) {
     return function ($receiver, it) {
       var tmp$;
       if (Kotlin.isType(it, Apple)) {
         Resources$Companion_getInstance().appleSound.play_gfl8bq$();
         it.spawn();
-        first(closure$bodyParts).bitmap = closure$eatingHeadTile;
-        timeout($receiver, MILLISECONDS_PER_FRAME.times_14dthe$(closure$speed), snake$lambda$lambda$lambda(closure$headTile, closure$bodyParts));
+        closure$head.bitmap = closure$eatingHeadTile;
+        timeout($receiver, MILLISECONDS_PER_FRAME.times_14dthe$(closure$speed), snake$lambda$lambda$lambda(closure$headTile, closure$head));
         timeout($receiver, MILLISECONDS_PER_FRAME.times_14dthe$(closure$speed), snake$lambda$lambda$lambda_0(closure$eat));
         closure$addBodyPart();
         closure$onItemEaten();
       }if (Kotlin.isType(it, Dot)) {
         Resources$Companion_getInstance().appleSound.play_gfl8bq$();
         it.die();
-        first(closure$bodyParts).bitmap = closure$eatingHeadTile;
-        timeout($receiver, MILLISECONDS_PER_FRAME.times_14dthe$(closure$speed), snake$lambda$lambda$lambda_1(closure$headTile, closure$bodyParts));
+        closure$head.bitmap = closure$eatingHeadTile;
+        timeout($receiver, MILLISECONDS_PER_FRAME.times_14dthe$(closure$speed), snake$lambda$lambda$lambda_1(closure$headTile, closure$head));
         tmp$ = closure$remainingToGrow.v;
         closure$remainingToGrow.v = tmp$ - 1 | 0;
         if (closure$remainingToGrow.v === 0) {
@@ -1128,8 +1129,8 @@
       }if (Kotlin.isType(it, Ghost)) {
         Resources$Companion_getInstance().pacmanDead.play_gfl8bq$();
         it.die();
-        first(closure$bodyParts).bitmap = closure$eatingHeadTile;
-        timeout($receiver, MILLISECONDS_PER_FRAME.times_14dthe$(closure$speed), snake$lambda$lambda$lambda_2(closure$headTile, closure$bodyParts));
+        closure$head.bitmap = closure$eatingHeadTile;
+        timeout($receiver, MILLISECONDS_PER_FRAME.times_14dthe$(closure$speed), snake$lambda$lambda$lambda_2(closure$headTile, closure$head));
         timeout($receiver, MILLISECONDS_PER_FRAME.times_14dthe$(closure$speed), snake$lambda$lambda$lambda_3(closure$eat));
         closure$addBodyPart();
         closure$onItemEaten();
@@ -1137,8 +1138,8 @@
       }if (Kotlin.isType(it, Pacoman)) {
         Resources$Companion_getInstance().pacmanDead.play_gfl8bq$();
         it.die();
-        first(closure$bodyParts).bitmap = closure$eatingHeadTile;
-        timeout($receiver, MILLISECONDS_PER_FRAME.times_14dthe$(closure$speed), snake$lambda$lambda$lambda_4(closure$headTile, closure$bodyParts));
+        closure$head.bitmap = closure$eatingHeadTile;
+        timeout($receiver, MILLISECONDS_PER_FRAME.times_14dthe$(closure$speed), snake$lambda$lambda$lambda_4(closure$headTile, closure$head));
         timeout($receiver, MILLISECONDS_PER_FRAME.times_14dthe$(closure$speed), snake$lambda$lambda$lambda_5(closure$eat));
         closure$addBodyPart();
         closure$onItemEaten();
@@ -1146,8 +1147,8 @@
       }if (Kotlin.isType(it, Coin)) {
         Resources$Companion_getInstance().appleSound.play_gfl8bq$();
         it.die();
-        first(closure$bodyParts).bitmap = closure$eatingHeadTile;
-        timeout($receiver, MILLISECONDS_PER_FRAME.times_14dthe$(closure$speed), snake$lambda$lambda$lambda_6(closure$headTile, closure$bodyParts));
+        closure$head.bitmap = closure$eatingHeadTile;
+        timeout($receiver, MILLISECONDS_PER_FRAME.times_14dthe$(closure$speed), snake$lambda$lambda$lambda_6(closure$headTile, closure$head));
         closure$addBodyPart();
         closure$onItemEaten();
       }return Unit;
@@ -1177,19 +1178,54 @@
         closure$newDirection.v = closure$snake.direction;
     };
   }
-  function snake$lambda$lambda$lambda_7(closure$snake, closure$goingToNextLevel, closure$nextLevel, closure$onDied) {
+  function snake$lambda$lambda$disableWarpWalking(closure$snake, closure$newDirection) {
     return function () {
-      if (closure$snake.goRight && !closure$goingToNextLevel.v) {
-        closure$goingToNextLevel.v = true;
-        Resources$Companion_getInstance().explosion.play_gfl8bq$();
-        closure$nextLevel();
-      } else {
+      if (closure$snake.head.x < 0 && closure$newDirection.v !== Direction$LEFT_getInstance()) {
+        closure$newDirection.v = Direction$RIGHT_getInstance();
+      }if (closure$snake.head.x > (800 - TILE_SIZE | 0) && closure$newDirection.v !== Direction$RIGHT_getInstance()) {
+        closure$newDirection.v = Direction$LEFT_getInstance();
+      }};
+  }
+  function snake$lambda$lambda$lambda$lambda$lambda(closure$image, closure$explotionPos) {
+    return function () {
+      var tmp$ = closure$image;
+      var point = closure$explotionPos.plus_4l17gg$(new Point(0, -10));
+      position(tmp$, get_x(point), get_y(point));
+      closure$image.alpha = 1.0;
+      return Unit;
+    };
+  }
+  function snake$lambda$lambda$lambda$lambda(closure$nextLevel) {
+    return function () {
+      closure$nextLevel();
+      return Unit;
+    };
+  }
+  function snake$lambda$lambda$lambda_7(closure$snake, closure$goingToNextLevel, closure$explotionAnim, this$, closure$nextLevel, closure$onDied) {
+    return function () {
+      if (closure$snake.goRight) {
+        if (!closure$goingToNextLevel.v) {
+          closure$goingToNextLevel.v = true;
+          Resources$Companion_getInstance().explosion.play_gfl8bq$();
+          var explotionPos = new Point(closure$snake.head.x, closure$snake.head.y);
+          var $receiver = closure$explotionAnim;
+          var tmp$, tmp$_0;
+          var index = 0;
+          tmp$ = $receiver.iterator();
+          while (tmp$.hasNext()) {
+            var item = tmp$.next();
+            var this$_0 = this$;
+            var index_0 = checkIndexOverflow((tmp$_0 = index, index = tmp$_0 + 1 | 0, tmp$_0));
+            timeout(this$_0, TimeSpan.Companion.fromMilliseconds_14dthe$(100).times_za3lpa$(index_0 + 1 | 0), snake$lambda$lambda$lambda$lambda$lambda(item, explotionPos));
+          }
+          timeout(this$, TimeSpan.Companion.fromSeconds_14dthe$(3), snake$lambda$lambda$lambda$lambda(closure$nextLevel));
+        }} else {
         closure$onDied();
       }
       return Unit;
     };
   }
-  function snake$lambda$lambda_1(closure$fatBodies, closure$lockInput, closure$key, closure$newDirection, closure$snake, closure$movementMode, closure$speed, closure$frames, closure$collisionChecker, closure$goingToNextLevel, closure$nextLevel, closure$onDied, closure$warpEnabled, closure$bocadilloSmall, closure$head, closure$bocadilloBig, closure$updateBodyParts) {
+  function snake$lambda$lambda_1(closure$fatBodies, closure$lockInput, closure$key, closure$newDirection, closure$snake, closure$movementMode, closure$speed, closure$frames, closure$collisionChecker, closure$goingToNextLevel, closure$explotionAnim, closure$nextLevel, closure$onDied, closure$warpEnabled, closure$bocadilloSmall, closure$head, closure$bocadilloBig, closure$updateBodyParts) {
     return function ($receiver) {
       var tmp$;
       if (currentGameState.paused)
@@ -1228,6 +1264,7 @@
         if (numberToInt(closure$key.v & (BUTTON_RIGHT | BUTTON_LEFT | BUTTON_UP | BUTTON_DOWN)) !== 0)
           closure$lockInput.v = true;
       }var disableWalkingBackwards = snake$lambda$lambda$disableWalkingBackwards(closure$newDirection, closure$snake);
+      var disableWarpWalking = snake$lambda$lambda$disableWarpWalking(closure$snake, closure$newDirection);
       loop_label: switch (closure$movementMode.name) {
         case 'SNAKE':
           disableWalkingBackwards();
@@ -1244,7 +1281,7 @@
               closure$snake.direction = closure$newDirection.v;
             if (!closure$snake.cinematicMode || closure$snake.goRight)
               closure$snake.move();
-            closure$collisionChecker.checkCollision_morwcd$(closure$snake.head.x, closure$snake.head.y, snake$lambda$lambda$lambda_7(closure$snake, closure$goingToNextLevel, closure$nextLevel, closure$onDied));
+            closure$collisionChecker.checkCollision_morwcd$(closure$snake.head.x, closure$snake.head.y, snake$lambda$lambda$lambda_7(closure$snake, closure$goingToNextLevel, closure$explotionAnim, $receiver, closure$nextLevel, closure$onDied));
             if (closure$snake.colides())
               closure$onDied();
           } else {
@@ -1254,6 +1291,7 @@
           break loop_label;
         case 'PACMAN':
           disableWalkingBackwards();
+          disableWarpWalking();
           closure$frames.v += closure$speed;
           if (closure$collisionChecker.colides_lu1900$(closure$snake.head.x + Kotlin.imul(closure$newDirection.v.deltaX(), TILE_SIZE), closure$snake.head.y + Kotlin.imul(closure$newDirection.v.deltaY(), TILE_SIZE))) {
             closure$lockInput.v = false;
@@ -1273,11 +1311,11 @@
           }
 
           var tail = last(closure$snake.body);
-          if (closure$snake.direction === Direction$LEFT_getInstance() && tail.x < (-TILE_SIZE | 0)) {
-            closure$snake.warp_5mfw0y$(800, Direction$LEFT_getInstance());
+          if (closure$snake.head.x < (-TILE_SIZE | 0) && tail.x < (-TILE_SIZE | 0)) {
+            closure$snake.warp_okwv88$(800, 10 * TILE_SIZE | 0, Direction$LEFT_getInstance());
           }
-          if (closure$warpEnabled.v && closure$snake.direction === Direction$RIGHT_getInstance() && tail.x > 800) {
-            closure$snake.warp_5mfw0y$(-TILE_SIZE | 0, Direction$RIGHT_getInstance());
+          if (closure$warpEnabled.v && closure$snake.head.x > 800 && tail.x > 800) {
+            closure$snake.warp_okwv88$(-TILE_SIZE | 0, 10 * TILE_SIZE | 0, Direction$RIGHT_getInstance());
           }
           break loop_label;
         case 'MARIO':
@@ -1310,7 +1348,10 @@
           if (closure$frames.v >= TILE_SIZE) {
             closure$lockInput.v = false;
             closure$snake.lastDirection = closure$snake.direction;
-            closure$snake.direction = closure$newDirection.v;
+            if (closure$snake.goRight)
+              closure$snake.direction = Direction$RIGHT_getInstance();
+            else
+              closure$snake.direction = closure$newDirection.v;
             if (!closure$collisionChecker.colides_lu1900$(closure$snake.head.x + Kotlin.imul(closure$newDirection.v.deltaX(), TILE_SIZE), closure$snake.head.y + Kotlin.imul(closure$newDirection.v.deltaY(), TILE_SIZE))) {
               closure$snake.move();
               closure$frames.v = 0.0;
@@ -1358,34 +1399,60 @@
     if ((tmp$_0 = $receiver_0 != null ? get_keys($receiver_0) : null) != null) {
       prop_0.get(tmp$_0).add_25kf2w$(snake$lambda_0(key));
     }var $receiver_0_0 = addTo(new Container_init(), $receiver_0);
-    var $receiver_0_1 = addTo(new Image(headTile, 0.0, 0.0), $receiver_0_0);
-    image$lambda($receiver_0_1);
-    $receiver_0_1.smoothing = false;
-    var $receiver_0_2 = addTo(new Image(bodyTile, 0.0, 0.0), $receiver_0_0);
+    var bodyParts = ArrayList_init();
+    var $receiver_0_1 = addTo(new Container_init(), $receiver_0_0);
+    var $receiver_0_2 = addTo(new Image(tailTile, 0.0, 0.0), $receiver_0_1);
     image$lambda($receiver_0_2);
     $receiver_0_2.smoothing = false;
-    var $receiver_0_3 = addTo(new Image(tailTile, 0.0, 0.0), $receiver_0_0);
+    var $receiver_0_3 = addTo(new Image(bodyTile, 0.0, 0.0), $receiver_0_1);
     image$lambda($receiver_0_3);
     $receiver_0_3.smoothing = false;
-    var bodyParts = mutableListOf([$receiver_0_1, $receiver_0_2, $receiver_0_3]);
-    var $receiver_0_4 = addTo(new Image(snakeAtlas.get_61zpoe$('bocadillo_02.png'), 0.0, 0.0), $receiver_0_0);
+    var $receiver_0_4 = addTo(new Image(headTile, 0.0, 0.0), $receiver_0_1);
     image$lambda($receiver_0_4);
-    var bocadilloSmall = $receiver_0_4;
+    $receiver_0_4.smoothing = false;
+    bodyParts.addAll_brywnq$(reversed(listOf([$receiver_0_2, $receiver_0_3, $receiver_0_4])));
+    var snakeContainer = $receiver_0_1;
+    var $receiver_0_5 = addTo(new Image(snakeAtlas.get_61zpoe$('bocadillo_02.png'), 0.0, 0.0), $receiver_0_0);
+    image$lambda($receiver_0_5);
+    var bocadilloSmall = $receiver_0_5;
     var color_0 = color.Colors.BLACK;
-    var $receiver_0_5 = addTo(Text.Companion.invoke_8ii8iq$('!?', 16.0, color_0, font), $receiver_0_0);
-    text$lambda($receiver_0_5);
-    bocadilloSmall.addChild_l5rad2$(centerXOn($receiver_0_5, bocadilloSmall));
+    var $receiver_0_6 = addTo(Text.Companion.invoke_8ii8iq$('!?', 16.0, color_0, font), $receiver_0_0);
+    text$lambda($receiver_0_6);
+    bocadilloSmall.addChild_l5rad2$(centerXOn($receiver_0_6, bocadilloSmall));
     bocadilloSmall.alpha = 0.0;
-    var $receiver_0_6 = addTo(new Image(snakeAtlas.get_61zpoe$('bocadillo_01.png'), 0.0, 0.0), $receiver_0_0);
-    image$lambda($receiver_0_6);
-    var bocadilloBig = $receiver_0_6;
+    var $receiver_0_7 = addTo(new Image(snakeAtlas.get_61zpoe$('bocadillo_01.png'), 0.0, 0.0), $receiver_0_0);
+    image$lambda($receiver_0_7);
+    var bocadilloBig = $receiver_0_7;
     scale(bocadilloBig, 1.5, 1.5);
     var text = 'Grrrr...';
     var color_0_0 = color.Colors.BLACK;
-    var $receiver_0_7 = addTo(Text.Companion.invoke_8ii8iq$(text, 10.0, color_0_0, font), $receiver_0_0);
-    text$lambda($receiver_0_7);
-    bocadilloBig.addChild_l5rad2$(position_0($receiver_0_7, 5, 5));
+    var $receiver_0_8 = addTo(Text.Companion.invoke_8ii8iq$(text, 10.0, color_0_0, font), $receiver_0_0);
+    text$lambda($receiver_0_8);
+    bocadilloBig.addChild_l5rad2$(position_0($receiver_0_8, 5, 5));
     bocadilloBig.alpha = 0.0;
+    var $receiver_0_9 = addTo(new Image(snakeAtlas.get_61zpoe$('Explosion1_01.png'), 0.0, 0.0), $receiver_0_0);
+    image$lambda($receiver_0_9);
+    var $receiver_0_10 = addTo(new Image(snakeAtlas.get_61zpoe$('Explosion1_02.png'), 0.0, 0.0), $receiver_0_0);
+    image$lambda($receiver_0_10);
+    var $receiver_0_11 = addTo(new Image(snakeAtlas.get_61zpoe$('Explosion1_03.png'), 0.0, 0.0), $receiver_0_0);
+    image$lambda($receiver_0_11);
+    var $receiver_0_12 = addTo(new Image(snakeAtlas.get_61zpoe$('Explosion1_04.png'), 0.0, 0.0), $receiver_0_0);
+    image$lambda($receiver_0_12);
+    var $receiver_0_13 = addTo(new Image(snakeAtlas.get_61zpoe$('Explosion1_05.png'), 0.0, 0.0), $receiver_0_0);
+    image$lambda($receiver_0_13);
+    var $receiver_0_14 = addTo(new Image(snakeAtlas.get_61zpoe$('Explosion1_06.png'), 0.0, 0.0), $receiver_0_0);
+    image$lambda($receiver_0_14);
+    var $receiver_0_15 = addTo(new Image(snakeAtlas.get_61zpoe$('Explosion1_07.png'), 0.0, 0.0), $receiver_0_0);
+    image$lambda($receiver_0_15);
+    var $receiver_0_16 = addTo(new Image(snakeAtlas.get_61zpoe$('Explosion1_08.png'), 0.0, 0.0), $receiver_0_0);
+    image$lambda($receiver_0_16);
+    var explotionAnim = mutableListOf([$receiver_0_9, $receiver_0_10, $receiver_0_11, $receiver_0_12, $receiver_0_13, $receiver_0_14, $receiver_0_15, $receiver_0_16]);
+    var tmp$_1;
+    tmp$_1 = explotionAnim.iterator();
+    while (tmp$_1.hasNext()) {
+      var element = tmp$_1.next();
+      element.alpha = 0.0;
+    }
     var updatePart = snake$lambda$updatePart;
     var updateBodyParts = snake$lambda$updateBodyParts(bodyParts, updatePart);
     snake.updateBodyParts = getCallableRef('updateBodyParts', function (body) {
@@ -1394,26 +1461,26 @@
     snake.bocadilloSmall = bocadilloSmall;
     snake.bocadilloBig = bocadilloBig;
     var head = first(bodyParts);
-    var addBodyPart = snake$lambda$addBodyPart(snake, bodyTile, bodyParts, tailTile, $receiver_0_0);
+    var addBodyPart = snake$lambda$addBodyPart(snake, bodyTile, snakeContainer, bodyParts);
     var frames = {v: 0.0};
     var speed = 4.0;
     var fatBodies = ArrayList_init();
-    var eat = snake$lambda$eat(snake, fatBodies, bodyParts, bodyFatTile, $receiver_0_0, updatePart);
+    var eat = snake$lambda$eat(snake, fatBodies, bodyParts, bodyFatTile, $receiver_0_0, updatePart, head);
     var prop_1 = getPropertyCallableRef('onKeyDown', 1, function ($receiver) {
       return $receiver.onKeyDown;
     });
-    var tmp$_1;
-    if ((tmp$_1 = $receiver_0_0 != null ? get_keys($receiver_0_0) : null) != null) {
-      prop_1.get(tmp$_1).add_25kf2w$(snake$lambda$lambda(addBodyPart));
+    var tmp$_2;
+    if ((tmp$_2 = $receiver_0_0 != null ? get_keys($receiver_0_0) : null) != null) {
+      prop_1.get(tmp$_2).add_25kf2w$(snake$lambda$lambda(addBodyPart));
     }var newDirection = {v: snake.direction};
     var lockInput = {v: false};
     var dotsToGrow = 5;
     var remainingToGrow = {v: dotsToGrow};
     var ghostsAndPacmanCounter = {v: 5};
     var enemyPacmanEaten = snake$lambda$enemyPacmanEaten(ghostsAndPacmanCounter, warpEnabled, snakeAtlas, $receiver_0_0, snake, nextLevel);
-    onCollision(head, void 0, void 0, void 0, snake$lambda$lambda_0(eatingHeadTile, bodyParts, speed, headTile, eat, addBodyPart, onItemEaten, remainingToGrow, dotsToGrow, enemyPacmanEaten));
+    onCollision(head, void 0, void 0, void 0, snake$lambda$lambda_0(eatingHeadTile, head, speed, headTile, eat, addBodyPart, onItemEaten, remainingToGrow, dotsToGrow, enemyPacmanEaten));
     var goingToNextLevel = {v: false};
-    addFixedUpdater($receiver_0_0, MILLISECONDS_PER_FRAME, false, void 0, snake$lambda$lambda_1(fatBodies, lockInput, key, newDirection, snake, movementMode, speed, frames, collisionChecker, goingToNextLevel, nextLevel, onDied, warpEnabled, bocadilloSmall, head, bocadilloBig, updateBodyParts));
+    addFixedUpdater($receiver_0_0, MILLISECONDS_PER_FRAME, false, void 0, snake$lambda$lambda_1(fatBodies, lockInput, key, newDirection, snake, movementMode, speed, frames, collisionChecker, goingToNextLevel, explotionAnim, nextLevel, onDied, warpEnabled, bocadilloSmall, head, bocadilloBig, updateBodyParts));
     return snake;
   }
   function SnakeSkin() {
@@ -1494,11 +1561,223 @@
   function container$lambda_1($receiver) {
     return Unit;
   }
+  function solidRect$lambda($receiver) {
+    return Unit;
+  }
+  function image$lambda_0($receiver) {
+    return Unit;
+  }
+  function EndCinematic(container, player, coroutineContext, menu) {
+    this.player_0 = player;
+    this.coroutineContext_0 = coroutineContext;
+    this.menu_0 = menu;
+    this.finalImg_tv0qb4$_0 = this.finalImg_tv0qb4$_0;
+    this.credits_zi4ngd$_0 = this.credits_zi4ngd$_0;
+    this.fadeRect_95zw59$_0 = this.fadeRect_95zw59$_0;
+    this.ended = false;
+    var $receiver_0 = addTo(new Container_init(), container);
+    var $receiver_0_0 = addTo(new SolidRect_init(1000.0, 1000.0, RGBA.Companion.float_7b5o5w$(numberToDouble(0), numberToDouble(0), numberToDouble(0), numberToDouble(0))), $receiver_0);
+    solidRect$lambda($receiver_0_0);
+    this.fadeRect = $receiver_0_0;
+    launch(this.coroutineContext_0, EndCinematic_init$lambda$lambda($receiver_0, this));
+    addFixedUpdater($receiver_0, MILLISECONDS_PER_FRAME, false, void 0, EndCinematic_init$lambda$lambda_0(this));
+  }
+  Object.defineProperty(EndCinematic.prototype, 'finalImg', {
+    get: function () {
+      if (this.finalImg_tv0qb4$_0 == null)
+        return throwUPAE('finalImg');
+      return this.finalImg_tv0qb4$_0;
+    },
+    set: function (finalImg) {
+      this.finalImg_tv0qb4$_0 = finalImg;
+    }
+  });
+  Object.defineProperty(EndCinematic.prototype, 'credits', {
+    get: function () {
+      if (this.credits_zi4ngd$_0 == null)
+        return throwUPAE('credits');
+      return this.credits_zi4ngd$_0;
+    },
+    set: function (credits) {
+      this.credits_zi4ngd$_0 = credits;
+    }
+  });
+  Object.defineProperty(EndCinematic.prototype, 'fadeRect', {
+    get: function () {
+      if (this.fadeRect_95zw59$_0 == null)
+        return throwUPAE('fadeRect');
+      return this.fadeRect_95zw59$_0;
+    },
+    set: function (fadeRect) {
+      this.fadeRect_95zw59$_0 = fadeRect;
+    }
+  });
+  function EndCinematic$fade$lambda$lambda$lambda$lambda(this$EndCinematic) {
+    return function () {
+      this$EndCinematic.menu_0();
+      return Unit;
+    };
+  }
+  function EndCinematic$fade$lambda$lambda$lambda(this$EndCinematic, this$fade) {
+    return function () {
+      this$EndCinematic.credits.alpha = 1.0;
+      timeout(this$fade, TimeSpan.Companion.fromSeconds_14dthe$(10), EndCinematic$fade$lambda$lambda$lambda$lambda(this$EndCinematic));
+      return Unit;
+    };
+  }
+  function EndCinematic$fade$lambda$lambda(this$EndCinematic, this$fade) {
+    return function () {
+      this$EndCinematic.finalImg.alpha = 1.0;
+      timeout(this$fade, TimeSpan.Companion.fromSeconds_14dthe$(8), EndCinematic$fade$lambda$lambda$lambda(this$EndCinematic, this$fade));
+      return Unit;
+    };
+  }
+  function Coroutine$EndCinematic$fade$lambda(this$EndCinematic_0, this$fade_0, continuation_0) {
+    CoroutineImpl.call(this, continuation_0);
+    this.exceptionState_0 = 1;
+    this.local$this$EndCinematic = this$EndCinematic_0;
+    this.local$this$fade = this$fade_0;
+  }
+  Coroutine$EndCinematic$fade$lambda.$metadata$ = {
+    kind: Kotlin.Kind.CLASS,
+    simpleName: null,
+    interfaces: [CoroutineImpl]
+  };
+  Coroutine$EndCinematic$fade$lambda.prototype = Object.create(CoroutineImpl.prototype);
+  Coroutine$EndCinematic$fade$lambda.prototype.constructor = Coroutine$EndCinematic$fade$lambda;
+  Coroutine$EndCinematic$fade$lambda.prototype.doResume = function () {
+    do
+      try {
+        switch (this.state_0) {
+          case 0:
+            this.state_0 = 2;
+            this.result_0 = show(this.local$this$EndCinematic.fadeRect, TimeSpan.Companion.fromSeconds_14dthe$(2), void 0, this);
+            if (this.result_0 === COROUTINE_SUSPENDED)
+              return COROUTINE_SUSPENDED;
+            continue;
+          case 1:
+            throw this.exception_0;
+          case 2:
+            return timeout(this.local$this$fade, TimeSpan.Companion.fromSeconds_14dthe$(2), EndCinematic$fade$lambda$lambda(this.local$this$EndCinematic, this.local$this$fade));
+          default:this.state_0 = 1;
+            throw new Error('State Machine Unreachable execution');
+        }
+      } catch (e) {
+        if (this.state_0 === 1) {
+          this.exceptionState_0 = this.state_0;
+          throw e;
+        } else {
+          this.state_0 = this.exceptionState_0;
+          this.exception_0 = e;
+        }
+      }
+     while (true);
+  };
+  function EndCinematic$fade$lambda(this$EndCinematic_0, this$fade_0) {
+    return function (continuation_0, suspended) {
+      var instance = new Coroutine$EndCinematic$fade$lambda(this$EndCinematic_0, this$fade_0, continuation_0);
+      if (suspended)
+        return instance;
+      else
+        return instance.doResume(null);
+    };
+  }
+  EndCinematic.prototype.fade_st8p7j$ = function ($receiver) {
+    launch(this.coroutineContext_0, EndCinematic$fade$lambda(this, $receiver));
+  };
+  function Coroutine$EndCinematic_init$lambda$lambda(this$_0, this$EndCinematic_0, continuation_0) {
+    CoroutineImpl.call(this, continuation_0);
+    this.exceptionState_0 = 1;
+    this.local$this$ = this$_0;
+    this.local$this$EndCinematic = this$EndCinematic_0;
+  }
+  Coroutine$EndCinematic_init$lambda$lambda.$metadata$ = {
+    kind: Kotlin.Kind.CLASS,
+    simpleName: null,
+    interfaces: [CoroutineImpl]
+  };
+  Coroutine$EndCinematic_init$lambda$lambda.prototype = Object.create(CoroutineImpl.prototype);
+  Coroutine$EndCinematic_init$lambda$lambda.prototype.constructor = Coroutine$EndCinematic_init$lambda$lambda;
+  Coroutine$EndCinematic_init$lambda$lambda.prototype.doResume = function () {
+    do
+      try {
+        switch (this.state_0) {
+          case 0:
+            var tmp$, tmp$_0;
+            this.state_0 = 2;
+            this.result_0 = readBitmap(std.resourcesVfs.get_61zpoe$('level3/LarrioEnd.png'), void 0, void 0, this);
+            if (this.result_0 === COROUTINE_SUSPENDED)
+              return COROUTINE_SUSPENDED;
+            continue;
+          case 1:
+            throw this.exception_0;
+          case 2:
+            tmp$ = this.result_0;
+            var tmp$_1 = this.local$this$EndCinematic;
+            var $receiver = this.local$this$;
+            var $receiver_0 = addTo(Image_init(tmp$, 0.0, 0.0), $receiver);
+            image$lambda_0($receiver_0);
+            tmp$_1.finalImg = $receiver_0;
+            this.state_0 = 3;
+            this.result_0 = readBitmap(std.resourcesVfs.get_61zpoe$('level3/Credits.png'), void 0, void 0, this);
+            if (this.result_0 === COROUTINE_SUSPENDED)
+              return COROUTINE_SUSPENDED;
+            continue;
+          case 3:
+            tmp$_0 = this.result_0;
+            var tmp$_2 = this.local$this$EndCinematic;
+            var $receiver_1 = this.local$this$;
+            var $receiver_0_0 = addTo(Image_init(tmp$_0, 0.0, 0.0), $receiver_1);
+            image$lambda_0($receiver_0_0);
+            tmp$_2.credits = $receiver_0_0;
+            this.local$this$EndCinematic.finalImg.alpha = 0.0;
+            return this.local$this$EndCinematic.credits.alpha = 0.0, Unit;
+          default:this.state_0 = 1;
+            throw new Error('State Machine Unreachable execution');
+        }
+      } catch (e) {
+        if (this.state_0 === 1) {
+          this.exceptionState_0 = this.state_0;
+          throw e;
+        } else {
+          this.state_0 = this.exceptionState_0;
+          this.exception_0 = e;
+        }
+      }
+     while (true);
+  };
+  function EndCinematic_init$lambda$lambda(this$_0, this$EndCinematic_0) {
+    return function (continuation_0, suspended) {
+      var instance = new Coroutine$EndCinematic_init$lambda$lambda(this$_0, this$EndCinematic_0, continuation_0);
+      if (suspended)
+        return instance;
+      else
+        return instance.doResume(null);
+    };
+  }
+  function EndCinematic_init$lambda$lambda_0(this$EndCinematic) {
+    return function ($receiver) {
+      if (this$EndCinematic.player_0.head.xpos > 100 && !this$EndCinematic.ended) {
+        this$EndCinematic.fade_st8p7j$($receiver);
+        this$EndCinematic.ended = true;
+        this$EndCinematic.player_0.cinematicMode = false;
+        this$EndCinematic.player_0.goRight = true;
+      }return Unit;
+    };
+  }
+  EndCinematic.$metadata$ = {
+    kind: Kind_CLASS,
+    simpleName: 'EndCinematic',
+    interfaces: []
+  };
+  function container$lambda_2($receiver) {
+    return Unit;
+  }
   function SnakeCinematic(container, player, coroutineContext) {
     this.player_0 = player;
     this.coroutineContext_0 = coroutineContext;
     var $receiver_0 = addTo(new Container_init(), container);
-    timeout($receiver_0, TimeSpan.Companion.fromSeconds_14dthe$(5), SnakeCinematic_init$lambda$lambda(this, $receiver_0));
+    timeout($receiver_0, TimeSpan.Companion.fromSeconds_14dthe$(20), SnakeCinematic_init$lambda$lambda(this, $receiver_0));
   }
   function SnakeCinematic$goRight$lambda(this$SnakeCinematic, this$goRight) {
     return function () {
@@ -1586,12 +1865,26 @@
       $receiver_0.textSize = size;
     launch(this.coroutineContext_0, SnakeCinematic$talk$lambda($receiver));
   };
-  function SnakeCinematic_init$lambda$lambda(this$SnakeCinematic, this$) {
+  function SnakeCinematic_init$lambda$lambda$lambda$lambda(this$SnakeCinematic, this$) {
     return function () {
       this$SnakeCinematic.talk_w2ut7v$(this$SnakeCinematic.player_0.bocadilloBig, "I'M TIRED", 8.0);
       if (this$SnakeCinematic.player_0.direction !== Direction$LEFT_getInstance())
         this$SnakeCinematic.player_0.cinematicMode = true;
       this$SnakeCinematic.goRight_st8p7j$(this$);
+      return Unit;
+    };
+  }
+  function SnakeCinematic_init$lambda$lambda$lambda(this$SnakeCinematic, this$) {
+    return function () {
+      this$SnakeCinematic.talk_w2ut7v$(this$SnakeCinematic.player_0.bocadilloBig, "THAT'S FUN?", 7.0);
+      timeout(this$, TimeSpan.Companion.fromSeconds_14dthe$(10), SnakeCinematic_init$lambda$lambda$lambda$lambda(this$SnakeCinematic, this$));
+      return Unit;
+    };
+  }
+  function SnakeCinematic_init$lambda$lambda(this$SnakeCinematic, this$) {
+    return function () {
+      this$SnakeCinematic.talk_w2ut7v$(this$SnakeCinematic.player_0.bocadilloBig, 'WHY?', 8.0);
+      timeout(this$, TimeSpan.Companion.fromSeconds_14dthe$(10), SnakeCinematic_init$lambda$lambda$lambda(this$SnakeCinematic, this$));
       return Unit;
     };
   }
@@ -1796,7 +2089,7 @@
     simpleName: 'CollisionChecker',
     interfaces: []
   };
-  function image$lambda_0($receiver) {
+  function image$lambda_1($receiver) {
     return Unit;
   }
   function tiledMapView$lambda($receiver) {
@@ -1830,7 +2123,7 @@
           case 2:
             var background = this.result_0;
             var $receiver_0 = addTo(Image_init(background, 0.0, 0.0), this.local$$receiver);
-            image$lambda_0($receiver_0);
+            image$lambda_1($receiver_0);
             $receiver_0.smoothing = false;
             this.state_0 = 3;
             this.result_0 = readTiledMap(std.resourcesVfs.get_61zpoe$('level' + this.local$level + '/map.tmx'), void 0, void 0, void 0, this);
@@ -1907,8 +2200,10 @@
     this.appleSound_c658iw$_0 = this.appleSound_c658iw$_0;
     this.bubbleTalk_5sc5vf$_0 = this.bubbleTalk_5sc5vf$_0;
     this.explosion_3n588u$_0 = this.explosion_3n588u$_0;
-    this.larrioMusicChannel_zeoxgc$_0 = this.larrioMusicChannel_zeoxgc$_0;
+    this.channel_qyze98$_0 = this.channel_qyze98$_0;
     this.larrioMusic_ydgkq5$_0 = this.larrioMusic_ydgkq5$_0;
+    this.pacmanMusic_44z4py$_0 = this.pacmanMusic_44z4py$_0;
+    this.snakeMusic_sf5jew$_0 = this.snakeMusic_sf5jew$_0;
     this.levelWarp_tdqd6d$_0 = this.levelWarp_tdqd6d$_0;
     this.pacmanDead_e0z1m7$_0 = this.pacmanDead_e0z1m7$_0;
     this.loaded_0 = false;
@@ -1963,14 +2258,14 @@
       this.explosion_3n588u$_0 = explosion;
     }
   });
-  Object.defineProperty(Resources$Companion.prototype, 'larrioMusicChannel', {
+  Object.defineProperty(Resources$Companion.prototype, 'channel', {
     get: function () {
-      if (this.larrioMusicChannel_zeoxgc$_0 == null)
-        return throwUPAE('larrioMusicChannel');
-      return this.larrioMusicChannel_zeoxgc$_0;
+      if (this.channel_qyze98$_0 == null)
+        return throwUPAE('channel');
+      return this.channel_qyze98$_0;
     },
-    set: function (larrioMusicChannel) {
-      this.larrioMusicChannel_zeoxgc$_0 = larrioMusicChannel;
+    set: function (channel) {
+      this.channel_qyze98$_0 = channel;
     }
   });
   Object.defineProperty(Resources$Companion.prototype, 'larrioMusic', {
@@ -1981,6 +2276,26 @@
     },
     set: function (larrioMusic) {
       this.larrioMusic_ydgkq5$_0 = larrioMusic;
+    }
+  });
+  Object.defineProperty(Resources$Companion.prototype, 'pacmanMusic', {
+    get: function () {
+      if (this.pacmanMusic_44z4py$_0 == null)
+        return throwUPAE('pacmanMusic');
+      return this.pacmanMusic_44z4py$_0;
+    },
+    set: function (pacmanMusic) {
+      this.pacmanMusic_44z4py$_0 = pacmanMusic;
+    }
+  });
+  Object.defineProperty(Resources$Companion.prototype, 'snakeMusic', {
+    get: function () {
+      if (this.snakeMusic_sf5jew$_0 == null)
+        return throwUPAE('snakeMusic');
+      return this.snakeMusic_sf5jew$_0;
+    },
+    set: function (snakeMusic) {
+      this.snakeMusic_sf5jew$_0 = snakeMusic;
     }
   });
   Object.defineProperty(Resources$Companion.prototype, 'levelWarp', {
@@ -2084,21 +2399,35 @@
             continue;
           case 8:
             Resources$Companion_getInstance().larrioMusic = this.result_0;
-            Resources$Companion_getInstance().larrioMusicChannel = Resources$Companion_getInstance().larrioMusic.play_gfl8bq$();
-            Resources$Companion_getInstance().larrioMusicChannel.stop();
             this.state_0 = 9;
-            this.result_0 = readSound(std.resourcesVfs.get_61zpoe$('sounds/LevelWarp.wav'), void 0, void 0, this);
+            this.result_0 = readMusic(std.resourcesVfs.get_61zpoe$('sounds/PacMan_music.mp3'), void 0, this);
             if (this.result_0 === COROUTINE_SUSPENDED)
               return COROUTINE_SUSPENDED;
             continue;
           case 9:
-            Resources$Companion_getInstance().levelWarp = this.result_0;
+            Resources$Companion_getInstance().pacmanMusic = this.result_0;
             this.state_0 = 10;
-            this.result_0 = readSound(std.resourcesVfs.get_61zpoe$('sounds/PacmanDead.wav'), void 0, void 0, this);
+            this.result_0 = readMusic(std.resourcesVfs.get_61zpoe$('sounds/Snake_Music.mp3'), void 0, this);
             if (this.result_0 === COROUTINE_SUSPENDED)
               return COROUTINE_SUSPENDED;
             continue;
           case 10:
+            Resources$Companion_getInstance().snakeMusic = this.result_0;
+            Resources$Companion_getInstance().channel = Resources$Companion_getInstance().snakeMusic.play_gfl8bq$();
+            Resources$Companion_getInstance().channel.stop();
+            this.state_0 = 11;
+            this.result_0 = readSound(std.resourcesVfs.get_61zpoe$('sounds/LevelWarp.wav'), void 0, void 0, this);
+            if (this.result_0 === COROUTINE_SUSPENDED)
+              return COROUTINE_SUSPENDED;
+            continue;
+          case 11:
+            Resources$Companion_getInstance().levelWarp = this.result_0;
+            this.state_0 = 12;
+            this.result_0 = readSound(std.resourcesVfs.get_61zpoe$('sounds/PacmanDead.wav'), void 0, void 0, this);
+            if (this.result_0 === COROUTINE_SUSPENDED)
+              return COROUTINE_SUSPENDED;
+            continue;
+          case 12:
             Resources$Companion_getInstance().pacmanDead = this.result_0;
             return;
           default:this.state_0 = 1;
@@ -2127,7 +2456,7 @@
     simpleName: 'Resources',
     interfaces: []
   };
-  function solidRect$lambda($receiver) {
+  function solidRect$lambda_0($receiver) {
     return Unit;
   }
   function text$lambda_0($receiver) {
@@ -2198,7 +2527,7 @@
   }
   GameScene.prototype.fade_st8p7j$ = function ($receiver) {
     var $receiver_0 = addTo(new SolidRect_init(1000.0, 1000.0, RGBA.Companion.float_7b5o5w$(numberToDouble(0), numberToDouble(0), numberToDouble(0), numberToDouble(0))), $receiver);
-    solidRect$lambda($receiver_0);
+    solidRect$lambda_0($receiver_0);
     var fadeRect = $receiver_0;
     launch_0(this, GameScene$fade$lambda(fadeRect));
   };
@@ -2259,7 +2588,7 @@
   }
   GameScene.prototype.unFade_st8p7j$ = function ($receiver, continuation) {
     var $receiver_0 = addTo(new SolidRect_init(1000.0, 1000.0, RGBA.Companion.float_7b5o5w$(numberToDouble(0), numberToDouble(0), numberToDouble(0), numberToDouble(1))), $receiver);
-    solidRect$lambda($receiver_0);
+    solidRect$lambda_0($receiver_0);
     var fadeRect = $receiver_0;
     launch_0(this, GameScene$unFade$lambda(fadeRect));
   };
@@ -2526,7 +2855,72 @@
         }}return Unit;
     };
   }
-  function GameScene$sceneInit$lambda$lambda_3(closure$cameraCenter, closure$player, closure$cameraSpeed, closure$tiledMap, closure$screenSize) {
+  function Coroutine$GameScene$sceneInit$lambda$lambda$lambda_2(this$GameScene_0, continuation_0) {
+    CoroutineImpl.call(this, continuation_0);
+    this.exceptionState_0 = 1;
+    this.local$this$GameScene = this$GameScene_0;
+  }
+  Coroutine$GameScene$sceneInit$lambda$lambda$lambda_2.$metadata$ = {
+    kind: Kotlin.Kind.CLASS,
+    simpleName: null,
+    interfaces: [CoroutineImpl]
+  };
+  Coroutine$GameScene$sceneInit$lambda$lambda$lambda_2.prototype = Object.create(CoroutineImpl.prototype);
+  Coroutine$GameScene$sceneInit$lambda$lambda$lambda_2.prototype.constructor = Coroutine$GameScene$sceneInit$lambda$lambda$lambda_2;
+  Coroutine$GameScene$sceneInit$lambda$lambda$lambda_2.prototype.doResume = function () {
+    do
+      try {
+        switch (this.state_0) {
+          case 0:
+            var $this = this.local$this$GameScene.sceneContainer;
+            var injects = [1];
+            var time;
+            var transition;
+            if (time === void 0) {
+              time = TimeSpan_0.Companion.fromSeconds_14dthe$(0);
+            }
+            if (transition === void 0)
+              transition = $this.defaultTransition;
+            this.state_0 = 2;
+            this.result_0 = $this.changeTo_oszfv1$(getKClass(LoadingScene), injects.slice(), time, transition, this);
+            if (this.result_0 === COROUTINE_SUSPENDED)
+              return COROUTINE_SUSPENDED;
+            continue;
+          case 1:
+            throw this.exception_0;
+          case 2:
+            this.result_0;
+            return this.result_0;
+          default:this.state_0 = 1;
+            throw new Error('State Machine Unreachable execution');
+        }
+      } catch (e) {
+        if (this.state_0 === 1) {
+          this.exceptionState_0 = this.state_0;
+          throw e;
+        } else {
+          this.state_0 = this.exceptionState_0;
+          this.exception_0 = e;
+        }
+      }
+     while (true);
+  };
+  function GameScene$sceneInit$lambda$lambda$lambda_2(this$GameScene_0) {
+    return function (continuation_0, suspended) {
+      var instance = new Coroutine$GameScene$sceneInit$lambda$lambda$lambda_2(this$GameScene_0, continuation_0);
+      if (suspended)
+        return instance;
+      else
+        return instance.doResume(null);
+    };
+  }
+  function GameScene$sceneInit$lambda$lambda_3(this$GameScene) {
+    return function () {
+      launchImmediately(this$GameScene, GameScene$sceneInit$lambda$lambda$lambda_2(this$GameScene));
+      return Unit;
+    };
+  }
+  function GameScene$sceneInit$lambda$lambda_4(closure$cameraCenter, closure$player, closure$cameraSpeed, closure$tiledMap, closure$screenSize) {
     return function ($receiver) {
       var target = closure$cameraCenter - closure$player.head.xpos;
       if ($receiver.x < target) {
@@ -2618,7 +3012,7 @@
       }
      while (true);
   };
-  function GameScene$sceneInit$lambda$lambda_4(closure$getReady_0, this$GameScene_0, closure$collisionChecker_0, this$_0) {
+  function GameScene$sceneInit$lambda$lambda_5(closure$getReady_0, this$GameScene_0, closure$collisionChecker_0, this$_0) {
     return function (continuation_0, suspended) {
       var instance = new Coroutine$GameScene$sceneInit$lambda$lambda(closure$getReady_0, this$GameScene_0, closure$collisionChecker_0, this$_0, continuation_0);
       if (suspended)
@@ -2764,13 +3158,20 @@
             var player = this.result_0;
             var fallen = {v: false};
             addUpdater(this.local$$receiver_0, GameScene$sceneInit$lambda$lambda_2(this.$this, fallen, player));
-            if (this.$this.stageConfig.level === 1)
-              new SnakeCinematic(this.local$$receiver, player, this.$this.coroutineContext);
+            switch (this.$this.stageConfig.level) {
+              case 1:
+                new SnakeCinematic(this.local$$receiver, player, this.$this.coroutineContext);
+                break;
+              case 3:
+                new EndCinematic(this.local$$receiver, player, this.$this.coroutineContext, GameScene$sceneInit$lambda$lambda_3(this.$this));
+                break;
+            }
+
             if (this.$this.stageConfig.scroll) {
               var cameraSpeed = 4;
               var cameraCenter = 400;
               var screenSize = 800;
-              addFixedUpdater(this.local$$receiver_0, MILLISECONDS_PER_FRAME, void 0, void 0, GameScene$sceneInit$lambda$lambda_3(cameraCenter, player, cameraSpeed, this.local$tiledMap, screenSize));
+              addFixedUpdater(this.local$$receiver_0, MILLISECONDS_PER_FRAME, void 0, void 0, GameScene$sceneInit$lambda$lambda_4(cameraCenter, player, cameraSpeed, this.local$tiledMap, screenSize));
             }
             var text = 'GET READY!';
             var color_0_0;
@@ -2780,7 +3181,7 @@
             var $receiver = centerBetween($receiver_0, numberToDouble(0), numberToDouble(0), numberToDouble(800), numberToDouble(400));
             $receiver.visible = false;
             var getReady = $receiver;
-            launch_0(this.$this, GameScene$sceneInit$lambda$lambda_4(getReady, this.$this, this.local$collisionChecker, this.local$$receiver_0));
+            launch_0(this.$this, GameScene$sceneInit$lambda$lambda_5(getReady, this.$this, this.local$collisionChecker, this.local$$receiver_0));
             this.state_0 = 18;
             this.result_0 = this.$this.customInit_st8p7j$(this.local$$receiver, this);
             if (this.result_0 === COROUTINE_SUSPENDED)
@@ -2850,6 +3251,7 @@
     }
   });
   SnakeGameScene.prototype.customInit_st8p7j$ = function ($receiver, continuation) {
+    var tmp$;
     var font = Resources$Companion_getInstance().font;
     var color_0_0;
     color_0_0 = color_0.Colors.WHITE;
@@ -2857,6 +3259,8 @@
     text$lambda_0($receiver_0);
     this.scoreText = position_0($receiver_0, 25, 15);
     this.updateScore();
+    (tmp$ = Resources$Companion_getInstance().channel) != null ? (tmp$.stop(), Unit) : null;
+    Resources$Companion_getInstance().channel = Resources$Companion_getInstance().snakeMusic.playForever_fv8bff$();
   };
   SnakeGameScene.prototype.updateScore = function () {
     this.scoreText.text = padStart(currentGameState.score.toString(), 6, 48);
@@ -2944,6 +3348,11 @@
   function PacmanGameScene() {
     GameScene.call(this, PacmanStageConfig);
   }
+  PacmanGameScene.prototype.customInit_st8p7j$ = function ($receiver, continuation) {
+    var tmp$;
+    (tmp$ = Resources$Companion_getInstance().channel) != null ? (tmp$.stop(), Unit) : null;
+    Resources$Companion_getInstance().channel = Resources$Companion_getInstance().pacmanMusic.playForever_fv8bff$();
+  };
   function Coroutine$nextLevel($this, continuation_0) {
     CoroutineImpl.call(this, continuation_0);
     this.exceptionState_0 = 1;
@@ -2971,7 +3380,6 @@
             throw this.exception_0;
           case 2:
             currentGameState.paused = true;
-            println('nextLevel.1');
             var $this = this.$this.sceneContainer;
             var injects = [];
             var time;
@@ -3019,15 +3427,16 @@
     GameScene.call(this, MarioStageConfig);
   }
   MarioGameScene.prototype.customInit_st8p7j$ = function ($receiver, continuation) {
-    Resources$Companion_getInstance().larrioMusicChannel.stop();
-    Resources$Companion_getInstance().larrioMusicChannel = Resources$Companion_getInstance().larrioMusic.play_gfl8bq$();
+    var tmp$;
+    (tmp$ = Resources$Companion_getInstance().channel) != null ? (tmp$.stop(), Unit) : null;
+    Resources$Companion_getInstance().channel = Resources$Companion_getInstance().larrioMusic.playForever_fv8bff$();
   };
   MarioGameScene.$metadata$ = {
     kind: Kind_CLASS,
     simpleName: 'MarioGameScene',
     interfaces: [GameScene]
   };
-  function image$lambda_1($receiver) {
+  function image$lambda_2($receiver) {
     return Unit;
   }
   function LoadingScene() {
@@ -3494,11 +3903,12 @@
         return instance.doResume(null);
     };
   }
-  function Coroutine$MainMenuScene$sceneInit$lambda_3(closure$mario_0, closure$pacman_0, it_0, continuation_0) {
+  function Coroutine$MainMenuScene$sceneInit$lambda_3(closure$mario_0, closure$pacman_0, closure$play_0, it_0, continuation_0) {
     CoroutineImpl.call(this, continuation_0);
     this.exceptionState_0 = 1;
     this.local$closure$mario = closure$mario_0;
     this.local$closure$pacman = closure$pacman_0;
+    this.local$closure$play = closure$play_0;
     this.local$it = it_0;
   }
   Coroutine$MainMenuScene$sceneInit$lambda_3.$metadata$ = {
@@ -3523,7 +3933,8 @@
           case 2:
             this.local$closure$mario.alpha = 1.0;
             this.local$closure$pacman.alpha = 1.0;
-            return this.local$it.view.removeFromParent(), Unit;
+            this.local$it.view.removeFromParent();
+            return this.local$closure$play.text = 'SNAKE', Unit;
           default:this.state_0 = 1;
             throw new Error('State Machine Unreachable execution');
         }
@@ -3538,9 +3949,9 @@
       }
      while (true);
   };
-  function MainMenuScene$sceneInit$lambda_3(closure$mario_0, closure$pacman_0) {
+  function MainMenuScene$sceneInit$lambda_3(closure$mario_0, closure$pacman_0, closure$play_0) {
     return function (it_0, continuation_0, suspended) {
-      var instance = new Coroutine$MainMenuScene$sceneInit$lambda_3(closure$mario_0, closure$pacman_0, it_0, continuation_0);
+      var instance = new Coroutine$MainMenuScene$sceneInit$lambda_3(closure$mario_0, closure$pacman_0, closure$play_0, it_0, continuation_0);
       if (suspended)
         return instance;
       else
@@ -3552,6 +3963,7 @@
     this.exceptionState_0 = 1;
     this.$this = $this;
     this.local$font = void 0;
+    this.local$play = void 0;
     this.local$pacman = void 0;
     this.local$mario = void 0;
     this.local$$receiver = $receiver_0;
@@ -3576,6 +3988,8 @@
           case 1:
             throw this.exception_0;
           case 2:
+            Resources$Companion_getInstance().channel.stop();
+            Resources$Companion_getInstance().channel = Resources$Companion_getInstance().snakeMusic.playForever_fv8bff$();
             currentGameState.reset();
             this.state_0 = 3;
             this.result_0 = tiledMap(this.local$$receiver, 1, this);
@@ -3609,6 +4023,7 @@
             if ((tmp$ = $receiver != null ? get_mouse($receiver) : null) != null) {
               prop.get(tmp$).add_qlkmfe$(doMouseEvent$lambda$lambda(tmp$, MainMenuScene$sceneInit$lambda_0(this.$this)));
             }
+            this.local$play = ensureNotNull($receiver);
             var color_0_3;
             color_0_3 = color_0.Colors.WHITE;
             var $receiver_0_3 = addTo(Text.Companion.invoke_8ii8iq$('PACMAN', 28.0, color_0_3, this.local$font), this.local$$receiver);
@@ -3657,7 +4072,7 @@
             });
             var tmp$_2;
             if ((tmp$_2 = $receiver_3 != null ? get_mouse($receiver_3) : null) != null) {
-              prop_2.get(tmp$_2).add_qlkmfe$(doMouseEvent$lambda$lambda(tmp$_2, MainMenuScene$sceneInit$lambda_3(this.local$mario, this.local$pacman)));
+              prop_2.get(tmp$_2).add_qlkmfe$(doMouseEvent$lambda$lambda(tmp$_2, MainMenuScene$sceneInit$lambda_3(this.local$mario, this.local$pacman, this.local$play)));
             }
             return;
           default:this.state_0 = 1;
@@ -3686,7 +4101,7 @@
     simpleName: 'MainMenuScene',
     interfaces: [Scene]
   };
-  function image$lambda_2($receiver) {
+  function image$lambda_3($receiver) {
     return Unit;
   }
   function RestartMarioScene() {
@@ -3785,7 +4200,7 @@
             throw this.exception_0;
           case 2:
             var $receiver_0 = addTo(Image_init(this.result_0, 0.0, 0.0), this.local$$receiver);
-            image$lambda_2($receiver_0);
+            image$lambda_3($receiver_0);
             launchImmediately(this.$this, RestartMarioScene$sceneInit$lambda(this.$this));
             return;
           default:this.state_0 = 1;
@@ -3814,7 +4229,7 @@
     simpleName: 'RestartMarioScene',
     interfaces: [Scene]
   };
-  function solidRect$lambda_0($receiver) {
+  function solidRect$lambda_1($receiver) {
     return Unit;
   }
   function RestartPacmanScene() {
@@ -3839,7 +4254,7 @@
         switch (this.state_0) {
           case 0:
             var $receiver_0 = addTo(new SolidRect_init(1000.0, 1000.0, RGBA.Companion.float_7b5o5w$(numberToDouble(0), numberToDouble(0), numberToDouble(0), numberToDouble(1))), this.local$$receiver);
-            solidRect$lambda_0($receiver_0);
+            solidRect$lambda_1($receiver_0);
             currentGameState.paused = false;
             var $this = this.$this.sceneContainer;
             var injects = [1];
@@ -3959,7 +4374,7 @@
     simpleName: 'RestartSnakeScene',
     interfaces: [Scene]
   };
-  function solidRect$lambda_1($receiver) {
+  function solidRect$lambda_2($receiver) {
     return Unit;
   }
   function TransitionToMarioScene() {
@@ -3985,7 +4400,7 @@
           case 0:
             println('nextLevel.2');
             var $receiver_0 = addTo(new SolidRect_init(1000.0, 1000.0, RGBA.Companion.float_7b5o5w$(numberToDouble(0), numberToDouble(0), numberToDouble(0), numberToDouble(1))), this.local$$receiver);
-            solidRect$lambda_1($receiver_0);
+            solidRect$lambda_2($receiver_0);
             currentGameState.paused = false;
             println('nextLevel.3');
             var $this = this.$this.sceneContainer;
@@ -4033,7 +4448,7 @@
     simpleName: 'TransitionToMarioScene',
     interfaces: [Scene]
   };
-  function solidRect$lambda_2($receiver) {
+  function solidRect$lambda_3($receiver) {
     return Unit;
   }
   function TransitionToPacmanScene() {
@@ -4058,7 +4473,7 @@
         switch (this.state_0) {
           case 0:
             var $receiver_0 = addTo(new SolidRect_init(1000.0, 1000.0, RGBA.Companion.float_7b5o5w$(numberToDouble(0), numberToDouble(0), numberToDouble(0), numberToDouble(1))), this.local$$receiver);
-            solidRect$lambda_2($receiver_0);
+            solidRect$lambda_3($receiver_0);
             currentGameState.paused = false;
             var $this = this.$this.sceneContainer;
             var injects = [1];
@@ -4618,12 +5033,14 @@
   });
   package$actors.MovementMode = MovementMode;
   $$importsForInline$$.korgejam = _;
+  $$importsForInline$$['klock-root-klock'] = $module$klock_root_klock;
   $$importsForInline$$['korma-root-korma'] = $module$korma_root_korma;
   package$actors.snake_7unl9l$ = snake;
   package$actors.SnakeSkin = SnakeSkin;
   package$actors.PacmanSnakeSkin = PacmanSnakeSkin;
-  $$importsForInline$$['klock-root-klock'] = $module$klock_root_klock;
+  $$importsForInline$$['korim-root-korim'] = $module$korim_root_korim;
   var package$cinematics = package$snakegame.cinematics || (package$snakegame.cinematics = {});
+  package$cinematics.EndCinematic = EndCinematic;
   package$cinematics.SnakeCinematic = SnakeCinematic;
   Object.defineProperty(package$snakegame, 'DESIRED_FPS', {
     get: function () {
@@ -4728,7 +5145,6 @@
   });
   var package$resources = package$snakegame.resources || (package$snakegame.resources = {});
   package$resources.Resources = Resources;
-  $$importsForInline$$['korim-root-korim'] = $module$korim_root_korim;
   var package$scenes = package$snakegame.scenes || (package$snakegame.scenes = {});
   package$scenes.GameScene = GameScene;
   package$scenes.SnakeGameScene = SnakeGameScene;

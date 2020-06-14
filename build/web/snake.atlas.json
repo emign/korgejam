@@ -818,6 +818,27 @@
 				"h": 32
 			},
 			"trimmed": false
+		},
+		"Toad.png": {
+			"filename": "Toad.png",
+			"frame": {
+				"x": 2,
+				"y": 1302,
+				"w": 32,
+				"h": 48
+			},
+			"rotated": false,
+			"sourceSize": {
+				"w": 32,
+				"h": 48
+			},
+			"spriteSourceSize": {
+				"x": 0,
+				"y": 0,
+				"w": 32,
+				"h": 48
+			},
+			"trimmed": false
 		}
 	},
 	"frames": [
@@ -1639,6 +1660,27 @@
 				"h": 32
 			},
 			"trimmed": false
+		},
+		{
+			"filename": "Toad.png",
+			"frame": {
+				"x": 2,
+				"y": 1302,
+				"w": 32,
+				"h": 48
+			},
+			"rotated": false,
+			"sourceSize": {
+				"w": 32,
+				"h": 48
+			},
+			"spriteSourceSize": {
+				"x": 0,
+				"y": 0,
+				"w": 32,
+				"h": 48
+			},
+			"trimmed": false
 		}
 	],
 	"meta": {
@@ -1648,7 +1690,7 @@
 		"scale": 1.0,
 		"size": {
 			"w": 172,
-			"h": 1300
+			"h": 1352
 		},
 		"version": "1.0.0"
 	}
