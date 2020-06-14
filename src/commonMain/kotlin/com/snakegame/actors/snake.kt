@@ -140,7 +140,7 @@ class Snake(
 
 enum class MovementMode { SNAKE, PACMAN, MARIO }
 
-suspend fun Container.snake(views: Views, pos: Point, skin:SnakeSkin, collisionChecker: CollisionChecker, movementMode:MovementMode = MovementMode.SNAKE, onDied:()->Unit):Snake {
+suspend fun Container.snake(views: Views, pos: Point, skin:SnakeSkin, collisionChecker: CollisionChecker, movementMode:MovementMode = MovementMode.SNAKE, onDied:()->Unit, onItemEaten:()->Unit):Snake {
     val snakeAtlas = resourcesVfs["snake.atlas.json"].readAtlas(views)
     val headTile = snakeAtlas[skin.headTile]
     val bodyTile = snakeAtlas[skin.bodyTile]
@@ -192,11 +192,15 @@ suspend fun Container.snake(views: Views, pos: Point, skin:SnakeSkin, collisionC
             if (it is Apple) {
                 it.spawn()
                 addBodyPart()
+                onItemEaten()
             }
         }
 
         addFixedUpdater(MILLISECONDS_PER_FRAME, false) {
-            if(currentGameState.paused) return@addFixedUpdater
+            if(currentGameState.paused) {
+                //println("GAME IS PAUSERDDD")
+                return@addFixedUpdater
+            }
         //addUpdater { it ->
         //    val deltaTime:Double = if (it.milliseconds == 0.0) 0.0 else (it.milliseconds / 16.666666)
 

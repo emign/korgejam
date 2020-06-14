@@ -22,6 +22,8 @@ import com.soywiz.korio.file.std.resourcesVfs
 
 open class GameScene(val stageConfig: StageConfig) : Scene() {
 
+    var fadeOff = false
+
     fun Container.fade(){
         val fadeRect = solidRect(1000.0, 1000.0, RGBA.float(0, 0, 0, 0))
         launch {
@@ -41,22 +43,33 @@ open class GameScene(val stageConfig: StageConfig) : Scene() {
     override suspend fun Container.sceneInit() {
         val font = resourcesVfs["texts/I-pixel-u.fnt"].readBitmapFont()
 
+        addUpdater {
+            if(fadeOff){
+                fade()
+            }
+        }
+
         camera{
             val tiledMap = tiledMap(stageConfig.level)
             val collisionChecker = CollisionChecker(tiledMap)
 
 
-            val player = snake(views, stageConfig.startingPoint, stageConfig.snakeSkin, collisionChecker, stageConfig.movementMode){
-                currentGameState.paused = true
-                launchImmediately {
-                    text("YOU DIED!", 64.0, font = font)
-                            .centerBetween(0,0,800,400)
-                    sleep(1.seconds)
-                    //currentGameState.paused = false
-                    currentGameState.restarting = true
-                    sceneContainer.changeTo<RestartSnakeScene>()
+            val player = snake(views, stageConfig.startingPoint, stageConfig.snakeSkin, collisionChecker, stageConfig.movementMode,
+                onDied = {
+                    println("DIEDDD")
+                    currentGameState.paused = true
+                    launchImmediately {
+                        text("YOU DIED!", 64.0, font = font)
+                                .centerBetween(0,0,800,400)
+                        sleep(1.seconds)
+                        //currentGameState.paused = false
+                        currentGameState.restarting = true
+                        sceneContainer.changeTo<RestartSnakeScene>()
+                    }
+                },onItemEaten = {
+                    onItemEaten()
                 }
-            }
+            )
 
             if (stageConfig.scroll) {
                 val cameraSpeed = 4
@@ -97,12 +110,39 @@ open class GameScene(val stageConfig: StageConfig) : Scene() {
 
         if(!currentGameState.restarting) unFade()
     }
+
+    open fun onItemEaten() {
+        currentGameState.score += 100
+    }
 }
 
 class SnakeGameScene() : GameScene(SnakeStageConfig){
+    lateinit var scoreText:Text
+
+    var apples = 0
+
     override suspend fun Container.customInit() {
         val font = resourcesVfs["texts/I-pixel-u.fnt"].readBitmapFont()
-        text("00023", 32.0, font = font).position(25, 15)
+        scoreText = text("000000", 32.0, font = font).position(25, 15)
+        updateScore()
+    }
+
+    fun updateScore(){
+        scoreText.text = currentGameState.score.toString().padStart(6, '0')
+    }
+
+    override fun onItemEaten() {
+        super.onItemEaten()
+        updateScore()
+        apples++
+        if (apples>=2) {
+            launch {
+                fadeOff = true
+                currentGameState.paused = true
+                sleep(1.seconds)
+                sceneContainer.changeTo<TransitionToPacmanScene>(1)
+            }
+        }
     }
 }
 
