@@ -3,8 +3,11 @@ package com.snakegame.cinematics
 import com.snakegame.MILLISECONDS_PER_FRAME
 import com.snakegame.actors.Direction
 import com.snakegame.actors.Snake
+import com.snakegame.resources.Resources
+import com.soywiz.klock.milliseconds
 import com.soywiz.klock.seconds
 import com.soywiz.korge.time.timeout
+import com.soywiz.korge.time.wait
 import com.soywiz.korge.tween.get
 import com.soywiz.korge.tween.show
 import com.soywiz.korge.tween.tween
@@ -35,6 +38,17 @@ class EndCinematic(container: Container, private val player: Snake, private val 
             addFixedUpdater(MILLISECONDS_PER_FRAME, false) {
                 if(player.head.xpos > 8840 && !ended){
                     fade()
+                    Resources.channel.volume /= 10
+                    Resources.levelCompleted.play()
+                    timeout(7.seconds){
+                        Resources.channel.volume = 0.5
+                        launch(coroutineContext) {
+                            while (Resources.channel.volume < 1.0) {
+                                wait(100.milliseconds)
+                                Resources.channel.volume += 0.01
+                            }
+                        }
+                    }
                     ended = true
                     player.cinematicMode = false
                     player.goRight = true

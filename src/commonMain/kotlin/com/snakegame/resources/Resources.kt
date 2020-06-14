@@ -26,6 +26,7 @@ class Resources(val views: Views) {
         lateinit var snakeMusic: NativeSound
         lateinit var levelWarp: NativeSound
         lateinit var pacmanDead: NativeSound
+        lateinit var levelCompleted: NativeSound
 
         private var loaded = false
     }
@@ -45,6 +46,7 @@ class Resources(val views: Views) {
         channel.stop()
         levelWarp = resourcesVfs["sounds/LevelWarp.wav"].readSound()
         pacmanDead = resourcesVfs["sounds/PacmanDead.wav"].readSound()
+        levelCompleted = resourcesVfs["sounds/LevelCompleted.mp3"].readSound()
     }
 }
 
