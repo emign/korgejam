@@ -3,6 +3,7 @@ package com.snakegame.scenes
 import com.snakegame.MILLISECONDS_PER_FRAME
 import com.snakegame.TILE_SIZE
 import com.snakegame.actors.*
+import com.snakegame.cinematics.SnakeCinematic
 import com.snakegame.gameplay.*
 import com.snakegame.map.CollisionChecker
 import com.snakegame.map.ItemSpawner
@@ -64,7 +65,6 @@ open class GameScene(val stageConfig: StageConfig) : Scene() {
                 }
             }
 
-
             val player = snake(views, stageConfig.startingPoint, stageConfig.snakeSkin, collisionChecker, font, stageConfig.movementMode,
                 onDied = {
                     println("DIEDDD")
@@ -81,6 +81,10 @@ open class GameScene(val stageConfig: StageConfig) : Scene() {
                     onItemEaten()
                 }
             )
+
+            when(stageConfig.level){
+                1->SnakeCinematic(this@sceneInit, player, coroutineContext)
+            }
 
             if (stageConfig.scroll) {
                 val cameraSpeed = 4
