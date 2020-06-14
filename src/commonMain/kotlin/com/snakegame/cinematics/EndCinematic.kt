@@ -39,7 +39,6 @@ class EndCinematic(container: Container, cameraContainer: Container, private val
             }
 
             addFixedUpdater(MILLISECONDS_PER_FRAME, false) {
-                println(player.head.xpos)
                 if(player.head.xpos > 8300 && !marioAdded){
                     marioAdded = true
                     launch(coroutineContext) {
