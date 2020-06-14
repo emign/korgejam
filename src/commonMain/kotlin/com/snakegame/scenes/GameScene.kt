@@ -63,10 +63,11 @@ open class GameScene(val stageConfig: StageConfig) : Scene() {
                 ItemSpawner(tiledMap).getSpawnPositions().forEach {
                     dot(views, it * TILE_SIZE)
                 }
-                ghost(views, collisionChecker, 1)
-                ghost(views, collisionChecker, 2)
-                ghost(views, collisionChecker, 3)
-                ghost(views, collisionChecker, 4)
+                ghost(collisionChecker, 1)
+                ghost(collisionChecker, 2)
+                ghost(collisionChecker, 3)
+                ghost(collisionChecker, 4)
+                pacoman(collisionChecker)
 
             }
 
