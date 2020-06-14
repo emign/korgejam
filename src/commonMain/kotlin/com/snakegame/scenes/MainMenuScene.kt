@@ -1,5 +1,6 @@
 package com.snakegame.scenes
 
+import com.snakegame.gameplay.currentGameState
 import com.snakegame.map.tiledMap
 import com.soywiz.klock.seconds
 import com.soywiz.korge.input.onClick
@@ -18,6 +19,7 @@ import com.soywiz.korio.file.std.resourcesVfs
 class MainMenuScene() : Scene() {
 
     override suspend fun Container.sceneInit() {
+        currentGameState.restarting = false
         tiledMap(1)
         val font = resourcesVfs["texts/I-pixel-u.fnt"].readBitmapFont()
         text("A CLASSIC SNAKE GAME", 32.0, font = font).centerXOn(this).positionY(200)

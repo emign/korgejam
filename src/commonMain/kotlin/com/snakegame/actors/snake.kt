@@ -3,6 +3,7 @@ package com.snakegame.actors
 import com.snakegame.MILLISECONDS_PER_FRAME
 import com.snakegame.TILE_SIZE
 import com.snakegame.extensions.toBool
+import com.snakegame.gameplay.GameState
 import com.snakegame.gameplay.currentGameState
 import com.snakegame.input.*
 import com.snakegame.map.CollisionChecker
@@ -126,11 +127,20 @@ class Snake(
             it.ypos = lerp(it.lastY, it.y, delta)
         }
     }
+
+    fun colides():Boolean {
+        body.forEach {
+            if (head!=it && head.x == it.x && head.y == it.y){
+                return true
+            }
+        }
+        return false
+    }
 }
 
 enum class MovementMode { SNAKE, PACMAN, MARIO }
 
-suspend fun Container.snake(views: Views, pos: Point, skin:SnakeSkin, collisionChecker: CollisionChecker, movementMode:MovementMode = MovementMode.SNAKE):Snake {
+suspend fun Container.snake(views: Views, pos: Point, skin:SnakeSkin, collisionChecker: CollisionChecker, movementMode:MovementMode = MovementMode.SNAKE, onDied:()->Unit):Snake {
     val snakeAtlas = resourcesVfs["snake.atlas.json"].readAtlas(views)
     val headTile = snakeAtlas[skin.headTile]
     val bodyTile = snakeAtlas[skin.bodyTile]
@@ -223,9 +233,11 @@ suspend fun Container.snake(views: Views, pos: Point, skin:SnakeSkin, collisionC
                         snake.move()
 
                         collisionChecker.checkCollision(snake.head.x, snake.head.y) {
-                            snake.head.x = 128.0
-                            snake.head.y = 128.0
+                            onDied()
                         }
+
+                        if (snake.colides()) onDied()
+
                     } else {
                         snake.interpolate(frames / TILE_SIZE)
                     }

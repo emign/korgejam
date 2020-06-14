@@ -8,6 +8,7 @@ import com.snakegame.map.tiledMap
 import com.soywiz.klock.milliseconds
 import com.soywiz.klock.seconds
 import com.soywiz.korge.scene.Scene
+import com.soywiz.korge.scene.sleep
 import com.soywiz.korge.tween.get
 import com.soywiz.korge.tween.tween
 import com.soywiz.korge.view.*
@@ -15,6 +16,7 @@ import com.soywiz.korim.color.RGBA
 import com.soywiz.korim.font.readBitmapFont
 import com.soywiz.korio.async.delay
 import com.soywiz.korio.async.launch
+import com.soywiz.korio.async.launchImmediately
 import com.soywiz.korio.file.std.resourcesVfs
 
 
@@ -37,12 +39,24 @@ open class GameScene(val stageConfig: StageConfig) : Scene() {
     open suspend fun Container.customInit(){}
 
     override suspend fun Container.sceneInit() {
+        val font = resourcesVfs["texts/I-pixel-u.fnt"].readBitmapFont()
+
         camera{
             val tiledMap = tiledMap(stageConfig.level)
             val collisionChecker = CollisionChecker(tiledMap)
 
 
-            val player = snake(views, stageConfig.startingPoint, stageConfig.snakeSkin, collisionChecker, stageConfig.movementMode)
+            val player = snake(views, stageConfig.startingPoint, stageConfig.snakeSkin, collisionChecker, stageConfig.movementMode){
+                currentGameState.paused = true
+                launchImmediately {
+                    text("YOU DIED!", 64.0, font = font)
+                            .centerBetween(0,0,800,400)
+                    sleep(1.seconds)
+                    //currentGameState.paused = false
+                    currentGameState.restarting = true
+                    sceneContainer.changeTo<RestartSnakeScene>()
+                }
+            }
 
             if (stageConfig.scroll) {
                 val cameraSpeed = 4
@@ -63,8 +77,6 @@ open class GameScene(val stageConfig: StageConfig) : Scene() {
                 }
             }
 
-            val font = resourcesVfs["texts/I-pixel-u.fnt"].readBitmapFont()
-
             val getReady = text("GET READY!", 64.0, font = font)
                     .centerBetween(0,0,800,400)
                     .visible(false)
@@ -82,7 +94,8 @@ open class GameScene(val stageConfig: StageConfig) : Scene() {
             }
         }
         customInit()
-        unFade()
+
+        if(!currentGameState.restarting) unFade()
     }
 }
 
