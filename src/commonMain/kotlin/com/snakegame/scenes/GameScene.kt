@@ -59,7 +59,7 @@ open class GameScene(val stageConfig: StageConfig) : Scene() {
             val tiledMap = tiledMap(stageConfig.level)
             val collisionChecker = CollisionChecker(tiledMap)
 
-            if(stageConfig== PacmanStageConfig){
+            if(stageConfig == PacmanStageConfig){
                 ItemSpawner(tiledMap).getSpawnPositions().forEach {
                     dot(views, it * TILE_SIZE)
                 }
@@ -87,6 +87,22 @@ open class GameScene(val stageConfig: StageConfig) : Scene() {
                     onItemEaten()
                 }
             )
+
+            var fallen = false
+            addUpdater {
+                if(stageConfig == MarioStageConfig) {
+                    if(!fallen && player.body.last().y > 632) {
+                        fallen = true
+                        currentGameState.paused = true
+                        launch {
+                            fadeOff = true
+                            sleep(1.seconds)
+                            sceneContainer.changeTo<RestartMarioScene>()
+                        }
+                    }
+                }
+            }
+
 
             when(stageConfig.level){
                 1->SnakeCinematic(this@sceneInit, player, coroutineContext)
