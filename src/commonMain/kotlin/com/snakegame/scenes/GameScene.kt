@@ -219,7 +219,6 @@ class PacmanGameScene() : GameScene(PacmanStageConfig){
         fadeOff = true
         delay(1.seconds)
         currentGameState.paused = true
-        println("nextLevel.1")
         sceneContainer.changeTo<TransitionToMarioScene>()
     }
 }

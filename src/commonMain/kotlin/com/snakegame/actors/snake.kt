@@ -191,11 +191,16 @@ suspend fun Container.snake(views: Views, pos: Point, skin:SnakeSkin, collisionC
 
 
     container {
-        val bodyParts = mutableListOf(
-                image(headTile).apply { smoothing = false },
-                image(bodyTile).apply { smoothing = false },
-                image(tailTile).apply { smoothing = false }
-        )
+
+        val bodyParts = mutableListOf<Image>()
+
+        val snakeContainer = container {
+            bodyParts.addAll(listOf(
+                    image(tailTile).apply { smoothing = false },
+                    image(bodyTile).apply { smoothing = false },
+                    image(headTile).apply { smoothing = false }
+            ).reversed())
+        }
 
         val bocadilloSmall = image(snakeAtlas["bocadillo_02.png"])
         bocadilloSmall.addChild(text("!?", 16.0, color = Colors.BLACK, font = font).centerXOn(bocadilloSmall))
@@ -259,8 +264,9 @@ suspend fun Container.snake(views: Views, pos: Point, skin:SnakeSkin, collisionC
             val body = snake.body
             val lastPart = body[body.size - 1]
             body.add(SnakeBodyPart(lastPart.x, lastPart.y))
-            bodyParts.last().bitmap = bodyTile
-            bodyParts.add(image(tailTile).apply { smoothing = false })
+            val newPart = Image(bodyTile).apply { smoothing = false }
+            snakeContainer.addChildAt(newPart, 1)
+            bodyParts.add(1, newPart)
         }
 
         var frames  =  0.0
@@ -271,7 +277,7 @@ suspend fun Container.snake(views: Views, pos: Point, skin:SnakeSkin, collisionC
             val part = snake.body.get(1)
             fatBodies.add(Pair(8.0 * (bodyParts.size - 1), image(bodyFatTile).apply {
                 smoothing = false
-            }.updatePart(part).position(bodyParts.first().pos)))
+            }.updatePart(part).position(head.pos)))
         }
 
         onKeyDown {
@@ -314,9 +320,9 @@ suspend fun Container.snake(views: Views, pos: Point, skin:SnakeSkin, collisionC
             if (it is Apple) {
                 Resources.appleSound.play()
                 it.spawn()
-                bodyParts.first().bitmap = eatingHeadTile
+                head.bitmap = eatingHeadTile
                 timeout(MILLISECONDS_PER_FRAME * speed){
-                    bodyParts.first().bitmap = headTile
+                    head.bitmap = headTile
                 }
                 timeout(MILLISECONDS_PER_FRAME * speed) {
                     eat()
@@ -327,9 +333,9 @@ suspend fun Container.snake(views: Views, pos: Point, skin:SnakeSkin, collisionC
             if (it is Dot) {
                 Resources.appleSound.play()
                 it.die()
-                bodyParts.first().bitmap = eatingHeadTile
+                head.bitmap = eatingHeadTile
                 timeout(MILLISECONDS_PER_FRAME * speed){
-                    bodyParts.first().bitmap = headTile
+                    head.bitmap = headTile
                 }
                 remainingToGrow--
                 if(remainingToGrow==0) {
@@ -341,9 +347,9 @@ suspend fun Container.snake(views: Views, pos: Point, skin:SnakeSkin, collisionC
             if (it is Ghost) {
                 Resources.pacmanDead.play()
                 it.die()
-                bodyParts.first().bitmap = eatingHeadTile
+                head.bitmap = eatingHeadTile
                 timeout(MILLISECONDS_PER_FRAME * speed){
-                    bodyParts.first().bitmap = headTile
+                    head.bitmap = headTile
                 }
                 timeout(MILLISECONDS_PER_FRAME * speed) {
                     eat()
@@ -355,9 +361,9 @@ suspend fun Container.snake(views: Views, pos: Point, skin:SnakeSkin, collisionC
             if (it is Pacoman) {
                 Resources.pacmanDead.play()
                 it.die()
-                bodyParts.first().bitmap = eatingHeadTile
+                head.bitmap = eatingHeadTile
                 timeout(MILLISECONDS_PER_FRAME * speed){
-                    bodyParts.first().bitmap = headTile
+                    head.bitmap = headTile
                 }
                 timeout(MILLISECONDS_PER_FRAME * speed) {
                     eat()
@@ -369,9 +375,9 @@ suspend fun Container.snake(views: Views, pos: Point, skin:SnakeSkin, collisionC
             if (it is Coin) {
                 Resources.appleSound.play()
                 it.die()
-                bodyParts.first().bitmap = eatingHeadTile
+                head.bitmap = eatingHeadTile
                 timeout(MILLISECONDS_PER_FRAME * speed){
-                    bodyParts.first().bitmap = headTile
+                    head.bitmap = headTile
                 }
                 addBodyPart()
                 onItemEaten()
