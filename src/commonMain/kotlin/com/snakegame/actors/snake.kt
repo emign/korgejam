@@ -573,10 +573,6 @@ suspend fun Container.snake(views: Views, pos: Point, skin:SnakeSkin, collisionC
                             }
                             snakeCurvesContainer.removeChildren()
                             curves.forEach {
-                                //turnTileDR_LU
-                                //turnTileRD_UL
-                                //turnTileRU_DL
-                                //turnTileUR_LD
                                 val tile = when(it.first) {
                                     CURVES.DR, CURVES.LU -> turnTileDR_LU
                                     CURVES.RD, CURVES.UL -> turnTileRD_UL
@@ -584,38 +580,12 @@ suspend fun Container.snake(views: Views, pos: Point, skin:SnakeSkin, collisionC
                                     CURVES.UR, CURVES.LD -> turnTileUR_LD
                                     else -> headTile
                                 }
-                                /*val angle = when(it.first) {
-                                    "vl" -> 0
-                                    "vr" -> 0
-                                    "hu" -> 90
-                                    "hd" -> 0
-                                    else -> 0
-                                }
-                                val scaleX = when(it.first) {
-                                    "vl" -> 1
-                                    "vr" -> -1
-                                    "hu" -> 1
-                                    "hd" -> -1
-                                    else -> 0
-                                }
-                                val scaleY = when(it.first) {
-                                    "vl" -> 1
-                                    "vr" -> -1
-                                    "hu" -> 1
-                                    "hd" -> 1
-                                    else -> 0
-                                }*/
-                                println(it.first)
+
                                 snakeCurvesContainer.addChild(
                                     image(tile).apply {
                                         smoothing = false
                                         position(it.second * TILE_SIZE)
-                                        //position(it.second * TILE_SIZE + Point(16,16))
-                                        //rotationDegrees(angle)
-                                        //anchor(0.5, 0.5)
-                                        //scale(scaleX, scaleY)
                                     }
-
                                 )
                             }
                         }
