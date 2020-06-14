@@ -198,11 +198,11 @@ suspend fun Container.snake(views: Views, pos: Point, skin:SnakeSkin, collisionC
 
         val bocadilloSmall = image(snakeAtlas["bocadillo_02.png"])
         bocadilloSmall.addChild(text("!?", 16.0, color = Colors.BLACK, font = font).centerXOn(bocadilloSmall))
-        //bocadilloSmall.hide(0.seconds)
+        bocadilloSmall.alpha = 0.0
         val bocadilloBig = image(snakeAtlas["bocadillo_01.png"])
         bocadilloBig.scale(1.5, 1.5)
         bocadilloBig.addChild(text("Grrrr...", 10.0, color = Colors.BLACK, font = font).position(5, 5))
-        //bocadilloBig.hide(0.seconds)
+        bocadilloBig.alpha = 0.0
 
         fun Image.updatePart(bodyPart: SnakeBodyPart): Image{
             x = bodyPart.xpos + TILE_SIZE / 2
@@ -311,6 +311,7 @@ suspend fun Container.snake(views: Views, pos: Point, skin:SnakeSkin, collisionC
 
         head.onCollision {
             if (it is Apple) {
+                Resources.appleSound.play()
                 it.spawn()
                 bodyParts.first().bitmap = eatingHeadTile
                 timeout(MILLISECONDS_PER_FRAME * speed){
@@ -323,6 +324,7 @@ suspend fun Container.snake(views: Views, pos: Point, skin:SnakeSkin, collisionC
                 onItemEaten()
             }
             if (it is Dot) {
+                Resources.appleSound.play()
                 it.die()
                 bodyParts.first().bitmap = eatingHeadTile
                 timeout(MILLISECONDS_PER_FRAME * speed){
@@ -336,6 +338,7 @@ suspend fun Container.snake(views: Views, pos: Point, skin:SnakeSkin, collisionC
                 onItemEaten()
             }
             if (it is Ghost) {
+                Resources.pacmanDead.play()
                 it.die()
                 bodyParts.first().bitmap = eatingHeadTile
                 timeout(MILLISECONDS_PER_FRAME * speed){
@@ -346,6 +349,7 @@ suspend fun Container.snake(views: Views, pos: Point, skin:SnakeSkin, collisionC
                 enemyPacmanEaten()
             }
             if (it is Pacoman) {
+                Resources.pacmanDead.play()
                 it.die()
                 bodyParts.first().bitmap = eatingHeadTile
                 timeout(MILLISECONDS_PER_FRAME * speed){
@@ -356,6 +360,7 @@ suspend fun Container.snake(views: Views, pos: Point, skin:SnakeSkin, collisionC
                 enemyPacmanEaten()
             }
             if (it is Coin) {
+                Resources.appleSound.play()
                 it.die()
                 bodyParts.first().bitmap = eatingHeadTile
                 timeout(MILLISECONDS_PER_FRAME * speed){
@@ -422,6 +427,7 @@ suspend fun Container.snake(views: Views, pos: Point, skin:SnakeSkin, collisionC
                         collisionChecker.checkCollision(snake.head.x, snake.head.y) {
                             if(snake.goRight && !goingToNextLevel) {
                                 goingToNextLevel = true
+                                Resources.explosion.play()
                                 nextLevel()
                             } else {
                                 onDied()
