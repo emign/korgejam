@@ -153,6 +153,16 @@ class Snake(
         }
         return false
     }
+
+    fun warp(x:Int, newDirection:Direction){
+        body.forEach {
+            it.x = x.toDouble()
+            it.xpos = x.toDouble()
+            it.lastX = x.toDouble()
+            it.direction = newDirection
+        }
+        direction = newDirection
+    }
 }
 
 enum class MovementMode { SNAKE, PACMAN, MARIO }
@@ -449,6 +459,15 @@ suspend fun Container.snake(views: Views, pos: Point, skin:SnakeSkin, collisionC
                     } else {
                         snake.interpolate(frames / TILE_SIZE)
                     }
+
+                    val tail = snake.body.last()
+                    if(snake.direction == Direction.LEFT && tail.x< -TILE_SIZE) {
+                        snake.warp(800, Direction.LEFT)
+                    }
+                    if(snake.direction == Direction.RIGHT && tail.x>800) {
+                        snake.warp(0, Direction.RIGHT)
+                    }
+
                 }
                 MovementMode.MARIO -> {
                     frames += speed // * deltaTime
