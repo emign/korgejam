@@ -3,6 +3,7 @@ package com.snakegame.scenes
 import com.snakegame.MILLISECONDS_PER_FRAME
 import com.snakegame.TILE_SIZE
 import com.snakegame.actors.*
+import com.snakegame.cinematics.EndCinematic
 import com.snakegame.cinematics.SnakeCinematic
 import com.snakegame.gameplay.*
 import com.snakegame.map.CollisionChecker
@@ -123,6 +124,7 @@ open class GameScene(val stageConfig: StageConfig) : Scene() {
 
             when(stageConfig.level){
                 1->SnakeCinematic(this@sceneInit, player, coroutineContext)
+                3-> EndCinematic(this@sceneInit, player, coroutineContext)
             }
 
             if (stageConfig.scroll) {

@@ -510,7 +510,10 @@ suspend fun Container.snake(views: Views, pos: Point, skin:SnakeSkin, collisionC
                         lockInput = false
 
                         snake.lastDirection = snake.direction
-                        snake.direction = newDirection
+                        if(snake.goRight)
+                            snake.direction = Direction.RIGHT
+                        else
+                            snake.direction = newDirection
 
                         if (!collisionChecker.colides(
                                         snake.head.x + newDirection.deltaX() * TILE_SIZE,
