@@ -57,7 +57,10 @@
   var getCallableRef = Kotlin.getCallableRef;
   var first = Kotlin.kotlin.collections.first_2p1efm$;
   var last = Kotlin.kotlin.collections.last_2p1efm$;
+  var Pair = Kotlin.kotlin.Pair;
   var Key = $module$korgw_root_korgw.com.soywiz.korev.Key;
+  var timeout = $module$korge_root_korge.com.soywiz.korge.time.timeout_7ghvt3$;
+  var toList = Kotlin.kotlin.collections.toList_7wnvza$;
   var Point = $module$korma_root_korma.com.soywiz.korma.geom.Point;
   var ArrayList_init = Kotlin.kotlin.collections.ArrayList_init_287e2$;
   var checkIndexOverflow = Kotlin.kotlin.collections.checkIndexOverflow_za3lpa$;
@@ -66,7 +69,6 @@
   var Text = $module$korge_root_korge.com.soywiz.korge.view.Text;
   var getPropertyCallableRef = Kotlin.getPropertyCallableRef;
   var get_keys = $module$korge_root_korge.com.soywiz.korge.input.get_keys_gohfi1$;
-  var timeout = $module$korge_root_korge.com.soywiz.korge.time.timeout_7ghvt3$;
   var throwCCE = Kotlin.throwCCE;
   var show = $module$korge_root_korge.com.soywiz.korge.tween.show_yz29kn$;
   var wait = $module$korge_root_korge.com.soywiz.korge.time.wait_f287ec$;
@@ -256,6 +258,8 @@
   function ghost$lambda(closure$direction, closure$collisionChecker, closure$move, closure$getRandomDirection) {
     return function ($receiver) {
       var tmp$, tmp$_0;
+      if (currentGameState.paused)
+        return;
       switch (closure$direction.v.name) {
         case 'LEFT':
           tmp$ = 0;
@@ -336,8 +340,9 @@
   }
   function pacoman$move(closure$direction) {
     return function ($receiver) {
-      $receiver.x = $receiver.x + closure$direction.v.deltaX();
-      $receiver.y = $receiver.y + closure$direction.v.deltaY();
+      var speed = 2;
+      $receiver.x = $receiver.x + Kotlin.imul(closure$direction.v.deltaX(), speed);
+      $receiver.y = $receiver.y + Kotlin.imul(closure$direction.v.deltaY(), speed);
       if ($receiver.x < (0 - TILE_SIZE | 0))
         $receiver.x = 800.0;
       if ($receiver.x > 800)
@@ -352,6 +357,8 @@
   function pacoman$lambda_0(closure$animDelay, closure$frame1, closure$frame2, closure$direction, closure$collisionChecker, closure$move, closure$getRandomDirection) {
     return function ($receiver) {
       var tmp$, tmp$_0, tmp$_1, tmp$_2, tmp$_3;
+      if (currentGameState.paused)
+        return;
       tmp$ = closure$animDelay.v;
       closure$animDelay.v = tmp$ + 1 | 0;
       if (closure$animDelay.v > 4) {
@@ -721,6 +728,18 @@
       }}
     return false;
   };
+  Snake.prototype.warp_5mfw0y$ = function (x, newDirection) {
+    var tmp$;
+    tmp$ = this.body.iterator();
+    while (tmp$.hasNext()) {
+      var element = tmp$.next();
+      element.x = x;
+      element.xpos = x;
+      element.lastX = x;
+      element.direction = newDirection;
+    }
+    this.direction = newDirection;
+  };
   function Snake_init$lambda(it) {
     return Unit;
   }
@@ -870,52 +889,58 @@
         return instance.doResume(null);
     };
   }
-  function snake$lambda$updateBodyParts(closure$bodyParts) {
+  function snake$lambda$updatePart($receiver, bodyPart) {
+    var tmp$, tmp$_0;
+    $receiver.x = bodyPart.xpos + (TILE_SIZE / 2 | 0);
+    $receiver.y = bodyPart.ypos + (TILE_SIZE / 2 | 0);
+    switch (bodyPart.direction.name) {
+      case 'RIGHT':
+        tmp$ = 1.0;
+        break;
+      case 'LEFT':
+        tmp$ = 1.0;
+        break;
+      case 'UP':
+        tmp$ = -1.0;
+        break;
+      case 'DOWN':
+        tmp$ = 1.0;
+        break;
+      default:tmp$ = Kotlin.noWhenBranchMatched();
+        break;
+    }
+    $receiver.scaleY = tmp$;
+    switch (bodyPart.direction.name) {
+      case 'RIGHT':
+        tmp$_0 = 270.0;
+        break;
+      case 'LEFT':
+        tmp$_0 = 90.0;
+        break;
+      case 'UP':
+        tmp$_0 = 0.0;
+        break;
+      case 'DOWN':
+        tmp$_0 = 0.0;
+        break;
+      default:tmp$_0 = Kotlin.noWhenBranchMatched();
+        break;
+    }
+    $receiver.rotationDegrees = tmp$_0;
+    anchor($receiver, 0.5, 0.5);
+    return $receiver;
+  }
+  function snake$lambda$updateBodyParts(closure$bodyParts, closure$updatePart) {
     return function (body) {
+      var $receiver = closure$bodyParts;
       var tmp$, tmp$_0;
       var index = 0;
-      tmp$ = closure$bodyParts.iterator();
+      tmp$ = $receiver.iterator();
       while (tmp$.hasNext()) {
         var item = tmp$.next();
-        var tmp$_1, tmp$_2;
+        var closure$updatePart_0 = closure$updatePart;
         var bodyPart = body.get_za3lpa$(checkIndexOverflow((tmp$_0 = index, index = tmp$_0 + 1 | 0, tmp$_0)));
-        item.x = bodyPart.xpos + (TILE_SIZE / 2 | 0);
-        item.y = bodyPart.ypos + (TILE_SIZE / 2 | 0);
-        switch (bodyPart.direction.name) {
-          case 'RIGHT':
-            tmp$_1 = 1.0;
-            break;
-          case 'LEFT':
-            tmp$_1 = 1.0;
-            break;
-          case 'UP':
-            tmp$_1 = -1.0;
-            break;
-          case 'DOWN':
-            tmp$_1 = 1.0;
-            break;
-          default:tmp$_1 = Kotlin.noWhenBranchMatched();
-            break;
-        }
-        item.scaleY = tmp$_1;
-        switch (bodyPart.direction.name) {
-          case 'RIGHT':
-            tmp$_2 = 270.0;
-            break;
-          case 'LEFT':
-            tmp$_2 = 90.0;
-            break;
-          case 'UP':
-            tmp$_2 = 0.0;
-            break;
-          case 'DOWN':
-            tmp$_2 = 0.0;
-            break;
-          default:tmp$_2 = Kotlin.noWhenBranchMatched();
-            break;
-        }
-        item.rotationDegrees = tmp$_2;
-        anchor(item, 0.5, 0.5);
+        closure$updatePart_0(item, bodyPart);
       }
     };
   }
@@ -933,10 +958,25 @@
       tmp$.add_11rb$($receiver_0);
     };
   }
-  function Coroutine$snake$lambda$lambda(closure$addBodyPart_0, it_0, continuation_0) {
+  function snake$lambda$eat(closure$snake, closure$fatBodies, closure$bodyParts, closure$bodyFatTile, this$, closure$updatePart) {
+    return function () {
+      var part = closure$snake.body.get_za3lpa$(1);
+      var tmp$ = closure$fatBodies;
+      var tmp$_0 = 8.0 * (closure$bodyParts.size - 1 | 0);
+      var tmp$_1 = closure$updatePart;
+      var $receiver = this$;
+      var $receiver_0 = addTo(new Image(closure$bodyFatTile, 0.0, 0.0), $receiver);
+      image$lambda($receiver_0);
+      $receiver_0.smoothing = false;
+      var $receiver_1 = tmp$_1($receiver_0, part);
+      var point = first(closure$bodyParts).pos;
+      tmp$.add_11rb$(new Pair(tmp$_0, position($receiver_1, get_x(point), get_y(point))));
+    };
+  }
+  function Coroutine$snake$lambda$lambda(closure$eat_0, it_0, continuation_0) {
     CoroutineImpl.call(this, continuation_0);
     this.exceptionState_0 = 1;
-    this.local$closure$addBodyPart = closure$addBodyPart_0;
+    this.local$closure$eat = closure$eat_0;
     this.local$it = it_0;
   }
   Coroutine$snake$lambda$lambda.$metadata$ = {
@@ -952,7 +992,7 @@
         switch (this.state_0) {
           case 0:
             if (this.local$it.key === Key.SPACE) {
-              return this.local$closure$addBodyPart(), Unit;
+              return this.local$closure$eat(), Unit;
             }
             return Unit;
           case 1:
@@ -971,33 +1011,95 @@
       }
      while (true);
   };
-  function snake$lambda$lambda(closure$addBodyPart_0) {
+  function snake$lambda$lambda(closure$eat_0) {
     return function (it_0, continuation_0, suspended) {
-      var instance = new Coroutine$snake$lambda$lambda(closure$addBodyPart_0, it_0, continuation_0);
+      var instance = new Coroutine$snake$lambda$lambda(closure$eat_0, it_0, continuation_0);
       if (suspended)
         return instance;
       else
         return instance.doResume(null);
     };
   }
-  function snake$lambda$enemyPacmanEaten(closure$ghostsAndPacmanCounter, closure$nextLevel) {
+  function snake$lambda$enemyPacmanEaten$lambda(closure$time, closure$snake, closure$nextLevel) {
+    return function ($receiver) {
+      var tmp$;
+      if (currentGameState.paused)
+        return;
+      tmp$ = closure$time.v;
+      closure$time.v = tmp$ + 1 | 0;
+      if (closure$time.v > 10) {
+        closure$time.v = 0;
+        $receiver.visible = !$receiver.visible;
+      }if (last(closure$snake.body).x > 800) {
+        currentGameState.paused = true;
+        closure$nextLevel();
+      }return Unit;
+    };
+  }
+  function snake$lambda$enemyPacmanEaten(closure$ghostsAndPacmanCounter, closure$snakeAtlas, this$, closure$snake, closure$nextLevel) {
     return function () {
       var tmp$;
       tmp$ = closure$ghostsAndPacmanCounter.v;
       closure$ghostsAndPacmanCounter.v = tmp$ - 1 | 0;
       if (closure$ghostsAndPacmanCounter.v <= 0) {
-        closure$nextLevel();
+        var $receiver = this$;
+        var $receiver_0 = addTo(new Image(closure$snakeAtlas.get_61zpoe$('arrow.png'), 0.0, 0.0), $receiver);
+        image$lambda($receiver_0);
+        var arrow = position_0($receiver_0, 22 * TILE_SIZE | 0, 8 * TILE_SIZE | 0);
+        var time = {v: 0};
+        addFixedUpdater(arrow, MILLISECONDS_PER_FRAME, void 0, void 0, snake$lambda$enemyPacmanEaten$lambda(time, closure$snake, closure$nextLevel));
       }};
   }
-  function snake$lambda$lambda_0(closure$addBodyPart, closure$onItemEaten, closure$remainingToGrow, closure$dotsToGrow, closure$enemyPacmanEaten) {
+  function snake$lambda$lambda$lambda(closure$headTile, closure$bodyParts) {
+    return function () {
+      first(closure$bodyParts).bitmap = closure$headTile;
+      return Unit;
+    };
+  }
+  function snake$lambda$lambda$lambda_0(closure$eat) {
+    return function () {
+      closure$eat();
+      return Unit;
+    };
+  }
+  function snake$lambda$lambda$lambda_1(closure$headTile, closure$bodyParts) {
+    return function () {
+      first(closure$bodyParts).bitmap = closure$headTile;
+      return Unit;
+    };
+  }
+  function snake$lambda$lambda$lambda_2(closure$headTile, closure$bodyParts) {
+    return function () {
+      first(closure$bodyParts).bitmap = closure$headTile;
+      return Unit;
+    };
+  }
+  function snake$lambda$lambda$lambda_3(closure$headTile, closure$bodyParts) {
+    return function () {
+      first(closure$bodyParts).bitmap = closure$headTile;
+      return Unit;
+    };
+  }
+  function snake$lambda$lambda$lambda_4(closure$headTile, closure$bodyParts) {
+    return function () {
+      first(closure$bodyParts).bitmap = closure$headTile;
+      return Unit;
+    };
+  }
+  function snake$lambda$lambda_0(closure$eatingHeadTile, closure$bodyParts, closure$speed, closure$headTile, closure$eat, closure$addBodyPart, closure$onItemEaten, closure$remainingToGrow, closure$dotsToGrow, closure$enemyPacmanEaten) {
     return function ($receiver, it) {
       var tmp$;
       if (Kotlin.isType(it, Apple)) {
         it.spawn();
+        first(closure$bodyParts).bitmap = closure$eatingHeadTile;
+        timeout($receiver, MILLISECONDS_PER_FRAME.times_14dthe$(closure$speed), snake$lambda$lambda$lambda(closure$headTile, closure$bodyParts));
+        timeout($receiver, MILLISECONDS_PER_FRAME.times_14dthe$(closure$speed), snake$lambda$lambda$lambda_0(closure$eat));
         closure$addBodyPart();
         closure$onItemEaten();
       }if (Kotlin.isType(it, Dot)) {
         it.die();
+        first(closure$bodyParts).bitmap = closure$eatingHeadTile;
+        timeout($receiver, MILLISECONDS_PER_FRAME.times_14dthe$(closure$speed), snake$lambda$lambda$lambda_1(closure$headTile, closure$bodyParts));
         tmp$ = closure$remainingToGrow.v;
         closure$remainingToGrow.v = tmp$ - 1 | 0;
         if (closure$remainingToGrow.v === 0) {
@@ -1006,16 +1108,22 @@
         }closure$onItemEaten();
       }if (Kotlin.isType(it, Ghost)) {
         it.die();
+        first(closure$bodyParts).bitmap = closure$eatingHeadTile;
+        timeout($receiver, MILLISECONDS_PER_FRAME.times_14dthe$(closure$speed), snake$lambda$lambda$lambda_2(closure$headTile, closure$bodyParts));
         closure$addBodyPart();
         closure$onItemEaten();
         closure$enemyPacmanEaten();
       }if (Kotlin.isType(it, Pacoman)) {
         it.die();
+        first(closure$bodyParts).bitmap = closure$eatingHeadTile;
+        timeout($receiver, MILLISECONDS_PER_FRAME.times_14dthe$(closure$speed), snake$lambda$lambda$lambda_3(closure$headTile, closure$bodyParts));
         closure$addBodyPart();
         closure$onItemEaten();
         closure$enemyPacmanEaten();
       }if (Kotlin.isType(it, Coin)) {
         it.die();
+        first(closure$bodyParts).bitmap = closure$eatingHeadTile;
+        timeout($receiver, MILLISECONDS_PER_FRAME.times_14dthe$(closure$speed), snake$lambda$lambda$lambda_4(closure$headTile, closure$bodyParts));
         closure$addBodyPart();
         closure$onItemEaten();
       }return Unit;
@@ -1045,21 +1153,36 @@
         closure$newDirection.v = closure$snake.direction;
     };
   }
-  function snake$lambda$lambda$lambda(closure$snake, closure$nextLevel, closure$onDied) {
+  function snake$lambda$lambda$lambda_5(closure$snake, closure$goingToNextLevel, closure$nextLevel, closure$onDied) {
     return function () {
-      if (closure$snake.goRight)
+      if (closure$snake.goRight && !closure$goingToNextLevel.v) {
+        closure$goingToNextLevel.v = true;
         closure$nextLevel();
-      else
+      } else {
         closure$onDied();
+      }
       return Unit;
     };
   }
-  function snake$lambda$lambda_1(closure$lockInput, closure$key, closure$newDirection, closure$snake, closure$movementMode, closure$speed, closure$frames, closure$collisionChecker, closure$nextLevel, closure$onDied, closure$bocadilloSmall, closure$head, closure$bocadilloBig, closure$updateBodyParts) {
+  function snake$lambda$lambda_1(closure$fatBodies, closure$lockInput, closure$key, closure$newDirection, closure$snake, closure$movementMode, closure$speed, closure$frames, closure$collisionChecker, closure$goingToNextLevel, closure$nextLevel, closure$onDied, closure$bocadilloSmall, closure$head, closure$bocadilloBig, closure$updateBodyParts) {
     return function ($receiver) {
       var tmp$;
-      if (currentGameState.paused) {
+      if (currentGameState.paused)
         return;
-      }if (closure$lockInput.v === false) {
+      var $receiver_0 = toList(closure$fatBodies);
+      var tmp$_0, tmp$_0_0;
+      var index = 0;
+      tmp$_0 = $receiver_0.iterator();
+      while (tmp$_0.hasNext()) {
+        var item = tmp$_0.next();
+        var closure$fatBodies_0 = closure$fatBodies;
+        var index_0 = checkIndexOverflow((tmp$_0_0 = index, index = tmp$_0_0 + 1 | 0, tmp$_0_0));
+        if (item.first <= 0.0)
+          item.second.alpha = 0.0;
+        else
+          closure$fatBodies_0.set_wxm5ur$(index_0, new Pair(item.first - 1, item.second));
+      }
+      if (closure$lockInput.v === false) {
         switch (closure$key.v) {
           case 8:
             tmp$ = Direction$RIGHT_getInstance();
@@ -1096,7 +1219,7 @@
               closure$snake.direction = closure$newDirection.v;
             if (!closure$snake.cinematicMode || closure$snake.goRight)
               closure$snake.move();
-            closure$collisionChecker.checkCollision_morwcd$(closure$snake.head.x, closure$snake.head.y, snake$lambda$lambda$lambda(closure$snake, closure$nextLevel, closure$onDied));
+            closure$collisionChecker.checkCollision_morwcd$(closure$snake.head.x, closure$snake.head.y, snake$lambda$lambda$lambda_5(closure$snake, closure$goingToNextLevel, closure$nextLevel, closure$onDied));
             if (closure$snake.colides())
               closure$onDied();
           } else {
@@ -1124,19 +1247,26 @@
             closure$snake.interpolate_14dthe$(closure$frames.v / TILE_SIZE);
           }
 
+          var tail = last(closure$snake.body);
+          if (closure$snake.direction === Direction$LEFT_getInstance() && tail.x < (-TILE_SIZE | 0)) {
+            closure$snake.warp_5mfw0y$(800, Direction$LEFT_getInstance());
+          }
+          if (closure$snake.direction === Direction$RIGHT_getInstance() && tail.x > 800) {
+            closure$snake.warp_5mfw0y$(0, Direction$RIGHT_getInstance());
+          }
           break loop_label;
         case 'MARIO':
           closure$frames.v += closure$speed;
-          var $receiver_0 = closure$snake.body;
+          var $receiver_1 = closure$snake.body;
           var any$result;
           any$break: do {
-            var tmp$_0;
-            if (Kotlin.isType($receiver_0, Collection) && $receiver_0.isEmpty()) {
+            var tmp$_1;
+            if (Kotlin.isType($receiver_1, Collection) && $receiver_1.isEmpty()) {
               any$result = false;
               break any$break;
-            }tmp$_0 = $receiver_0.iterator();
-            while (tmp$_0.hasNext()) {
-              var element = tmp$_0.next();
+            }tmp$_1 = $receiver_1.iterator();
+            while (tmp$_1.hasNext()) {
+              var element = tmp$_1.next();
               if (closure$collisionChecker.colides_lu1900$(element.x, element.y + TILE_SIZE)) {
                 any$result = true;
                 break any$break;
@@ -1165,12 +1295,12 @@
 
           break loop_label;
       }
-      var tmp$_1 = closure$bocadilloSmall;
+      var tmp$_2 = closure$bocadilloSmall;
       var point = closure$head.pos.plus_4l17gg$(new Point(15, -40));
-      position(tmp$_1, get_x(point), get_y(point));
-      var tmp$_2 = closure$bocadilloBig;
+      position(tmp$_2, get_x(point), get_y(point));
+      var tmp$_3 = closure$bocadilloBig;
       var point_0 = closure$head.pos.plus_4l17gg$(new Point(15, -55));
-      position(tmp$_2, get_x(point_0), get_y(point_0));
+      position(tmp$_3, get_x(point_0), get_y(point_0));
       if (!closure$snake.cinematicMode || closure$snake.goRight) {
         closure$updateBodyParts(closure$snake.body);
       }return Unit;
@@ -1182,7 +1312,9 @@
     var snakeAtlas = Resources$Companion_getInstance().snakeAtlas;
     var headTile = snakeAtlas.get_61zpoe$(skin.headTile);
     var bodyTile = snakeAtlas.get_61zpoe$(skin.bodyTile);
+    var bodyFatTile = snakeAtlas.get_61zpoe$(skin.bodyFatTile);
     var tailTile = snakeAtlas.get_61zpoe$(skin.tailTile);
+    var eatingHeadTile = snakeAtlas.get_61zpoe$(skin.eatingHeadTile);
     var initialX = pos.x * 32.0;
     var initialY = pos.y * 32.0;
     var snake = new Snake(initialX, initialY, 2);
@@ -1226,7 +1358,8 @@
     var $receiver_0_7 = addTo(Text.Companion.invoke_8ii8iq$(text, 10.0, color_0_0, font), $receiver_0_0);
     text$lambda($receiver_0_7);
     bocadilloBig.addChild_l5rad2$(position_0($receiver_0_7, 5, 5));
-    var updateBodyParts = snake$lambda$updateBodyParts(bodyParts);
+    var updatePart = snake$lambda$updatePart;
+    var updateBodyParts = snake$lambda$updateBodyParts(bodyParts, updatePart);
     snake.updateBodyParts = getCallableRef('updateBodyParts', function (body) {
       return updateBodyParts(body), Unit;
     });
@@ -1234,27 +1367,32 @@
     snake.bocadilloBig = bocadilloBig;
     var head = first(bodyParts);
     var addBodyPart = snake$lambda$addBodyPart(snake, bodyTile, bodyParts, tailTile, $receiver_0_0);
+    var frames = {v: 0.0};
+    var speed = 4.0;
+    var fatBodies = ArrayList_init();
+    var eat = snake$lambda$eat(snake, fatBodies, bodyParts, bodyFatTile, $receiver_0_0, updatePart);
     var prop_1 = getPropertyCallableRef('onKeyDown', 1, function ($receiver) {
       return $receiver.onKeyDown;
     });
     var tmp$_1;
     if ((tmp$_1 = $receiver_0_0 != null ? get_keys($receiver_0_0) : null) != null) {
-      prop_1.get(tmp$_1).add_25kf2w$(snake$lambda$lambda(addBodyPart));
-    }var frames = {v: 0.0};
-    var speed = 4.0;
-    var newDirection = {v: snake.direction};
+      prop_1.get(tmp$_1).add_25kf2w$(snake$lambda$lambda(eat));
+    }var newDirection = {v: snake.direction};
     var lockInput = {v: false};
     var dotsToGrow = 5;
     var remainingToGrow = {v: dotsToGrow};
     var ghostsAndPacmanCounter = {v: 5};
-    var enemyPacmanEaten = snake$lambda$enemyPacmanEaten(ghostsAndPacmanCounter, nextLevel);
-    onCollision(head, void 0, void 0, void 0, snake$lambda$lambda_0(addBodyPart, onItemEaten, remainingToGrow, dotsToGrow, enemyPacmanEaten));
-    addFixedUpdater($receiver_0_0, MILLISECONDS_PER_FRAME, false, void 0, snake$lambda$lambda_1(lockInput, key, newDirection, snake, movementMode, speed, frames, collisionChecker, nextLevel, onDied, bocadilloSmall, head, bocadilloBig, updateBodyParts));
+    var enemyPacmanEaten = snake$lambda$enemyPacmanEaten(ghostsAndPacmanCounter, snakeAtlas, $receiver_0_0, snake, nextLevel);
+    onCollision(head, void 0, void 0, void 0, snake$lambda$lambda_0(eatingHeadTile, bodyParts, speed, headTile, eat, addBodyPart, onItemEaten, remainingToGrow, dotsToGrow, enemyPacmanEaten));
+    var goingToNextLevel = {v: false};
+    addFixedUpdater($receiver_0_0, MILLISECONDS_PER_FRAME, false, void 0, snake$lambda$lambda_1(fatBodies, lockInput, key, newDirection, snake, movementMode, speed, frames, collisionChecker, goingToNextLevel, nextLevel, onDied, bocadilloSmall, head, bocadilloBig, updateBodyParts));
     return snake;
   }
   function SnakeSkin() {
     this.headTile_145vjg$_0 = 'snake_head_01.png';
+    this.eatingHeadTile_6qqqwa$_0 = 'snake_head_02.png';
     this.bodyTile_n83ixe$_0 = 'snake_body.png';
+    this.bodyFatTile_x2dtwt$_0 = 'snake_body_2.png';
     this.tailTile_193hk4$_0 = 'snake_body_tail.png';
   }
   Object.defineProperty(SnakeSkin.prototype, 'headTile', {
@@ -1262,9 +1400,19 @@
       return this.headTile_145vjg$_0;
     }
   });
+  Object.defineProperty(SnakeSkin.prototype, 'eatingHeadTile', {
+    get: function () {
+      return this.eatingHeadTile_6qqqwa$_0;
+    }
+  });
   Object.defineProperty(SnakeSkin.prototype, 'bodyTile', {
     get: function () {
       return this.bodyTile_n83ixe$_0;
+    }
+  });
+  Object.defineProperty(SnakeSkin.prototype, 'bodyFatTile', {
+    get: function () {
+      return this.bodyFatTile_x2dtwt$_0;
     }
   });
   Object.defineProperty(SnakeSkin.prototype, 'tailTile', {
@@ -1280,7 +1428,9 @@
   function PacmanSnakeSkin() {
     SnakeSkin.call(this);
     this.headTile_g5r8oc$_0 = 'PacMan_Snake_Head_01.png';
+    this.eatingHeadTile_x6g7ni$_0 = 'PacMan_Snake_Head_02.png';
     this.bodyTile_uj3ety$_0 = 'PacMan_Snake_Bdoy_01.png';
+    this.bodyFatTile_vfuuj$_0 = 'PacMan_Snake_Bdoy_02.png';
     this.tailTile_ij0lrw$_0 = 'PacMan_Snake_Tail.png';
   }
   Object.defineProperty(PacmanSnakeSkin.prototype, 'headTile', {
@@ -1288,9 +1438,19 @@
       return this.headTile_g5r8oc$_0;
     }
   });
+  Object.defineProperty(PacmanSnakeSkin.prototype, 'eatingHeadTile', {
+    get: function () {
+      return this.eatingHeadTile_x6g7ni$_0;
+    }
+  });
   Object.defineProperty(PacmanSnakeSkin.prototype, 'bodyTile', {
     get: function () {
       return this.bodyTile_uj3ety$_0;
+    }
+  });
+  Object.defineProperty(PacmanSnakeSkin.prototype, 'bodyFatTile', {
+    get: function () {
+      return this.bodyFatTile_vfuuj$_0;
     }
   });
   Object.defineProperty(PacmanSnakeSkin.prototype, 'tailTile', {
@@ -1592,7 +1752,7 @@
     if (this.collisionLayer_0.map.width <= tilePosX)
       return this.horizontalLimit;
     if (this.collisionLayer_0.map.height <= tilePosY)
-      return this.horizontalLimit;
+      return false;
     return this.collisionLayer_0.map.get_vux9f0$(tilePosX, tilePosY).value !== 0;
   };
   CollisionChecker.prototype.getRandomSpawnPoint = function () {
@@ -2103,6 +2263,7 @@
       try {
         switch (this.state_0) {
           case 0:
+            println('Call next level!');
             this.state_0 = 2;
             this.result_0 = this.local$this$GameScene.nextLevel(this);
             if (this.result_0 === COROUTINE_SUSPENDED)
@@ -2256,6 +2417,7 @@
       try {
         switch (this.state_0) {
           case 0:
+            var tmp$;
             this.state_0 = 2;
             this.result_0 = delay(TimeSpan.Companion.fromMilliseconds_14dthe$(1), this);
             if (this.result_0 === COROUTINE_SUSPENDED)
@@ -2280,13 +2442,21 @@
           case 4:
             this.local$closure$getReady.visible = false;
             currentGameState.paused = false;
-            this.state_0 = 5;
-            this.result_0 = apple(this.local$this$, this.local$this$GameScene.views, this.local$closure$collisionChecker, this);
-            if (this.result_0 === COROUTINE_SUSPENDED)
-              return COROUTINE_SUSPENDED;
-            continue;
+            if ((tmp$ = this.local$this$GameScene.stageConfig) != null ? tmp$.equals(SnakeStageConfig) : null) {
+              this.state_0 = 5;
+              this.result_0 = apple(this.local$this$, this.local$this$GameScene.views, this.local$closure$collisionChecker, this);
+              if (this.result_0 === COROUTINE_SUSPENDED)
+                return COROUTINE_SUSPENDED;
+              continue;
+            } else {
+              this.state_0 = 6;
+              continue;
+            }
+
           case 5:
-            return this.result_0;
+            return Unit;
+          case 6:
+            return Unit;
           default:this.state_0 = 1;
             throw new Error('State Machine Unreachable execution');
         }
@@ -2574,6 +2744,7 @@
           case 1:
             throw this.exception_0;
           case 2:
+            currentGameState.paused = true;
             var $this = this.local$this$SnakeGameScene.sceneContainer;
             var injects = [1];
             var time;
@@ -2626,23 +2797,24 @@
   function PacmanGameScene() {
     GameScene.call(this, PacmanStageConfig);
   }
-  function Coroutine$PacmanGameScene$nextLevel$lambda(this$PacmanGameScene_0, continuation_0) {
+  function Coroutine$nextLevel($this, continuation_0) {
     CoroutineImpl.call(this, continuation_0);
     this.exceptionState_0 = 1;
-    this.local$this$PacmanGameScene = this$PacmanGameScene_0;
+    this.$this = $this;
   }
-  Coroutine$PacmanGameScene$nextLevel$lambda.$metadata$ = {
+  Coroutine$nextLevel.$metadata$ = {
     kind: Kotlin.Kind.CLASS,
     simpleName: null,
     interfaces: [CoroutineImpl]
   };
-  Coroutine$PacmanGameScene$nextLevel$lambda.prototype = Object.create(CoroutineImpl.prototype);
-  Coroutine$PacmanGameScene$nextLevel$lambda.prototype.constructor = Coroutine$PacmanGameScene$nextLevel$lambda;
-  Coroutine$PacmanGameScene$nextLevel$lambda.prototype.doResume = function () {
+  Coroutine$nextLevel.prototype = Object.create(CoroutineImpl.prototype);
+  Coroutine$nextLevel.prototype.constructor = Coroutine$nextLevel;
+  Coroutine$nextLevel.prototype.doResume = function () {
     do
       try {
         switch (this.state_0) {
           case 0:
+            this.$this.fadeOff = true;
             this.state_0 = 2;
             this.result_0 = delay(TimeSpan.Companion.fromSeconds_14dthe$(1), this);
             if (this.result_0 === COROUTINE_SUSPENDED)
@@ -2651,8 +2823,10 @@
           case 1:
             throw this.exception_0;
           case 2:
-            var $this = this.local$this$PacmanGameScene.sceneContainer;
-            var injects = [1];
+            currentGameState.paused = true;
+            println('nextLevel.1');
+            var $this = this.$this.sceneContainer;
+            var injects = [];
             var time;
             var transition;
             if (time === void 0) {
@@ -2667,7 +2841,7 @@
             continue;
           case 3:
             this.result_0;
-            return this.result_0;
+            return;
           default:this.state_0 = 1;
             throw new Error('State Machine Unreachable execution');
         }
@@ -2682,18 +2856,12 @@
       }
      while (true);
   };
-  function PacmanGameScene$nextLevel$lambda(this$PacmanGameScene_0) {
-    return function (continuation_0, suspended) {
-      var instance = new Coroutine$PacmanGameScene$nextLevel$lambda(this$PacmanGameScene_0, continuation_0);
-      if (suspended)
-        return instance;
-      else
-        return instance.doResume(null);
-    };
-  }
-  PacmanGameScene.prototype.nextLevel = function (continuation) {
-    this.fadeOff = true;
-    launch_0(this, PacmanGameScene$nextLevel$lambda(this));
+  PacmanGameScene.prototype.nextLevel = function (continuation_0, suspended) {
+    var instance = new Coroutine$nextLevel(this, continuation_0);
+    if (suspended)
+      return instance;
+    else
+      return instance.doResume(null);
   };
   PacmanGameScene.$metadata$ = {
     kind: Kind_CLASS,
@@ -3608,11 +3776,13 @@
       try {
         switch (this.state_0) {
           case 0:
+            println('nextLevel.2');
             var $receiver_0 = addTo(new SolidRect_init(1000.0, 1000.0, RGBA.Companion.float_7b5o5w$(numberToDouble(0), numberToDouble(0), numberToDouble(0), numberToDouble(1))), this.local$$receiver);
             solidRect$lambda_2($receiver_0);
             currentGameState.paused = false;
+            println('nextLevel.3');
             var $this = this.$this.sceneContainer;
-            var injects = [1];
+            var injects = [];
             var time;
             var transition;
             if (time === void 0) {
