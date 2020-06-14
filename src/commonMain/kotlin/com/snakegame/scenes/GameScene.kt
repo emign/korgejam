@@ -124,7 +124,7 @@ open class GameScene(val stageConfig: StageConfig) : Scene() {
 
             when(stageConfig.level){
                 1->SnakeCinematic(this@sceneInit, player, coroutineContext)
-                3-> EndCinematic(this@sceneInit, player, coroutineContext){
+                3-> EndCinematic(this@sceneInit, this, player, coroutineContext){
                     launchImmediately {
                         sceneContainer.changeTo<LoadingScene>(1)
                     }
@@ -167,8 +167,9 @@ open class GameScene(val stageConfig: StageConfig) : Scene() {
                     apple(views, collisionChecker)
                 }
             }
+            customInit()
         }
-        customInit()
+
 
         if(!currentGameState.restarting) unFade()
     }
@@ -230,8 +231,9 @@ class PacmanGameScene() : GameScene(PacmanStageConfig){
 }
 class MarioGameScene() : GameScene(MarioStageConfig){
     override suspend fun Container.customInit() {
-        Resources.channel?.stop()
+        Resources.channel.stop()
         Resources.channel = Resources.larrioMusic.playForever()
+        image(Resources.snakeAtlas["Tube.png"]).positionY(360)
     }
 }
 
