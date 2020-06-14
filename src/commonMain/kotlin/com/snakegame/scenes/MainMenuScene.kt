@@ -52,6 +52,7 @@ class MainMenuScene() : Scene() {
             pacman.alpha = 1.0
             it.view.removeFromParent()
             play.text = "SNAKE"
+            play.centerXOn(this)
         }
     }
 
