@@ -65,8 +65,11 @@
   var timeout = $module$korge_root_korge.com.soywiz.korge.time.timeout_7ghvt3$;
   var toList = Kotlin.kotlin.collections.toList_7wnvza$;
   var Point = $module$korma_root_korma.com.soywiz.korma.geom.Point;
+  var get_lastIndex = Kotlin.kotlin.collections.get_lastIndex_55thoc$;
   var ArrayList_init = Kotlin.kotlin.collections.ArrayList_init_287e2$;
   var checkIndexOverflow = Kotlin.kotlin.collections.checkIndexOverflow_za3lpa$;
+  var collectionSizeOrDefault = Kotlin.kotlin.collections.collectionSizeOrDefault_ba2ldo$;
+  var ArrayList_init_0 = Kotlin.kotlin.collections.ArrayList_init_ww73n8$;
   var TimeSpan = $module$klock_root_klock.com.soywiz.klock.TimeSpan;
   var numberToInt = Kotlin.numberToInt;
   var Collection = Kotlin.kotlin.collections.Collection;
@@ -79,11 +82,11 @@
   var RGBA = $module$korim_root_korim.com.soywiz.korim.color.RGBA;
   var std = $module$korio_root_korio.com.soywiz.korio.file.std;
   var readBitmap = $module$korim_root_korim.com.soywiz.korim.format.readBitmap_vi5npc$;
+  var wait = $module$korge_root_korge.com.soywiz.korge.time.wait_f287ec$;
   var numberToDouble = Kotlin.numberToDouble;
   var SolidRect_init = $module$korge_root_korge.com.soywiz.korge.view.SolidRect;
   var Image_init = $module$korge_root_korge.com.soywiz.korge.view.Image_init_8drxwf$;
   var throwCCE = Kotlin.throwCCE;
-  var wait = $module$korge_root_korge.com.soywiz.korge.time.wait_f287ec$;
   var hide = $module$korge_root_korge.com.soywiz.korge.tween.hide_yz29kn$;
   var defineInlineFunction = Kotlin.defineInlineFunction;
   var wrapFunction = Kotlin.wrapFunction;
@@ -143,6 +146,8 @@
   MovementMode.prototype.constructor = MovementMode;
   PacmanSnakeSkin.prototype = Object.create(SnakeSkin.prototype);
   PacmanSnakeSkin.prototype.constructor = PacmanSnakeSkin;
+  CURVES.prototype = Object.create(Enum.prototype);
+  CURVES.prototype.constructor = CURVES;
   GameScene.prototype = Object.create(Scene.prototype);
   GameScene.prototype.constructor = GameScene;
   SnakeGameScene.prototype = Object.create(GameScene.prototype);
@@ -746,6 +751,7 @@
     }
     this.direction = newDirection;
     this.lastDirection = newDirection;
+    Resources$Companion_getInstance().levelWarp.play_gfl8bq$();
   };
   function Snake_init$lambda(it) {
     return Unit;
@@ -1186,6 +1192,99 @@
         closure$newDirection.v = Direction$LEFT_getInstance();
       }};
   }
+  function snake$lambda$lambda$paintCurves(closure$snake, closure$snakeCurvesContainer, closure$turnTileDR_LU, closure$turnTileRD_UL, closure$turnTileRU_DL, closure$turnTileUR_LD, closure$headTile, this$) {
+    return function () {
+      var $receiver = closure$snake.body;
+      var destination = ArrayList_init_0(collectionSizeOrDefault($receiver, 10));
+      var tmp$;
+      tmp$ = $receiver.iterator();
+      while (tmp$.hasNext()) {
+        var item = tmp$.next();
+        destination.add_11rb$(new Point(item.x / TILE_SIZE, item.y / TILE_SIZE));
+      }
+      var positions = destination;
+      var curves = ArrayList_init();
+      var tmp$_0, tmp$_0_0;
+      var index = 0;
+      tmp$_0 = positions.iterator();
+      loop_label: while (tmp$_0.hasNext()) {
+        var item_0 = tmp$_0.next();
+        var index_0 = checkIndexOverflow((tmp$_0_0 = index, index = tmp$_0_0 + 1 | 0, tmp$_0_0));
+        action$break: do {
+          if (index_0 >= (get_lastIndex(positions) - 1 | 0))
+            break action$break;
+          if (index_0 > 0) {
+            var next = positions.get_za3lpa$(index_0 + 1 | 0);
+            if (item_0.x === next.x) {
+              var next2 = positions.get_za3lpa$(index_0 + 2 | 0);
+              if (item_0.x < next2.x) {
+                if (item_0.y < next2.y)
+                  curves.add_11rb$(new Pair(CURVES$LU_getInstance(), next));
+                else
+                  curves.add_11rb$(new Pair(CURVES$LD_getInstance(), next));
+              } else if (item_0.x > next2.x) {
+                if (item_0.y < next2.y)
+                  curves.add_11rb$(new Pair(CURVES$RU_getInstance(), next));
+                else
+                  curves.add_11rb$(new Pair(CURVES$RD_getInstance(), next));
+              }} else if (item_0.y === next.y) {
+              var next2_0 = positions.get_za3lpa$(index_0 + 2 | 0);
+              if (item_0.y < next2_0.y) {
+                if (item_0.x < next2_0.x)
+                  curves.add_11rb$(new Pair(CURVES$UL_getInstance(), next));
+                else
+                  curves.add_11rb$(new Pair(CURVES$UR_getInstance(), next));
+              } else if (item_0.y > next2_0.y) {
+                if (item_0.x < next2_0.x)
+                  curves.add_11rb$(new Pair(CURVES$DL_getInstance(), next));
+                else
+                  curves.add_11rb$(new Pair(CURVES$DR_getInstance(), next));
+              }}}}
+         while (false);
+      }
+      closure$snakeCurvesContainer.removeChildren();
+      var tmp$_1;
+      tmp$_1 = curves.iterator();
+      while (tmp$_1.hasNext()) {
+        var element = tmp$_1.next();
+        var closure$turnTileDR_LU_0 = closure$turnTileDR_LU;
+        var closure$turnTileRD_UL_0 = closure$turnTileRD_UL;
+        var closure$turnTileRU_DL_0 = closure$turnTileRU_DL;
+        var closure$turnTileUR_LD_0 = closure$turnTileUR_LD;
+        var closure$headTile_0 = closure$headTile;
+        var closure$snakeCurvesContainer_0 = closure$snakeCurvesContainer;
+        var this$_0 = this$;
+        var tmp$_2;
+        switch (element.first.name) {
+          case 'DR':
+          case 'LU':
+            tmp$_2 = closure$turnTileDR_LU_0;
+            break;
+          case 'RD':
+          case 'UL':
+            tmp$_2 = closure$turnTileRD_UL_0;
+            break;
+          case 'RU':
+          case 'DL':
+            tmp$_2 = closure$turnTileRU_DL_0;
+            break;
+          case 'UR':
+          case 'LD':
+            tmp$_2 = closure$turnTileUR_LD_0;
+            break;
+          default:tmp$_2 = closure$headTile_0;
+            break;
+        }
+        var tile = tmp$_2;
+        var $receiver_0 = addTo(new Image(tile, 0.0, 0.0), this$_0);
+        image$lambda($receiver_0);
+        $receiver_0.smoothing = false;
+        var point = element.second.times_za3lpa$(TILE_SIZE);
+        position($receiver_0, get_x(point), get_y(point));
+        closure$snakeCurvesContainer_0.addChild_l5rad2$($receiver_0);
+      }
+    };
+  }
   function snake$lambda$lambda$lambda$lambda$lambda(closure$image, closure$explotionPos) {
     return function () {
       var tmp$ = closure$image;
@@ -1225,7 +1324,7 @@
       return Unit;
     };
   }
-  function snake$lambda$lambda_1(closure$fatBodies, closure$lockInput, closure$key, closure$newDirection, closure$snake, closure$movementMode, closure$speed, closure$frames, closure$collisionChecker, closure$goingToNextLevel, closure$explotionAnim, closure$nextLevel, closure$onDied, closure$warpEnabled, closure$bocadilloSmall, closure$head, closure$bocadilloBig, closure$updateBodyParts) {
+  function snake$lambda$lambda_1(closure$fatBodies, closure$lockInput, closure$key, closure$newDirection, closure$snake, closure$snakeCurvesContainer, closure$turnTileDR_LU, closure$turnTileRD_UL, closure$turnTileRU_DL, closure$turnTileUR_LD, closure$headTile, closure$movementMode, closure$speed, closure$frames, closure$collisionChecker, closure$goingToNextLevel, closure$explotionAnim, closure$nextLevel, closure$onDied, closure$warpEnabled, closure$bocadilloSmall, closure$head, closure$bocadilloBig, closure$updateBodyParts) {
     return function ($receiver) {
       var tmp$;
       if (currentGameState.paused)
@@ -1265,6 +1364,7 @@
           closure$lockInput.v = true;
       }var disableWalkingBackwards = snake$lambda$lambda$disableWalkingBackwards(closure$newDirection, closure$snake);
       var disableWarpWalking = snake$lambda$lambda$disableWarpWalking(closure$snake, closure$newDirection);
+      var paintCurves = snake$lambda$lambda$paintCurves(closure$snake, closure$snakeCurvesContainer, closure$turnTileDR_LU, closure$turnTileRD_UL, closure$turnTileRU_DL, closure$turnTileUR_LD, closure$headTile, $receiver);
       loop_label: switch (closure$movementMode.name) {
         case 'SNAKE':
           disableWalkingBackwards();
@@ -1288,6 +1388,7 @@
             closure$snake.interpolate_14dthe$(closure$frames.v / TILE_SIZE);
           }
 
+          paintCurves();
           break loop_label;
         case 'PACMAN':
           disableWalkingBackwards();
@@ -1306,6 +1407,7 @@
               closure$frames.v = 0.0;
             }if (closure$snake.colides())
               closure$onDied();
+            paintCurves();
           } else {
             closure$snake.interpolate_14dthe$(closure$frames.v / TILE_SIZE);
           }
@@ -1359,6 +1461,7 @@
             closure$snake.interpolate_14dthe$(closure$frames.v / TILE_SIZE);
           }
 
+          paintCurves();
           break loop_label;
       }
       var tmp$_2 = closure$bocadilloSmall;
@@ -1380,6 +1483,11 @@
     var bodyTile = snakeAtlas.get_61zpoe$(skin.bodyTile);
     var bodyFatTile = snakeAtlas.get_61zpoe$(skin.bodyFatTile);
     var tailTile = snakeAtlas.get_61zpoe$(skin.tailTile);
+    var turnTile = snakeAtlas.get_61zpoe$(skin.turnTile);
+    var turnTileDR_LU = snakeAtlas.get_61zpoe$(skin.turnTileDR_LU);
+    var turnTileRD_UL = snakeAtlas.get_61zpoe$(skin.turnTileRD_UL);
+    var turnTileRU_DL = snakeAtlas.get_61zpoe$(skin.turnTileRU_DL);
+    var turnTileUR_LD = snakeAtlas.get_61zpoe$(skin.turnTileUR_LD);
     var eatingHeadTile = snakeAtlas.get_61zpoe$(skin.eatingHeadTile);
     var initialX = pos.x * 32.0;
     var initialY = pos.y * 32.0;
@@ -1412,41 +1520,43 @@
     $receiver_0_4.smoothing = false;
     bodyParts.addAll_brywnq$(reversed(listOf([$receiver_0_2, $receiver_0_3, $receiver_0_4])));
     var snakeContainer = $receiver_0_1;
-    var $receiver_0_5 = addTo(new Image(snakeAtlas.get_61zpoe$('bocadillo_02.png'), 0.0, 0.0), $receiver_0_0);
-    image$lambda($receiver_0_5);
-    var bocadilloSmall = $receiver_0_5;
+    var $receiver_0_5 = addTo(new Container_init(), $receiver_0_0);
+    var snakeCurvesContainer = $receiver_0_5;
+    var $receiver_0_6 = addTo(new Image(snakeAtlas.get_61zpoe$('bocadillo_02.png'), 0.0, 0.0), $receiver_0_0);
+    image$lambda($receiver_0_6);
+    var bocadilloSmall = $receiver_0_6;
     var color_0 = color.Colors.BLACK;
-    var $receiver_0_6 = addTo(Text.Companion.invoke_8ii8iq$('!?', 16.0, color_0, font), $receiver_0_0);
-    text$lambda($receiver_0_6);
-    bocadilloSmall.addChild_l5rad2$(centerXOn($receiver_0_6, bocadilloSmall));
+    var $receiver_0_7 = addTo(Text.Companion.invoke_8ii8iq$('!?', 16.0, color_0, font), $receiver_0_0);
+    text$lambda($receiver_0_7);
+    bocadilloSmall.addChild_l5rad2$(centerXOn($receiver_0_7, bocadilloSmall));
     bocadilloSmall.alpha = 0.0;
-    var $receiver_0_7 = addTo(new Image(snakeAtlas.get_61zpoe$('bocadillo_01.png'), 0.0, 0.0), $receiver_0_0);
-    image$lambda($receiver_0_7);
-    var bocadilloBig = $receiver_0_7;
+    var $receiver_0_8 = addTo(new Image(snakeAtlas.get_61zpoe$('bocadillo_01.png'), 0.0, 0.0), $receiver_0_0);
+    image$lambda($receiver_0_8);
+    var bocadilloBig = $receiver_0_8;
     scale(bocadilloBig, 1.5, 1.5);
     var text = 'Grrrr...';
     var color_0_0 = color.Colors.BLACK;
-    var $receiver_0_8 = addTo(Text.Companion.invoke_8ii8iq$(text, 10.0, color_0_0, font), $receiver_0_0);
-    text$lambda($receiver_0_8);
-    bocadilloBig.addChild_l5rad2$(position_0($receiver_0_8, 5, 5));
+    var $receiver_0_9 = addTo(Text.Companion.invoke_8ii8iq$(text, 10.0, color_0_0, font), $receiver_0_0);
+    text$lambda($receiver_0_9);
+    bocadilloBig.addChild_l5rad2$(position_0($receiver_0_9, 5, 5));
     bocadilloBig.alpha = 0.0;
-    var $receiver_0_9 = addTo(new Image(snakeAtlas.get_61zpoe$('Explosion1_01.png'), 0.0, 0.0), $receiver_0_0);
-    image$lambda($receiver_0_9);
-    var $receiver_0_10 = addTo(new Image(snakeAtlas.get_61zpoe$('Explosion1_02.png'), 0.0, 0.0), $receiver_0_0);
+    var $receiver_0_10 = addTo(new Image(snakeAtlas.get_61zpoe$('Explosion1_01.png'), 0.0, 0.0), $receiver_0_0);
     image$lambda($receiver_0_10);
-    var $receiver_0_11 = addTo(new Image(snakeAtlas.get_61zpoe$('Explosion1_03.png'), 0.0, 0.0), $receiver_0_0);
+    var $receiver_0_11 = addTo(new Image(snakeAtlas.get_61zpoe$('Explosion1_02.png'), 0.0, 0.0), $receiver_0_0);
     image$lambda($receiver_0_11);
-    var $receiver_0_12 = addTo(new Image(snakeAtlas.get_61zpoe$('Explosion1_04.png'), 0.0, 0.0), $receiver_0_0);
+    var $receiver_0_12 = addTo(new Image(snakeAtlas.get_61zpoe$('Explosion1_03.png'), 0.0, 0.0), $receiver_0_0);
     image$lambda($receiver_0_12);
-    var $receiver_0_13 = addTo(new Image(snakeAtlas.get_61zpoe$('Explosion1_05.png'), 0.0, 0.0), $receiver_0_0);
+    var $receiver_0_13 = addTo(new Image(snakeAtlas.get_61zpoe$('Explosion1_04.png'), 0.0, 0.0), $receiver_0_0);
     image$lambda($receiver_0_13);
-    var $receiver_0_14 = addTo(new Image(snakeAtlas.get_61zpoe$('Explosion1_06.png'), 0.0, 0.0), $receiver_0_0);
+    var $receiver_0_14 = addTo(new Image(snakeAtlas.get_61zpoe$('Explosion1_05.png'), 0.0, 0.0), $receiver_0_0);
     image$lambda($receiver_0_14);
-    var $receiver_0_15 = addTo(new Image(snakeAtlas.get_61zpoe$('Explosion1_07.png'), 0.0, 0.0), $receiver_0_0);
+    var $receiver_0_15 = addTo(new Image(snakeAtlas.get_61zpoe$('Explosion1_06.png'), 0.0, 0.0), $receiver_0_0);
     image$lambda($receiver_0_15);
-    var $receiver_0_16 = addTo(new Image(snakeAtlas.get_61zpoe$('Explosion1_08.png'), 0.0, 0.0), $receiver_0_0);
+    var $receiver_0_16 = addTo(new Image(snakeAtlas.get_61zpoe$('Explosion1_07.png'), 0.0, 0.0), $receiver_0_0);
     image$lambda($receiver_0_16);
-    var explotionAnim = mutableListOf([$receiver_0_9, $receiver_0_10, $receiver_0_11, $receiver_0_12, $receiver_0_13, $receiver_0_14, $receiver_0_15, $receiver_0_16]);
+    var $receiver_0_17 = addTo(new Image(snakeAtlas.get_61zpoe$('Explosion1_08.png'), 0.0, 0.0), $receiver_0_0);
+    image$lambda($receiver_0_17);
+    var explotionAnim = mutableListOf([$receiver_0_10, $receiver_0_11, $receiver_0_12, $receiver_0_13, $receiver_0_14, $receiver_0_15, $receiver_0_16, $receiver_0_17]);
     var tmp$_1;
     tmp$_1 = explotionAnim.iterator();
     while (tmp$_1.hasNext()) {
@@ -1480,7 +1590,7 @@
     var enemyPacmanEaten = snake$lambda$enemyPacmanEaten(ghostsAndPacmanCounter, warpEnabled, snakeAtlas, $receiver_0_0, snake, nextLevel);
     onCollision(head, void 0, void 0, void 0, snake$lambda$lambda_0(eatingHeadTile, head, speed, headTile, eat, addBodyPart, onItemEaten, remainingToGrow, dotsToGrow, enemyPacmanEaten));
     var goingToNextLevel = {v: false};
-    addFixedUpdater($receiver_0_0, MILLISECONDS_PER_FRAME, false, void 0, snake$lambda$lambda_1(fatBodies, lockInput, key, newDirection, snake, movementMode, speed, frames, collisionChecker, goingToNextLevel, explotionAnim, nextLevel, onDied, warpEnabled, bocadilloSmall, head, bocadilloBig, updateBodyParts));
+    addFixedUpdater($receiver_0_0, MILLISECONDS_PER_FRAME, false, void 0, snake$lambda$lambda_1(fatBodies, lockInput, key, newDirection, snake, snakeCurvesContainer, turnTileDR_LU, turnTileRD_UL, turnTileRU_DL, turnTileUR_LD, headTile, movementMode, speed, frames, collisionChecker, goingToNextLevel, explotionAnim, nextLevel, onDied, warpEnabled, bocadilloSmall, head, bocadilloBig, updateBodyParts));
     return snake;
   }
   function SnakeSkin() {
@@ -1489,6 +1599,11 @@
     this.bodyTile_n83ixe$_0 = 'snake_body.png';
     this.bodyFatTile_x2dtwt$_0 = 'snake_body_2.png';
     this.tailTile_193hk4$_0 = 'snake_body_tail.png';
+    this.turnTile_g47tj$_0 = 'snake_body_turn.png';
+    this.turnTileDR_LU_9kvrml$_0 = 'snake_body_turn_dr_lu.png';
+    this.turnTileRD_UL_35xzyf$_0 = 'snake_body_turn_rd_ul.png';
+    this.turnTileRU_DL_2wluh3$_0 = 'snake_body_turn_ru_dl.png';
+    this.turnTileUR_LD_1j47bx$_0 = 'snake_body_turn_ur_ld.png';
   }
   Object.defineProperty(SnakeSkin.prototype, 'headTile', {
     get: function () {
@@ -1515,6 +1630,31 @@
       return this.tailTile_193hk4$_0;
     }
   });
+  Object.defineProperty(SnakeSkin.prototype, 'turnTile', {
+    get: function () {
+      return this.turnTile_g47tj$_0;
+    }
+  });
+  Object.defineProperty(SnakeSkin.prototype, 'turnTileDR_LU', {
+    get: function () {
+      return this.turnTileDR_LU_9kvrml$_0;
+    }
+  });
+  Object.defineProperty(SnakeSkin.prototype, 'turnTileRD_UL', {
+    get: function () {
+      return this.turnTileRD_UL_35xzyf$_0;
+    }
+  });
+  Object.defineProperty(SnakeSkin.prototype, 'turnTileRU_DL', {
+    get: function () {
+      return this.turnTileRU_DL_2wluh3$_0;
+    }
+  });
+  Object.defineProperty(SnakeSkin.prototype, 'turnTileUR_LD', {
+    get: function () {
+      return this.turnTileUR_LD_1j47bx$_0;
+    }
+  });
   SnakeSkin.$metadata$ = {
     kind: Kind_CLASS,
     simpleName: 'SnakeSkin',
@@ -1527,6 +1667,11 @@
     this.bodyTile_uj3ety$_0 = 'PacMan_Snake_Bdoy_01.png';
     this.bodyFatTile_vfuuj$_0 = 'PacMan_Snake_Bdoy_02.png';
     this.tailTile_ij0lrw$_0 = 'PacMan_Snake_Tail.png';
+    this.turnTile_hq1c1b$_0 = 'PacMan_Snake_body_turn.png';
+    this.turnTileDR_LU_mboilx$_0 = 'PacMan_Snake_body_turn_dr_lu.png';
+    this.turnTileRD_UL_fwqqxr$_0 = 'PacMan_Snake_body_turn_rd_ul.png';
+    this.turnTileRU_DL_fnelgf$_0 = 'PacMan_Snake_body_turn_ru_dl.png';
+    this.turnTileUR_LD_e9wyb9$_0 = 'PacMan_Snake_body_turn_ur_ld.png';
   }
   Object.defineProperty(PacmanSnakeSkin.prototype, 'headTile', {
     get: function () {
@@ -1551,6 +1696,31 @@
   Object.defineProperty(PacmanSnakeSkin.prototype, 'tailTile', {
     get: function () {
       return this.tailTile_ij0lrw$_0;
+    }
+  });
+  Object.defineProperty(PacmanSnakeSkin.prototype, 'turnTile', {
+    get: function () {
+      return this.turnTile_hq1c1b$_0;
+    }
+  });
+  Object.defineProperty(PacmanSnakeSkin.prototype, 'turnTileDR_LU', {
+    get: function () {
+      return this.turnTileDR_LU_mboilx$_0;
+    }
+  });
+  Object.defineProperty(PacmanSnakeSkin.prototype, 'turnTileRD_UL', {
+    get: function () {
+      return this.turnTileRD_UL_fwqqxr$_0;
+    }
+  });
+  Object.defineProperty(PacmanSnakeSkin.prototype, 'turnTileRU_DL', {
+    get: function () {
+      return this.turnTileRU_DL_fnelgf$_0;
+    }
+  });
+  Object.defineProperty(PacmanSnakeSkin.prototype, 'turnTileUR_LD', {
+    get: function () {
+      return this.turnTileUR_LD_e9wyb9$_0;
     }
   });
   PacmanSnakeSkin.$metadata$ = {
@@ -1755,10 +1925,80 @@
         return instance.doResume(null);
     };
   }
+  function Coroutine$EndCinematic_init$lambda$lambda$lambda$lambda(this$_0, continuation_0) {
+    CoroutineImpl.call(this, continuation_0);
+    this.exceptionState_0 = 1;
+    this.local$this$ = this$_0;
+  }
+  Coroutine$EndCinematic_init$lambda$lambda$lambda$lambda.$metadata$ = {
+    kind: Kotlin.Kind.CLASS,
+    simpleName: null,
+    interfaces: [CoroutineImpl]
+  };
+  Coroutine$EndCinematic_init$lambda$lambda$lambda$lambda.prototype = Object.create(CoroutineImpl.prototype);
+  Coroutine$EndCinematic_init$lambda$lambda$lambda$lambda.prototype.constructor = Coroutine$EndCinematic_init$lambda$lambda$lambda$lambda;
+  Coroutine$EndCinematic_init$lambda$lambda$lambda$lambda.prototype.doResume = function () {
+    do
+      try {
+        switch (this.state_0) {
+          case 0:
+            this.state_0 = 2;
+            continue;
+          case 1:
+            throw this.exception_0;
+          case 2:
+            if (Resources$Companion_getInstance().channel.volume >= 1.0) {
+              this.state_0 = 4;
+              continue;
+            }
+            this.state_0 = 3;
+            this.result_0 = wait(this.local$this$, TimeSpan.Companion.fromMilliseconds_14dthe$(100), this);
+            if (this.result_0 === COROUTINE_SUSPENDED)
+              return COROUTINE_SUSPENDED;
+            continue;
+          case 3:
+            Resources$Companion_getInstance().channel.volume = Resources$Companion_getInstance().channel.volume + 0.01;
+            this.state_0 = 2;
+            continue;
+          case 4:
+            return Unit;
+          default:this.state_0 = 1;
+            throw new Error('State Machine Unreachable execution');
+        }
+      } catch (e) {
+        if (this.state_0 === 1) {
+          this.exceptionState_0 = this.state_0;
+          throw e;
+        } else {
+          this.state_0 = this.exceptionState_0;
+          this.exception_0 = e;
+        }
+      }
+     while (true);
+  };
+  function EndCinematic_init$lambda$lambda$lambda$lambda(this$_0) {
+    return function (continuation_0, suspended) {
+      var instance = new Coroutine$EndCinematic_init$lambda$lambda$lambda$lambda(this$_0, continuation_0);
+      if (suspended)
+        return instance;
+      else
+        return instance.doResume(null);
+    };
+  }
+  function EndCinematic_init$lambda$lambda$lambda(this$EndCinematic, this$) {
+    return function () {
+      Resources$Companion_getInstance().channel.volume = 0.5;
+      launch(this$EndCinematic.coroutineContext_0, EndCinematic_init$lambda$lambda$lambda$lambda(this$));
+      return Unit;
+    };
+  }
   function EndCinematic_init$lambda$lambda_0(this$EndCinematic) {
     return function ($receiver) {
-      if (this$EndCinematic.player_0.head.xpos > 100 && !this$EndCinematic.ended) {
+      if (this$EndCinematic.player_0.head.xpos > 8840 && !this$EndCinematic.ended) {
         this$EndCinematic.fade_st8p7j$($receiver);
+        Resources$Companion_getInstance().channel.volume = Resources$Companion_getInstance().channel.volume / 10;
+        Resources$Companion_getInstance().levelCompleted.play_gfl8bq$();
+        timeout($receiver, TimeSpan.Companion.fromSeconds_14dthe$(7), EndCinematic_init$lambda$lambda$lambda(this$EndCinematic, $receiver));
         this$EndCinematic.ended = true;
         this$EndCinematic.player_0.cinematicMode = false;
         this$EndCinematic.player_0.goRight = true;
@@ -1770,14 +2010,9 @@
     simpleName: 'EndCinematic',
     interfaces: []
   };
-  function container$lambda_2($receiver) {
-    return Unit;
-  }
   function SnakeCinematic(container, player, coroutineContext) {
     this.player_0 = player;
     this.coroutineContext_0 = coroutineContext;
-    var $receiver_0 = addTo(new Container_init(), container);
-    timeout($receiver_0, TimeSpan.Companion.fromSeconds_14dthe$(20), SnakeCinematic_init$lambda$lambda(this, $receiver_0));
   }
   function SnakeCinematic$goRight$lambda(this$SnakeCinematic, this$goRight) {
     return function () {
@@ -1865,29 +2100,6 @@
       $receiver_0.textSize = size;
     launch(this.coroutineContext_0, SnakeCinematic$talk$lambda($receiver));
   };
-  function SnakeCinematic_init$lambda$lambda$lambda$lambda(this$SnakeCinematic, this$) {
-    return function () {
-      this$SnakeCinematic.talk_w2ut7v$(this$SnakeCinematic.player_0.bocadilloBig, "I'M TIRED", 8.0);
-      if (this$SnakeCinematic.player_0.direction !== Direction$LEFT_getInstance())
-        this$SnakeCinematic.player_0.cinematicMode = true;
-      this$SnakeCinematic.goRight_st8p7j$(this$);
-      return Unit;
-    };
-  }
-  function SnakeCinematic_init$lambda$lambda$lambda(this$SnakeCinematic, this$) {
-    return function () {
-      this$SnakeCinematic.talk_w2ut7v$(this$SnakeCinematic.player_0.bocadilloBig, "THAT'S FUN?", 7.0);
-      timeout(this$, TimeSpan.Companion.fromSeconds_14dthe$(10), SnakeCinematic_init$lambda$lambda$lambda$lambda(this$SnakeCinematic, this$));
-      return Unit;
-    };
-  }
-  function SnakeCinematic_init$lambda$lambda(this$SnakeCinematic, this$) {
-    return function () {
-      this$SnakeCinematic.talk_w2ut7v$(this$SnakeCinematic.player_0.bocadilloBig, 'WHY?', 8.0);
-      timeout(this$, TimeSpan.Companion.fromSeconds_14dthe$(10), SnakeCinematic_init$lambda$lambda$lambda(this$SnakeCinematic, this$));
-      return Unit;
-    };
-  }
   SnakeCinematic.$metadata$ = {
     kind: Kind_CLASS,
     simpleName: 'SnakeCinematic',
@@ -1896,6 +2108,102 @@
   var DESIRED_FPS;
   var MILLISECONDS_PER_FRAME;
   var TILE_SIZE;
+  function CURVES(name, ordinal) {
+    Enum.call(this);
+    this.name$ = name;
+    this.ordinal$ = ordinal;
+  }
+  function CURVES_initFields() {
+    CURVES_initFields = function () {
+    };
+    CURVES$DR_instance = new CURVES('DR', 0);
+    CURVES$LU_instance = new CURVES('LU', 1);
+    CURVES$RD_instance = new CURVES('RD', 2);
+    CURVES$UL_instance = new CURVES('UL', 3);
+    CURVES$RU_instance = new CURVES('RU', 4);
+    CURVES$DL_instance = new CURVES('DL', 5);
+    CURVES$UR_instance = new CURVES('UR', 6);
+    CURVES$LD_instance = new CURVES('LD', 7);
+    CURVES$XX_instance = new CURVES('XX', 8);
+  }
+  var CURVES$DR_instance;
+  function CURVES$DR_getInstance() {
+    CURVES_initFields();
+    return CURVES$DR_instance;
+  }
+  var CURVES$LU_instance;
+  function CURVES$LU_getInstance() {
+    CURVES_initFields();
+    return CURVES$LU_instance;
+  }
+  var CURVES$RD_instance;
+  function CURVES$RD_getInstance() {
+    CURVES_initFields();
+    return CURVES$RD_instance;
+  }
+  var CURVES$UL_instance;
+  function CURVES$UL_getInstance() {
+    CURVES_initFields();
+    return CURVES$UL_instance;
+  }
+  var CURVES$RU_instance;
+  function CURVES$RU_getInstance() {
+    CURVES_initFields();
+    return CURVES$RU_instance;
+  }
+  var CURVES$DL_instance;
+  function CURVES$DL_getInstance() {
+    CURVES_initFields();
+    return CURVES$DL_instance;
+  }
+  var CURVES$UR_instance;
+  function CURVES$UR_getInstance() {
+    CURVES_initFields();
+    return CURVES$UR_instance;
+  }
+  var CURVES$LD_instance;
+  function CURVES$LD_getInstance() {
+    CURVES_initFields();
+    return CURVES$LD_instance;
+  }
+  var CURVES$XX_instance;
+  function CURVES$XX_getInstance() {
+    CURVES_initFields();
+    return CURVES$XX_instance;
+  }
+  CURVES.$metadata$ = {
+    kind: Kind_CLASS,
+    simpleName: 'CURVES',
+    interfaces: [Enum]
+  };
+  function CURVES$values() {
+    return [CURVES$DR_getInstance(), CURVES$LU_getInstance(), CURVES$RD_getInstance(), CURVES$UL_getInstance(), CURVES$RU_getInstance(), CURVES$DL_getInstance(), CURVES$UR_getInstance(), CURVES$LD_getInstance(), CURVES$XX_getInstance()];
+  }
+  CURVES.values = CURVES$values;
+  function CURVES$valueOf(name) {
+    switch (name) {
+      case 'DR':
+        return CURVES$DR_getInstance();
+      case 'LU':
+        return CURVES$LU_getInstance();
+      case 'RD':
+        return CURVES$RD_getInstance();
+      case 'UL':
+        return CURVES$UL_getInstance();
+      case 'RU':
+        return CURVES$RU_getInstance();
+      case 'DL':
+        return CURVES$DL_getInstance();
+      case 'UR':
+        return CURVES$UR_getInstance();
+      case 'LD':
+        return CURVES$LD_getInstance();
+      case 'XX':
+        return CURVES$XX_getInstance();
+      default:throwISE('No enum constant com.snakegame.CURVES.' + name);
+    }
+  }
+  CURVES.valueOf_61zpoe$ = CURVES$valueOf;
   function shr($receiver, other) {
     return new UInt_init((new UInt_init($receiver.data & 255)).data >>> other);
   }
@@ -2206,6 +2514,7 @@
     this.snakeMusic_sf5jew$_0 = this.snakeMusic_sf5jew$_0;
     this.levelWarp_tdqd6d$_0 = this.levelWarp_tdqd6d$_0;
     this.pacmanDead_e0z1m7$_0 = this.pacmanDead_e0z1m7$_0;
+    this.levelCompleted_do2e3a$_0 = this.levelCompleted_do2e3a$_0;
     this.loaded_0 = false;
   }
   Object.defineProperty(Resources$Companion.prototype, 'snakeAtlas', {
@@ -2316,6 +2625,16 @@
     },
     set: function (pacmanDead) {
       this.pacmanDead_e0z1m7$_0 = pacmanDead;
+    }
+  });
+  Object.defineProperty(Resources$Companion.prototype, 'levelCompleted', {
+    get: function () {
+      if (this.levelCompleted_do2e3a$_0 == null)
+        return throwUPAE('levelCompleted');
+      return this.levelCompleted_do2e3a$_0;
+    },
+    set: function (levelCompleted) {
+      this.levelCompleted_do2e3a$_0 = levelCompleted;
     }
   });
   Resources$Companion.$metadata$ = {
@@ -2429,6 +2748,13 @@
             continue;
           case 12:
             Resources$Companion_getInstance().pacmanDead = this.result_0;
+            this.state_0 = 13;
+            this.result_0 = readSound(std.resourcesVfs.get_61zpoe$('sounds/LevelCompleted.mp3'), void 0, void 0, this);
+            if (this.result_0 === COROUTINE_SUSPENDED)
+              return COROUTINE_SUSPENDED;
+            continue;
+          case 13:
+            Resources$Companion_getInstance().levelCompleted = this.result_0;
             return;
           default:this.state_0 = 1;
             throw new Error('State Machine Unreachable execution');
@@ -3903,12 +4229,13 @@
         return instance.doResume(null);
     };
   }
-  function Coroutine$MainMenuScene$sceneInit$lambda_3(closure$mario_0, closure$pacman_0, closure$play_0, it_0, continuation_0) {
+  function Coroutine$MainMenuScene$sceneInit$lambda_3(closure$mario_0, closure$pacman_0, closure$play_0, this$sceneInit_0, it_0, continuation_0) {
     CoroutineImpl.call(this, continuation_0);
     this.exceptionState_0 = 1;
     this.local$closure$mario = closure$mario_0;
     this.local$closure$pacman = closure$pacman_0;
     this.local$closure$play = closure$play_0;
+    this.local$this$sceneInit = this$sceneInit_0;
     this.local$it = it_0;
   }
   Coroutine$MainMenuScene$sceneInit$lambda_3.$metadata$ = {
@@ -3934,7 +4261,8 @@
             this.local$closure$mario.alpha = 1.0;
             this.local$closure$pacman.alpha = 1.0;
             this.local$it.view.removeFromParent();
-            return this.local$closure$play.text = 'SNAKE', Unit;
+            this.local$closure$play.text = 'SNAKE';
+            return centerXOn(this.local$closure$play, this.local$this$sceneInit);
           default:this.state_0 = 1;
             throw new Error('State Machine Unreachable execution');
         }
@@ -3949,9 +4277,9 @@
       }
      while (true);
   };
-  function MainMenuScene$sceneInit$lambda_3(closure$mario_0, closure$pacman_0, closure$play_0) {
+  function MainMenuScene$sceneInit$lambda_3(closure$mario_0, closure$pacman_0, closure$play_0, this$sceneInit_0) {
     return function (it_0, continuation_0, suspended) {
-      var instance = new Coroutine$MainMenuScene$sceneInit$lambda_3(closure$mario_0, closure$pacman_0, closure$play_0, it_0, continuation_0);
+      var instance = new Coroutine$MainMenuScene$sceneInit$lambda_3(closure$mario_0, closure$pacman_0, closure$play_0, this$sceneInit_0, it_0, continuation_0);
       if (suspended)
         return instance;
       else
@@ -4072,7 +4400,7 @@
             });
             var tmp$_2;
             if ((tmp$_2 = $receiver_3 != null ? get_mouse($receiver_3) : null) != null) {
-              prop_2.get(tmp$_2).add_qlkmfe$(doMouseEvent$lambda$lambda(tmp$_2, MainMenuScene$sceneInit$lambda_3(this.local$mario, this.local$pacman, this.local$play)));
+              prop_2.get(tmp$_2).add_qlkmfe$(doMouseEvent$lambda$lambda(tmp$_2, MainMenuScene$sceneInit$lambda_3(this.local$mario, this.local$pacman, this.local$play, this.local$$receiver)));
             }
             return;
           default:this.state_0 = 1;
@@ -4530,7 +4858,7 @@
     this.size_ywotrd$_0 = SizeInt.Companion.invoke_vux9f0$(800, 600);
     this.windowSize_t2n2jd$_0 = SizeInt.Companion.invoke_vux9f0$(800, 600);
     this.bgcolor_k9kn70$_0 = color.Colors.get_61zpoe$('#2b2b2b');
-    this.mainScene_isvq47$_0 = getKClass(MainMenuScene);
+    this.mainScene_isvq47$_0 = getKClass(SnakeGameScene);
   }
   Object.defineProperty(SnakeGameModule.prototype, 'title', {
     get: function () {
@@ -5057,6 +5385,34 @@
       return TILE_SIZE;
     }
   });
+  Object.defineProperty(CURVES, 'DR', {
+    get: CURVES$DR_getInstance
+  });
+  Object.defineProperty(CURVES, 'LU', {
+    get: CURVES$LU_getInstance
+  });
+  Object.defineProperty(CURVES, 'RD', {
+    get: CURVES$RD_getInstance
+  });
+  Object.defineProperty(CURVES, 'UL', {
+    get: CURVES$UL_getInstance
+  });
+  Object.defineProperty(CURVES, 'RU', {
+    get: CURVES$RU_getInstance
+  });
+  Object.defineProperty(CURVES, 'DL', {
+    get: CURVES$DL_getInstance
+  });
+  Object.defineProperty(CURVES, 'UR', {
+    get: CURVES$UR_getInstance
+  });
+  Object.defineProperty(CURVES, 'LD', {
+    get: CURVES$LD_getInstance
+  });
+  Object.defineProperty(CURVES, 'XX', {
+    get: CURVES$XX_getInstance
+  });
+  package$snakegame.CURVES = CURVES;
   var package$extensions = package$snakegame.extensions || (package$snakegame.extensions = {});
   package$extensions.shr_aogav3$ = shr;
   package$extensions.shl_aogav3$ = shl;
