@@ -2,6 +2,7 @@ package com.snakegame.actors
 
 import com.snakegame.MILLISECONDS_PER_FRAME
 import com.snakegame.TILE_SIZE
+import com.snakegame.gameplay.currentGameState
 import com.snakegame.map.CollisionChecker
 import com.snakegame.resources.Resources
 import com.soywiz.kmem.toIntFloor
@@ -47,6 +48,8 @@ suspend fun Container.ghost(collisionChecker: CollisionChecker, ghostType:Int) {
     //var lastTileY = y.toInt() / TILE_SIZE
 
     ghost.addFixedUpdater(MILLISECONDS_PER_FRAME) {
+        if (currentGameState.paused) return@addFixedUpdater
+
         /*if(lastTileX != x.toInt() / TILE_SIZE || lastTileY != y.toInt()/ TILE_SIZE) {
             lastTileX = x.toInt() / TILE_SIZE
             lastTileY = y.toInt() / TILE_SIZE

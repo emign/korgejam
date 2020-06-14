@@ -2,6 +2,7 @@ package com.snakegame.actors
 
 import com.snakegame.MILLISECONDS_PER_FRAME
 import com.snakegame.TILE_SIZE
+import com.snakegame.gameplay.currentGameState
 import com.snakegame.map.CollisionChecker
 import com.snakegame.resources.Resources
 import com.soywiz.kmem.bit
@@ -37,8 +38,9 @@ suspend fun Container.pacoman(collisionChecker: CollisionChecker) {
     var direction = getRandomDirection()
 
     fun Pacoman.move() {
-        x += direction.deltaX()
-        y += direction.deltaY()
+        val speed = 2
+        x += direction.deltaX() * speed
+        y += direction.deltaY() * speed
 
         if(x<0 - TILE_SIZE) x = 800.0
         if(x>800) x = 0.0 - TILE_SIZE
@@ -53,6 +55,8 @@ suspend fun Container.pacoman(collisionChecker: CollisionChecker) {
     }
 
     pacoman.addFixedUpdater(MILLISECONDS_PER_FRAME) {
+        if (currentGameState.paused) return@addFixedUpdater
+
         animDelay++
         if(animDelay>4) {
             animDelay = 0
