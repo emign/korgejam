@@ -217,6 +217,10 @@ class PacmanGameScene() : GameScene(PacmanStageConfig){
         sceneContainer.changeTo<TransitionToMarioScene>()
     }
 }
-class MarioGameScene() : GameScene(MarioStageConfig)
+class MarioGameScene() : GameScene(MarioStageConfig){
+    override suspend fun Container.customInit() {
+        Resources.larrioMusic.playForever()
+    }
+}
 
 
