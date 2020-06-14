@@ -20,7 +20,7 @@ class CollisionChecker(tiledMapView:TiledMapView, val horizontalLimit:Boolean)
 
         if(tilePosX<0 || tilePosY<0) return horizontalLimit
         if(collisionLayer.map.width<=tilePosX) return horizontalLimit
-        if(collisionLayer.map.height<=tilePosY) return horizontalLimit
+        if(collisionLayer.map.height<=tilePosY) return false
 
         return collisionLayer.map[tilePosX, tilePosY].value != 0
     }
