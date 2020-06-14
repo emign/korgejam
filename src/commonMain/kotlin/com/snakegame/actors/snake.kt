@@ -1,5 +1,6 @@
 package com.snakegame.actors
 
+import com.snakegame.CURVES
 import com.snakegame.MILLISECONDS_PER_FRAME
 import com.snakegame.TILE_SIZE
 import com.snakegame.extensions.toBool
@@ -176,6 +177,11 @@ suspend fun Container.snake(views: Views, pos: Point, skin:SnakeSkin, collisionC
     val bodyTile = snakeAtlas[skin.bodyTile]
     val bodyFatTile = snakeAtlas[skin.bodyFatTile]
     val tailTile = snakeAtlas[skin.tailTile]
+    val turnTile = snakeAtlas[skin.turnTile]
+    val turnTileDR_LU = snakeAtlas[skin.turnTileDR_LU]
+    val turnTileRD_UL = snakeAtlas[skin.turnTileRD_UL]
+    val turnTileRU_DL = snakeAtlas[skin.turnTileRU_DL]
+    val turnTileUR_LD = snakeAtlas[skin.turnTileUR_LD]
     val eatingHeadTile = snakeAtlas[skin.eatingHeadTile]
 
     val initialX = pos.x * 32.0
@@ -202,6 +208,10 @@ suspend fun Container.snake(views: Views, pos: Point, skin:SnakeSkin, collisionC
                     image(bodyTile).apply { smoothing = false },
                     image(headTile).apply { smoothing = false }
             ).reversed())
+        }
+
+        val snakeCurvesContainer = container {
+
         }
 
         val bocadilloSmall = image(snakeAtlas["bocadillo_02.png"])
@@ -519,6 +529,98 @@ suspend fun Container.snake(views: Views, pos: Point, skin:SnakeSkin, collisionC
                         }
 
                         if (snake.colides()) onDied()
+
+                        fun getCurvas() {
+                            val positions = snake.body.map {
+                                Point(it.x / TILE_SIZE, it.y / TILE_SIZE)
+                            }
+                            val curves = mutableListOf<Pair<CURVES,Point>>()
+
+
+
+                            positions.forEachIndexed { index, it ->
+                                if(index>=positions.lastIndex-1) return@forEachIndexed
+                                if(index>0) {
+                                    val next = positions[index+1]
+                                    if (it.x == next.x) { //Vertical
+                                        val next2 = positions[index+2]
+                                        if(it.x < next2.x){ //Vertical left
+                                            if(it.y<next2.y)
+                                                curves.add(Pair(CURVES.LU, next)) //LU
+                                            else
+                                                curves.add(Pair(CURVES.LD, next)) //LD
+                                        } else if(it.x > next2.x) { //Vertical right
+                                            if(it.y<next2.y)
+                                                curves.add(Pair(CURVES.RU, next))//RU
+                                            else
+                                                curves.add(Pair(CURVES.RD, next))//RD
+                                        }
+                                    } else if (it.y == next.y) { //Horizontal
+                                        val next2 = positions[index+2]
+                                        if(it.y < next2.y){ //Horizontal UP
+                                            if(it.x<next2.x)
+                                                curves.add(Pair(CURVES.UL, next))//!
+                                            else
+                                                curves.add(Pair(CURVES.UR, next))
+                                        } else if(it.y > next2.y) { //Horizontal DOWN
+                                            if(it.x<next2.x)
+                                                curves.add(Pair(CURVES.DL, next))
+                                            else
+                                                curves.add(Pair(CURVES.DR, next))
+                                        }
+                                    }
+                                }
+                            }
+                            snakeCurvesContainer.removeChildren()
+                            curves.forEach {
+                                //turnTileDR_LU
+                                //turnTileRD_UL
+                                //turnTileRU_DL
+                                //turnTileUR_LD
+                                val tile = when(it.first) {
+                                    CURVES.DR, CURVES.LU -> turnTileDR_LU
+                                    CURVES.RD, CURVES.UL -> turnTileRD_UL
+                                    CURVES.RU, CURVES.DL -> turnTileRU_DL
+                                    CURVES.UR, CURVES.LD -> turnTileUR_LD
+                                    else -> headTile
+                                }
+                                /*val angle = when(it.first) {
+                                    "vl" -> 0
+                                    "vr" -> 0
+                                    "hu" -> 90
+                                    "hd" -> 0
+                                    else -> 0
+                                }
+                                val scaleX = when(it.first) {
+                                    "vl" -> 1
+                                    "vr" -> -1
+                                    "hu" -> 1
+                                    "hd" -> -1
+                                    else -> 0
+                                }
+                                val scaleY = when(it.first) {
+                                    "vl" -> 1
+                                    "vr" -> -1
+                                    "hu" -> 1
+                                    "hd" -> 1
+                                    else -> 0
+                                }*/
+                                println(it.first)
+                                snakeCurvesContainer.addChild(
+                                    image(tile).apply {
+                                        smoothing = false
+                                        position(it.second * TILE_SIZE)
+                                        //position(it.second * TILE_SIZE + Point(16,16))
+                                        //rotationDegrees(angle)
+                                        //anchor(0.5, 0.5)
+                                        //scale(scaleX, scaleY)
+                                    }
+
+                                )
+                            }
+                        }
+                        getCurvas()
+
                     } else {
                         snake.interpolate(frames / TILE_SIZE)
                     }
