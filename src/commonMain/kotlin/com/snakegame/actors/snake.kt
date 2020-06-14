@@ -164,6 +164,7 @@ class Snake(
         }
         direction = newDirection
         lastDirection = newDirection
+        Resources.levelWarp.play()
     }
 }
 
