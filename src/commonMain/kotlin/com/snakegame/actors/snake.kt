@@ -7,6 +7,7 @@ import com.snakegame.gameplay.currentGameState
 import com.snakegame.input.*
 import com.snakegame.map.CollisionChecker
 import com.snakegame.resources.Resources
+import com.soywiz.klock.milliseconds
 import com.soywiz.klock.seconds
 import com.soywiz.kmem.unsetBits
 import com.soywiz.korev.Key
@@ -205,6 +206,21 @@ suspend fun Container.snake(views: Views, pos: Point, skin:SnakeSkin, collisionC
         bocadilloBig.addChild(text("Grrrr...", 10.0, color = Colors.BLACK, font = font).position(5, 5))
         bocadilloBig.alpha = 0.0
 
+        val explotionAnim = mutableListOf(
+                image(snakeAtlas["Explosion1_01.png"]),
+                image(snakeAtlas["Explosion1_02.png"]),
+                image(snakeAtlas["Explosion1_03.png"]),
+                image(snakeAtlas["Explosion1_04.png"]),
+                image(snakeAtlas["Explosion1_05.png"]),
+                image(snakeAtlas["Explosion1_06.png"]),
+                image(snakeAtlas["Explosion1_07.png"]),
+                image(snakeAtlas["Explosion1_08.png"])
+        )
+
+        explotionAnim.forEach {
+            it.alpha = 0.0
+        }
+
         fun Image.updatePart(bodyPart: SnakeBodyPart): Image{
             x = bodyPart.xpos + TILE_SIZE / 2
             y = bodyPart.ypos + TILE_SIZE / 2
@@ -291,7 +307,7 @@ suspend fun Container.snake(views: Views, pos: Point, skin:SnakeSkin, collisionC
             if(ghostsAndPacmanCounter <= 0) {
                 warpEnabled = false
                 val arrow = image(snakeAtlas["arrow.png"])
-                        .position(23 * TILE_SIZE - 8,8* TILE_SIZE)
+                        .position(23 * TILE_SIZE - 8,10* TILE_SIZE - 8)
                 var time = 0
 
                 arrow.addFixedUpdater(MILLISECONDS_PER_FRAME){
@@ -441,10 +457,23 @@ suspend fun Container.snake(views: Views, pos: Point, skin:SnakeSkin, collisionC
                             snake.move()
 
                         collisionChecker.checkCollision(snake.head.x, snake.head.y) {
-                            if(snake.goRight && !goingToNextLevel) {
-                                goingToNextLevel = true
-                                Resources.explosion.play()
-                                nextLevel()
+                            if(snake.goRight) {
+                                if(!goingToNextLevel) {
+                                    goingToNextLevel = true
+                                    Resources.explosion.play()
+                                    val explotionPos = Point(snake.head.x, snake.head.y)
+
+                                    explotionAnim.forEachIndexed { index, image ->
+                                        timeout(100.milliseconds * (index + 1)) {
+                                            image.position(explotionPos)
+                                            image.alpha = 1.0
+                                        }
+                                    }
+
+                                    timeout(3.seconds) {
+                                        nextLevel()
+                                    }
+                                }
                             } else {
                                 onDied()
                             }
