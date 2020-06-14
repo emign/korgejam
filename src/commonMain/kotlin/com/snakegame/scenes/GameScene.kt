@@ -40,9 +40,10 @@ open class GameScene(val stageConfig: StageConfig) : Scene() {
         camera{
             val tiledMap = tiledMap(stageConfig.level)
             val collisionChecker = CollisionChecker(tiledMap)
+            val font = resourcesVfs["texts/I-pixel-u.fnt"].readBitmapFont()
 
 
-            val player = snake(views, stageConfig.startingPoint, stageConfig.snakeSkin, collisionChecker, stageConfig.movementMode)
+            val player = snake(views, stageConfig.startingPoint, stageConfig.snakeSkin, collisionChecker, font, stageConfig.movementMode)
 
             if (stageConfig.scroll) {
                 val cameraSpeed = 4
@@ -62,8 +63,6 @@ open class GameScene(val stageConfig: StageConfig) : Scene() {
                     if(x < - (tiledMap.width - screenSize)) x = - (tiledMap.width - screenSize)
                 }
             }
-
-            val font = resourcesVfs["texts/I-pixel-u.fnt"].readBitmapFont()
 
             val getReady = text("GET READY!", 64.0, font = font)
                     .centerBetween(0,0,800,400)
