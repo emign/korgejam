@@ -57,7 +57,7 @@ open class GameScene(val stageConfig: StageConfig) : Scene() {
 
         camera{
             val tiledMap = tiledMap(stageConfig.level)
-            val collisionChecker = CollisionChecker(tiledMap)
+            val collisionChecker = CollisionChecker(tiledMap, stageConfig.horizontalLimit)
 
             if(stageConfig == PacmanStageConfig){
                 ItemSpawner(tiledMap).getSpawnPositions().forEach {

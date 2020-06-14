@@ -10,7 +10,8 @@ data class StageConfig(
     val startingPoint:Point = Point(12, 8),
     val movementMode: MovementMode = MovementMode.SNAKE,
     val snakeSkin: SnakeSkin = SnakeSkin(),
-    val scroll:Boolean = false
+    val scroll:Boolean = false,
+    val horizontalLimit:Boolean = true
 )
 
 val SnakeStageConfig = StageConfig(
@@ -18,7 +19,8 @@ val SnakeStageConfig = StageConfig(
     startingPoint = Point(8, 8),
     movementMode = MovementMode.SNAKE,
     snakeSkin = SnakeSkin(),
-    scroll = false
+    scroll = false,
+    horizontalLimit = true
 )
 
 val PacmanStageConfig = StageConfig(
@@ -26,7 +28,8 @@ val PacmanStageConfig = StageConfig(
     startingPoint = Point(0, 10),
     movementMode = MovementMode.PACMAN,
     snakeSkin = PacmanSnakeSkin(),
-    scroll = false
+    scroll = false,
+    horizontalLimit = false
 )
 
 val MarioStageConfig = StageConfig(
@@ -34,5 +37,6 @@ val MarioStageConfig = StageConfig(
     startingPoint = Point(0, 10),
     movementMode = MovementMode.MARIO,
     snakeSkin = SnakeSkin(),
-    scroll = true
+    scroll = true,
+    horizontalLimit = true
 )

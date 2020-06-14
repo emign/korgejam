@@ -4,7 +4,7 @@ import com.snakegame.TILE_SIZE
 import com.soywiz.korge.tiled.TiledMapView
 import com.soywiz.korma.geom.Point
 
-class CollisionChecker(tiledMapView:TiledMapView)
+class CollisionChecker(tiledMapView:TiledMapView, val horizontalLimit:Boolean)
 {
     private val collisionLayer = tiledMapView.tiledMap.data.patternLayers.last()
 
@@ -18,9 +18,9 @@ class CollisionChecker(tiledMapView:TiledMapView)
         val tilePosX = x.toInt()/TILE_SIZE
         val tilePosY = y.toInt()/TILE_SIZE
 
-        if(tilePosX<0 || tilePosY<0) return false
-        if(collisionLayer.map.width<=tilePosX) return false
-        if(collisionLayer.map.height<=tilePosY) return false
+        if(tilePosX<0 || tilePosY<0) return horizontalLimit
+        if(collisionLayer.map.width<=tilePosX) return horizontalLimit
+        if(collisionLayer.map.height<=tilePosY) return horizontalLimit
 
         return collisionLayer.map[tilePosX, tilePosY].value != 0
     }
