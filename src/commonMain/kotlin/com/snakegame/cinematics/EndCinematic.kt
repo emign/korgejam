@@ -2,6 +2,7 @@ package com.snakegame.cinematics
 
 import com.snakegame.MILLISECONDS_PER_FRAME
 import com.snakegame.actors.Direction
+import com.snakegame.actors.Lario
 import com.snakegame.actors.Snake
 import com.snakegame.resources.Resources
 import com.soywiz.klock.milliseconds
@@ -16,14 +17,16 @@ import com.soywiz.korim.color.RGBA
 import com.soywiz.korim.format.readBitmap
 import com.soywiz.korio.async.launch
 import com.soywiz.korio.file.std.resourcesVfs
+import com.soywiz.korma.geom.Point
 import kotlin.coroutines.CoroutineContext
 
-class EndCinematic(container: Container, private val player: Snake, private val coroutineContext: CoroutineContext, private val menu: ()->Unit) {
+class EndCinematic(container: Container, cameraContainer: Container, private val player: Snake, private val coroutineContext: CoroutineContext, private val menu: ()->Unit) {
 
     lateinit var finalImg: Image
     lateinit var credits: Image
     lateinit var fadeRect: SolidRect
     var ended = false
+    var marioAdded = false
 
     init {
         container.container {
@@ -36,6 +39,15 @@ class EndCinematic(container: Container, private val player: Snake, private val 
             }
 
             addFixedUpdater(MILLISECONDS_PER_FRAME, false) {
+                println(player.head.xpos)
+                if(player.head.xpos > 8300 && !marioAdded){
+                    marioAdded = true
+                    launch(coroutineContext) {
+                        val lario = Lario(resourcesVfs["level3/LarrioGrande/Larrio_G_Jump.png"].readBitmap()).position(8860, 0)
+                        cameraContainer.addChild(lario)
+                        tween(lario::y[50.0, 450.0], time = 2.seconds)
+                    }
+                }
                 if(player.head.xpos > 8840 && !ended){
                     fade()
                     Resources.channel.volume /= 10

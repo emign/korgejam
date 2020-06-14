@@ -330,8 +330,19 @@ suspend fun Container.snake(views: Views, pos: Point, skin:SnakeSkin, collisionC
             }
         }
 
-
         head.onCollision {
+            if(it is Lario){
+                Resources.appleSound.play()
+                head.bitmap = eatingHeadTile
+                timeout(MILLISECONDS_PER_FRAME * speed){
+                    head.bitmap = headTile
+                }
+                timeout(MILLISECONDS_PER_FRAME * speed) {
+                    eat()
+                }
+                addBodyPart()
+                it.positionY(1000)
+            }
             if (it is Apple) {
                 Resources.appleSound.play()
                 it.spawn()
