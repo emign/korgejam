@@ -341,19 +341,19 @@
 			"frame": {
 				"x": 2,
 				"y": 578,
-				"w": 32,
-				"h": 32
+				"w": 16,
+				"h": 16
 			},
 			"rotated": false,
 			"sourceSize": {
-				"w": 32,
-				"h": 32
+				"w": 16,
+				"h": 16
 			},
 			"spriteSourceSize": {
 				"x": 0,
 				"y": 0,
-				"w": 32,
-				"h": 32
+				"w": 16,
+				"h": 16
 			},
 			"trimmed": false
 		},
@@ -361,7 +361,7 @@
 			"filename": "snake_body.png",
 			"frame": {
 				"x": 2,
-				"y": 614,
+				"y": 598,
 				"w": 32,
 				"h": 32
 			},
@@ -382,7 +382,7 @@
 			"filename": "snake_body_2.png",
 			"frame": {
 				"x": 2,
-				"y": 650,
+				"y": 634,
 				"w": 32,
 				"h": 32
 			},
@@ -403,7 +403,7 @@
 			"filename": "snake_body_tail.png",
 			"frame": {
 				"x": 2,
-				"y": 686,
+				"y": 670,
 				"w": 32,
 				"h": 32
 			},
@@ -424,7 +424,7 @@
 			"filename": "snake_body_turn.png",
 			"frame": {
 				"x": 2,
-				"y": 722,
+				"y": 706,
 				"w": 32,
 				"h": 32
 			},
@@ -444,8 +444,8 @@
 		"snake_eyebrows.png": {
 			"filename": "snake_eyebrows.png",
 			"frame": {
-				"x": 2,
-				"y": 758,
+				"x": 22,
+				"y": 578,
 				"w": 12,
 				"h": 7
 			},
@@ -465,8 +465,8 @@
 		"snake_hat.png": {
 			"filename": "snake_hat.png",
 			"frame": {
-				"x": 18,
-				"y": 758,
+				"x": 2,
+				"y": 742,
 				"w": 32,
 				"h": 32
 			},
@@ -486,8 +486,8 @@
 		"snake_head_01.png": {
 			"filename": "snake_head_01.png",
 			"frame": {
-				"x": 38,
-				"y": 2,
+				"x": 2,
+				"y": 778,
 				"w": 32,
 				"h": 32
 			},
@@ -507,8 +507,8 @@
 		"snake_head_02.png": {
 			"filename": "snake_head_02.png",
 			"frame": {
-				"x": 38,
-				"y": 38,
+				"x": 2,
+				"y": 814,
 				"w": 32,
 				"h": 32
 			},
@@ -528,8 +528,8 @@
 		"tail.png": {
 			"filename": "tail.png",
 			"frame": {
-				"x": 38,
-				"y": 74,
+				"x": 2,
+				"y": 850,
 				"w": 32,
 				"h": 32
 			},
@@ -889,19 +889,19 @@
 			"frame": {
 				"x": 2,
 				"y": 578,
-				"w": 32,
-				"h": 32
+				"w": 16,
+				"h": 16
 			},
 			"rotated": false,
 			"sourceSize": {
-				"w": 32,
-				"h": 32
+				"w": 16,
+				"h": 16
 			},
 			"spriteSourceSize": {
 				"x": 0,
 				"y": 0,
-				"w": 32,
-				"h": 32
+				"w": 16,
+				"h": 16
 			},
 			"trimmed": false
 		},
@@ -909,7 +909,7 @@
 			"filename": "snake_body.png",
 			"frame": {
 				"x": 2,
-				"y": 614,
+				"y": 598,
 				"w": 32,
 				"h": 32
 			},
@@ -930,7 +930,7 @@
 			"filename": "snake_body_2.png",
 			"frame": {
 				"x": 2,
-				"y": 650,
+				"y": 634,
 				"w": 32,
 				"h": 32
 			},
@@ -951,7 +951,7 @@
 			"filename": "snake_body_tail.png",
 			"frame": {
 				"x": 2,
-				"y": 686,
+				"y": 670,
 				"w": 32,
 				"h": 32
 			},
@@ -972,7 +972,7 @@
 			"filename": "snake_body_turn.png",
 			"frame": {
 				"x": 2,
-				"y": 722,
+				"y": 706,
 				"w": 32,
 				"h": 32
 			},
@@ -992,8 +992,8 @@
 		{
 			"filename": "snake_eyebrows.png",
 			"frame": {
-				"x": 2,
-				"y": 758,
+				"x": 22,
+				"y": 578,
 				"w": 12,
 				"h": 7
 			},
@@ -1013,8 +1013,8 @@
 		{
 			"filename": "snake_hat.png",
 			"frame": {
-				"x": 18,
-				"y": 758,
+				"x": 2,
+				"y": 742,
 				"w": 32,
 				"h": 32
 			},
@@ -1034,8 +1034,8 @@
 		{
 			"filename": "snake_head_01.png",
 			"frame": {
-				"x": 38,
-				"y": 2,
+				"x": 2,
+				"y": 778,
 				"w": 32,
 				"h": 32
 			},
@@ -1055,8 +1055,8 @@
 		{
 			"filename": "snake_head_02.png",
 			"frame": {
-				"x": 38,
-				"y": 38,
+				"x": 2,
+				"y": 814,
 				"w": 32,
 				"h": 32
 			},
@@ -1076,8 +1076,8 @@
 		{
 			"filename": "tail.png",
 			"frame": {
-				"x": 38,
-				"y": 74,
+				"x": 2,
+				"y": 850,
 				"w": 32,
 				"h": 32
 			},
@@ -1101,8 +1101,8 @@
 		"image": "snake.atlas.png",
 		"scale": 1.0,
 		"size": {
-			"w": 72,
-			"h": 792
+			"w": 36,
+			"h": 884
 		},
 		"version": "1.0.0"
 	}

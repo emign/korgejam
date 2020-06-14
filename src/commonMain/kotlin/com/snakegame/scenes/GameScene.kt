@@ -146,7 +146,7 @@ class SnakeGameScene() : GameScene(SnakeStageConfig){
         super.onItemEaten()
         updateScore()
         apples++
-        if (apples>=2) {
+        if (apples >= 2) {
             launch {
                 fadeOff = true
                 currentGameState.paused = true
