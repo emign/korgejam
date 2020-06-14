@@ -12,9 +12,13 @@ import com.soywiz.kmem.unsetBits
 import com.soywiz.korev.Key
 import com.soywiz.korge.input.onKeyDown
 import com.soywiz.korge.input.onKeyUp
+import com.soywiz.korge.time.delay
+import com.soywiz.korge.time.timeout
 import com.soywiz.korge.time.wait
+import com.soywiz.korge.tween.get
 import com.soywiz.korge.tween.hide
 import com.soywiz.korge.tween.show
+import com.soywiz.korge.tween.tween
 import com.soywiz.korge.view.*
 import com.soywiz.korim.color.Colors
 import com.soywiz.korim.font.BitmapFont
@@ -22,6 +26,7 @@ import com.soywiz.korim.format.readNativeImage
 import com.soywiz.korio.async.launch
 import com.soywiz.korio.file.std.resourcesVfs
 import com.soywiz.korma.geom.Point
+import kotlin.coroutines.CoroutineContext
 import kotlin.coroutines.coroutineContext
 
 
@@ -71,6 +76,9 @@ class Snake(
 
     var lastPosX = startX
     var lastPosY = startY
+
+    lateinit var bocadilloSmall: Image
+    lateinit var bocadilloBig: Image
 
 
     init {
@@ -145,13 +153,6 @@ class Snake(
 
 enum class MovementMode { SNAKE, PACMAN, MARIO }
 
-suspend fun Image.talk(text: String){
-    (getChildAt(0) as Text).text = text
-    show(1.seconds)
-    wait(2.seconds)
-    hide(1.seconds)
-}
-
 suspend fun Container.snake(views: Views, pos: Point, skin:SnakeSkin, collisionChecker: CollisionChecker, font: BitmapFont, movementMode:MovementMode = MovementMode.SNAKE, onDied:()->Unit, onItemEaten: ()->Unit):Snake {
     val snakeAtlas = Resources.snakeAtlas
     val headTile = snakeAtlas[skin.headTile]
@@ -178,13 +179,14 @@ suspend fun Container.snake(views: Views, pos: Point, skin:SnakeSkin, collisionC
 
         val bocadilloSmall = image(snakeAtlas["bocadillo_02.png"])
         bocadilloSmall.addChild(text("!?", 16.0, color = Colors.BLACK, font = font).centerXOn(bocadilloSmall))
-        bocadilloSmall.hide(0.seconds)
+        //bocadilloSmall.hide(0.seconds)
         val bocadilloBig = image(snakeAtlas["bocadillo_01.png"])
         bocadilloBig.scale(1.5, 1.5)
         bocadilloBig.addChild(text("Grrrr...", 10.0, color = Colors.BLACK, font = font).position(5, 5))
-        bocadilloBig.hide(0.seconds)
+        //bocadilloBig.hide(0.seconds)
 
-        launch(coroutineContext){ bocadilloBig.talk("Wololoooo") }
+        snake.bocadilloSmall = bocadilloSmall
+        snake.bocadilloBig = bocadilloBig
 
         val head = bodyParts.first()
 
@@ -337,12 +339,8 @@ suspend fun Container.snake(views: Views, pos: Point, skin:SnakeSkin, collisionC
                 }
             }
 
-            bocadilloSmall.apply {
-                position(head.pos + Point(15, -40))
-            }
-            bocadilloBig.apply {
-                position(head.pos + Point(15, -55))
-            }
+            bocadilloSmall.position(head.pos + Point(15, -40))
+            bocadilloBig.position(head.pos + Point(15, -55))
 
             bodyParts.forEachIndexed { index, image ->
                 val bodyPart = snake.body[index]
