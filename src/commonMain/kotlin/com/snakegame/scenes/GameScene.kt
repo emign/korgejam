@@ -63,6 +63,11 @@ open class GameScene(val stageConfig: StageConfig) : Scene() {
                 ItemSpawner(tiledMap).getSpawnPositions().forEach {
                     dot(views, it * TILE_SIZE)
                 }
+                ghost(views, collisionChecker, 1)
+                ghost(views, collisionChecker, 2)
+                ghost(views, collisionChecker, 3)
+                ghost(views, collisionChecker, 4)
+
             }
 
             val player = snake(views, stageConfig.startingPoint, stageConfig.snakeSkin, collisionChecker, font, stageConfig.movementMode,
