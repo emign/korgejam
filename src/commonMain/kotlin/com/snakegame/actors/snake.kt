@@ -275,8 +275,20 @@ suspend fun Container.snake(views: Views, pos: Point, skin:SnakeSkin, collisionC
         fun enemyPacmanEaten() {
             ghostsAndPacmanCounter--
             if(ghostsAndPacmanCounter <= 0){
-                //currentGameState.paused = true
-                nextLevel()
+                val arrow = image(snakeAtlas["arrow.png"])
+                        .position(22* TILE_SIZE,8* TILE_SIZE)
+                var time = 0
+                arrow.addFixedUpdater(MILLISECONDS_PER_FRAME){
+                    time++
+                    if(time>10) {
+                        time = 0
+                        visible = !visible
+                    }
+                    if(snake.body.last().x>800) {
+                        currentGameState.paused = true
+                        nextLevel()
+                    }
+                }
             }
         }
 
@@ -339,10 +351,8 @@ suspend fun Container.snake(views: Views, pos: Point, skin:SnakeSkin, collisionC
         }
 
         addFixedUpdater(MILLISECONDS_PER_FRAME, false) {
-            if (currentGameState.paused) {
-                //println("GAME IS PAUSERDDD")
-                return@addFixedUpdater
-            }
+            if (currentGameState.paused) return@addFixedUpdater
+
             //addUpdater { it ->
             //    val deltaTime:Double = if (it.milliseconds == 0.0) 0.0 else (it.milliseconds / 16.666666)
 
