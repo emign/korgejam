@@ -35,9 +35,9 @@ class MainMenuScene() : Scene() {
             questionMark.tween(questionMark::color[RGBA.float(255, 255,255, 0), RGBA.float(255, 255,255, 1)], time = 1.seconds)
         }
 
-        text("PLAY", 28.0, font = font).centerXOn(this).positionY(350).onClick {
+        val play = text("PLAY", 28.0, font = font).centerXOn(this).positionY(350).onClick {
             sceneContainer.changeTo<SnakeGameScene>(1)
-        }
+        }!!
         val pacman = text("PACMAN", 28.0, font = font).centerXOn(this).positionY(400).onClick {
             sceneContainer.changeTo<PacmanGameScene>(1)
         }!!
@@ -51,6 +51,7 @@ class MainMenuScene() : Scene() {
             mario.alpha = 1.0
             pacman.alpha = 1.0
             it.view.removeFromParent()
+            play.text = "SNAKE"
         }
     }
 
