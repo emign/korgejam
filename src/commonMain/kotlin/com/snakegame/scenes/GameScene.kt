@@ -198,7 +198,15 @@ class SnakeGameScene() : GameScene(SnakeStageConfig){
     }
 }
 
-class PacmanGameScene() : GameScene(PacmanStageConfig)
+class PacmanGameScene() : GameScene(PacmanStageConfig){
+    override suspend fun nextLevel() {
+        fadeOff = true
+        launch {
+            delay(1.seconds)
+            sceneContainer.changeTo<TransitionToMarioScene>(1)
+        }
+    }
+}
 class MarioGameScene() : GameScene(MarioStageConfig)
 
 

@@ -17,6 +17,10 @@ class Pacoman(bitmap:BmpSlice, val collisionChecker: CollisionChecker) : Image(b
     fun spawn() {
         position(collisionChecker.getRandomSpawnPoint())
     }
+
+    fun die() {
+        removeFromParent()
+    }
 }
 
 suspend fun Container.pacoman(collisionChecker: CollisionChecker) {
