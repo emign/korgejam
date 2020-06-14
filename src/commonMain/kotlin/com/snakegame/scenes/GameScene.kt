@@ -53,8 +53,7 @@ open class GameScene(val stageConfig: StageConfig) : Scene() {
             val tiledMap = tiledMap(stageConfig.level)
             val collisionChecker = CollisionChecker(tiledMap)
 
-
-            val player = snake(views, stageConfig.startingPoint, stageConfig.snakeSkin, collisionChecker, stageConfig.movementMode,
+            val player = snake(views, stageConfig.startingPoint, stageConfig.snakeSkin, collisionChecker, font, stageConfig.movementMode,
                 onDied = {
                     println("DIEDDD")
                     currentGameState.paused = true
