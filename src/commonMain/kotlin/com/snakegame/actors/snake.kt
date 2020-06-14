@@ -67,7 +67,8 @@ class Snake(
         startY: Double,
         numBodyParts:Int,
         var direction: Direction = Direction.RIGHT,
-        var width:Int = 32
+        var width:Int = 32,
+        var updateBodyParts: (MutableList<SnakeBodyPart>)->Unit = {}
 ) {
 
     val body = mutableListOf<SnakeBodyPart>()
@@ -80,6 +81,7 @@ class Snake(
     lateinit var bocadilloSmall: Image
     lateinit var bocadilloBig: Image
 
+    var cinematicMode = false
 
     init {
         (0..numBodyParts).forEach {
@@ -161,6 +163,7 @@ suspend fun Container.snake(views: Views, pos: Point, skin:SnakeSkin, collisionC
 
     val initialX = pos.x * 32.0
     val initialY = pos.y * 32.0
+
     val snake = Snake(initialX, initialY, 2)
 
     var key = 0
@@ -185,6 +188,45 @@ suspend fun Container.snake(views: Views, pos: Point, skin:SnakeSkin, collisionC
         bocadilloBig.addChild(text("Grrrr...", 10.0, color = Colors.BLACK, font = font).position(5, 5))
         //bocadilloBig.hide(0.seconds)
 
+        fun updateBodyParts(body: MutableList<SnakeBodyPart>){
+            bodyParts.forEachIndexed { index, image ->
+                val bodyPart = body[index]
+                image.x = bodyPart.xpos + TILE_SIZE / 2
+                image.y = bodyPart.ypos + TILE_SIZE / 2
+
+                /*image.scaleX = when(bodyPart.direction) {
+                Direction.RIGHT ->  1.0
+                Direction.LEFT -> 1.0
+                Direction.UP -> 1.0
+                Direction.DOWN -> 1.0
+            }*/
+                image.scaleY = when (bodyPart.direction) {
+                    Direction.RIGHT -> 1.0
+                    Direction.LEFT -> 1.0
+                    Direction.UP -> -1.0
+                    Direction.DOWN -> 1.0
+                }
+                image.rotationDegrees = when (bodyPart.direction) {
+                    Direction.RIGHT -> 270.0
+                    Direction.LEFT -> 90.0
+                    Direction.UP -> 0.0
+                    Direction.DOWN -> 0.0
+                }
+                image.anchor(0.5, 0.5)
+                /*image.anchor(when(bodyPart.direction) {
+                Direction.RIGHT ->  0.5
+                Direction.LEFT -> 0.5
+                Direction.UP -> 0.5
+                Direction.DOWN -> 0.5
+            }, when(bodyPart.direction) {
+                Direction.RIGHT ->  0.5
+                Direction.LEFT -> 0.5
+                Direction.UP -> 0.5
+                Direction.DOWN -> 0.5
+            })*/
+            }
+        }
+        snake.updateBodyParts = ::updateBodyParts
         snake.bocadilloSmall = bocadilloSmall
         snake.bocadilloBig = bocadilloBig
 
@@ -225,14 +267,14 @@ suspend fun Container.snake(views: Views, pos: Point, skin:SnakeSkin, collisionC
         }
 
         addFixedUpdater(MILLISECONDS_PER_FRAME, false) {
-            if(currentGameState.paused) {
+            if (currentGameState.paused) {
                 //println("GAME IS PAUSERDDD")
                 return@addFixedUpdater
             }
-        //addUpdater { it ->
-        //    val deltaTime:Double = if (it.milliseconds == 0.0) 0.0 else (it.milliseconds / 16.666666)
+            //addUpdater { it ->
+            //    val deltaTime:Double = if (it.milliseconds == 0.0) 0.0 else (it.milliseconds / 16.666666)
 
-            if(lockInput == false ) {
+            if (lockInput == false) {
                 newDirection = when (key) {
                     BUTTON_RIGHT -> Direction.RIGHT
                     BUTTON_LEFT -> Direction.LEFT
@@ -240,29 +282,31 @@ suspend fun Container.snake(views: Views, pos: Point, skin:SnakeSkin, collisionC
                     BUTTON_DOWN -> Direction.DOWN
                     else -> newDirection
                 }
-                if((key and (BUTTON_RIGHT or BUTTON_LEFT or BUTTON_UP or BUTTON_DOWN)).toBool()) lockInput = true
+                if ((key and (BUTTON_RIGHT or BUTTON_LEFT or BUTTON_UP or BUTTON_DOWN)).toBool()) lockInput = true
             }
 
-            fun disableWalkingBackwards(){
-                val disable = when(newDirection) {
-                    Direction.LEFT -> snake.direction==Direction.RIGHT
-                    Direction.RIGHT -> snake.direction==Direction.LEFT
-                    Direction.UP -> snake.direction==Direction.DOWN
-                    Direction.DOWN -> snake.direction==Direction.UP
+            fun disableWalkingBackwards() {
+                val disable = when (newDirection) {
+                    Direction.LEFT -> snake.direction == Direction.RIGHT
+                    Direction.RIGHT -> snake.direction == Direction.LEFT
+                    Direction.UP -> snake.direction == Direction.DOWN
+                    Direction.DOWN -> snake.direction == Direction.UP
                 }
                 if (disable) newDirection = snake.direction
             }
 
-            when(movementMode){
+            when (movementMode) {
                 MovementMode.SNAKE -> {
                     disableWalkingBackwards()
                     frames += speed // * deltaTime
-                    if(frames >= TILE_SIZE ) {
+                    if (frames >= TILE_SIZE) {
                         lockInput = false
                         frames = 0.0
                         snake.lastDirection = snake.direction
                         snake.direction = newDirection
-                        snake.move()
+
+                        if (!snake.cinematicMode)
+                            snake.move()
 
                         collisionChecker.checkCollision(snake.head.x, snake.head.y) {
                             onDied()
@@ -278,9 +322,9 @@ suspend fun Container.snake(views: Views, pos: Point, skin:SnakeSkin, collisionC
                     disableWalkingBackwards()
                     frames += speed // * deltaTime
 
-                    if(collisionChecker.colides(
-                                    snake.head.x + newDirection.deltaX()* TILE_SIZE,
-                                    snake.head.y + newDirection.deltaY()* TILE_SIZE)) {
+                    if (collisionChecker.colides(
+                                    snake.head.x + newDirection.deltaX() * TILE_SIZE,
+                                    snake.head.y + newDirection.deltaY() * TILE_SIZE)) {
                         lockInput = false
                         newDirection = snake.direction
                     }
@@ -291,7 +335,7 @@ suspend fun Container.snake(views: Views, pos: Point, skin:SnakeSkin, collisionC
                         snake.lastDirection = snake.direction
                         snake.direction = newDirection
 
-                        if(!collisionChecker.colides(
+                        if (!collisionChecker.colides(
                                         snake.head.x + newDirection.deltaX() * TILE_SIZE,
                                         snake.head.y + newDirection.deltaY() * TILE_SIZE)) {
                             snake.move()
@@ -305,18 +349,18 @@ suspend fun Container.snake(views: Views, pos: Point, skin:SnakeSkin, collisionC
                     frames += speed // * deltaTime
 
                     //CheckGround
-                    val onGround = snake.body.any{
+                    val onGround = snake.body.any {
                         collisionChecker.colides(it.x, it.y + TILE_SIZE)
                     }
 
-                    if(!onGround) {
+                    if (!onGround) {
                         newDirection = Direction.DOWN
                     }
 
 
-                    if(collisionChecker.colides(
-                                    snake.head.x + newDirection.deltaX()* TILE_SIZE,
-                                    snake.head.y + newDirection.deltaY()* TILE_SIZE)) {
+                    if (collisionChecker.colides(
+                                    snake.head.x + newDirection.deltaX() * TILE_SIZE,
+                                    snake.head.y + newDirection.deltaY() * TILE_SIZE)) {
                         lockInput = false
                         newDirection = snake.direction
                     }
@@ -327,7 +371,7 @@ suspend fun Container.snake(views: Views, pos: Point, skin:SnakeSkin, collisionC
                         snake.lastDirection = snake.direction
                         snake.direction = newDirection
 
-                        if(!collisionChecker.colides(
+                        if (!collisionChecker.colides(
                                         snake.head.x + newDirection.deltaX() * TILE_SIZE,
                                         snake.head.y + newDirection.deltaY() * TILE_SIZE)) {
                             snake.move()
@@ -342,41 +386,8 @@ suspend fun Container.snake(views: Views, pos: Point, skin:SnakeSkin, collisionC
             bocadilloSmall.position(head.pos + Point(15, -40))
             bocadilloBig.position(head.pos + Point(15, -55))
 
-            bodyParts.forEachIndexed { index, image ->
-                val bodyPart = snake.body[index]
-                image.x = bodyPart.xpos + TILE_SIZE/2
-                image.y = bodyPart.ypos + TILE_SIZE/2
-
-                /*image.scaleX = when(bodyPart.direction) {
-                    Direction.RIGHT ->  1.0
-                    Direction.LEFT -> 1.0
-                    Direction.UP -> 1.0
-                    Direction.DOWN -> 1.0
-                }*/
-                image.scaleY = when(bodyPart.direction) {
-                    Direction.RIGHT ->  1.0
-                    Direction.LEFT -> 1.0
-                    Direction.UP -> -1.0
-                    Direction.DOWN -> 1.0
-                }
-                image.rotationDegrees = when(bodyPart.direction) {
-                    Direction.RIGHT ->  270.0
-                    Direction.LEFT -> 90.0
-                    Direction.UP -> 0.0
-                    Direction.DOWN -> 0.0
-                }
-                image.anchor(0.5, 0.5)
-                /*image.anchor(when(bodyPart.direction) {
-                    Direction.RIGHT ->  0.5
-                    Direction.LEFT -> 0.5
-                    Direction.UP -> 0.5
-                    Direction.DOWN -> 0.5
-                }, when(bodyPart.direction) {
-                    Direction.RIGHT ->  0.5
-                    Direction.LEFT -> 0.5
-                    Direction.UP -> 0.5
-                    Direction.DOWN -> 0.5
-                })*/
+            if (!snake.cinematicMode) {
+                updateBodyParts(snake.body)
             }
         }
     }

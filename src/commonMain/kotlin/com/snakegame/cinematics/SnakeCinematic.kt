@@ -1,5 +1,6 @@
 package com.snakegame.cinematics
 
+import com.snakegame.actors.Direction
 import com.snakegame.actors.Snake
 import com.soywiz.klock.seconds
 import com.soywiz.korge.time.delay
@@ -21,8 +22,10 @@ class SnakeCinematic(container: Container, player: Snake, private val coroutineC
         container.container {
             player.bocadilloSmall.alpha = 0.0
             player.bocadilloBig.alpha = 0.0
+
             timeout(5.seconds){
                 player.bocadilloBig.talk("I'M TIRED", 8.0)
+                player.cinematicMode = true
             }
         }
     }
