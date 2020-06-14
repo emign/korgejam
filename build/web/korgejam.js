@@ -1036,12 +1036,13 @@
       }return Unit;
     };
   }
-  function snake$lambda$enemyPacmanEaten(closure$ghostsAndPacmanCounter, closure$snakeAtlas, this$, closure$snake, closure$nextLevel) {
+  function snake$lambda$enemyPacmanEaten(closure$ghostsAndPacmanCounter, closure$warpEnabled, closure$snakeAtlas, this$, closure$snake, closure$nextLevel) {
     return function () {
       var tmp$;
       tmp$ = closure$ghostsAndPacmanCounter.v;
       closure$ghostsAndPacmanCounter.v = tmp$ - 1 | 0;
       if (closure$ghostsAndPacmanCounter.v <= 0) {
+        closure$warpEnabled.v = false;
         var $receiver = this$;
         var $receiver_0 = addTo(new Image(closure$snakeAtlas.get_61zpoe$('arrow.png'), 0.0, 0.0), $receiver);
         image$lambda($receiver_0);
@@ -1164,7 +1165,7 @@
       return Unit;
     };
   }
-  function snake$lambda$lambda_1(closure$fatBodies, closure$lockInput, closure$key, closure$newDirection, closure$snake, closure$movementMode, closure$speed, closure$frames, closure$collisionChecker, closure$goingToNextLevel, closure$nextLevel, closure$onDied, closure$bocadilloSmall, closure$head, closure$bocadilloBig, closure$updateBodyParts) {
+  function snake$lambda$lambda_1(closure$fatBodies, closure$lockInput, closure$key, closure$newDirection, closure$snake, closure$movementMode, closure$speed, closure$frames, closure$collisionChecker, closure$goingToNextLevel, closure$nextLevel, closure$onDied, closure$warpEnabled, closure$bocadilloSmall, closure$head, closure$bocadilloBig, closure$updateBodyParts) {
     return function ($receiver) {
       var tmp$;
       if (currentGameState.paused)
@@ -1247,13 +1248,13 @@
             closure$snake.interpolate_14dthe$(closure$frames.v / TILE_SIZE);
           }
 
-          var tail = last(closure$snake.body);
-          if (closure$snake.direction === Direction$LEFT_getInstance() && tail.x < (-TILE_SIZE | 0)) {
-            closure$snake.warp_5mfw0y$(800, Direction$LEFT_getInstance());
-          }
-          if (closure$snake.direction === Direction$RIGHT_getInstance() && tail.x > 800) {
-            closure$snake.warp_5mfw0y$(0, Direction$RIGHT_getInstance());
-          }
+          if (closure$warpEnabled.v) {
+            var tail = last(closure$snake.body);
+            if (closure$snake.direction === Direction$LEFT_getInstance() && tail.x < (-TILE_SIZE | 0)) {
+              closure$snake.warp_5mfw0y$(800, Direction$LEFT_getInstance());
+            }if (closure$snake.direction === Direction$RIGHT_getInstance() && tail.x > 800) {
+              closure$snake.warp_5mfw0y$(0, Direction$RIGHT_getInstance());
+            }}
           break loop_label;
         case 'MARIO':
           closure$frames.v += closure$speed;
@@ -1317,6 +1318,7 @@
     var eatingHeadTile = snakeAtlas.get_61zpoe$(skin.eatingHeadTile);
     var initialX = pos.x * 32.0;
     var initialY = pos.y * 32.0;
+    var warpEnabled = {v: true};
     var snake = new Snake(initialX, initialY, 2);
     var key = {v: 0};
     var prop = getPropertyCallableRef('onKeyDown', 1, function ($receiver) {
@@ -1382,10 +1384,10 @@
     var dotsToGrow = 5;
     var remainingToGrow = {v: dotsToGrow};
     var ghostsAndPacmanCounter = {v: 5};
-    var enemyPacmanEaten = snake$lambda$enemyPacmanEaten(ghostsAndPacmanCounter, snakeAtlas, $receiver_0_0, snake, nextLevel);
+    var enemyPacmanEaten = snake$lambda$enemyPacmanEaten(ghostsAndPacmanCounter, warpEnabled, snakeAtlas, $receiver_0_0, snake, nextLevel);
     onCollision(head, void 0, void 0, void 0, snake$lambda$lambda_0(eatingHeadTile, bodyParts, speed, headTile, eat, addBodyPart, onItemEaten, remainingToGrow, dotsToGrow, enemyPacmanEaten));
     var goingToNextLevel = {v: false};
-    addFixedUpdater($receiver_0_0, MILLISECONDS_PER_FRAME, false, void 0, snake$lambda$lambda_1(fatBodies, lockInput, key, newDirection, snake, movementMode, speed, frames, collisionChecker, goingToNextLevel, nextLevel, onDied, bocadilloSmall, head, bocadilloBig, updateBodyParts));
+    addFixedUpdater($receiver_0_0, MILLISECONDS_PER_FRAME, false, void 0, snake$lambda$lambda_1(fatBodies, lockInput, key, newDirection, snake, movementMode, speed, frames, collisionChecker, goingToNextLevel, nextLevel, onDied, warpEnabled, bocadilloSmall, head, bocadilloBig, updateBodyParts));
     return snake;
   }
   function SnakeSkin() {
@@ -3535,11 +3537,77 @@
     simpleName: 'MainMenuScene',
     interfaces: [Scene]
   };
-  function solidRect$lambda_0($receiver) {
+  function image$lambda_2($receiver) {
     return Unit;
   }
   function RestartMarioScene() {
     Scene.call(this);
+  }
+  function Coroutine$RestartMarioScene$sceneInit$lambda(this$RestartMarioScene_0, continuation_0) {
+    CoroutineImpl.call(this, continuation_0);
+    this.exceptionState_0 = 1;
+    this.local$this$RestartMarioScene = this$RestartMarioScene_0;
+  }
+  Coroutine$RestartMarioScene$sceneInit$lambda.$metadata$ = {
+    kind: Kotlin.Kind.CLASS,
+    simpleName: null,
+    interfaces: [CoroutineImpl]
+  };
+  Coroutine$RestartMarioScene$sceneInit$lambda.prototype = Object.create(CoroutineImpl.prototype);
+  Coroutine$RestartMarioScene$sceneInit$lambda.prototype.constructor = Coroutine$RestartMarioScene$sceneInit$lambda;
+  Coroutine$RestartMarioScene$sceneInit$lambda.prototype.doResume = function () {
+    do
+      try {
+        switch (this.state_0) {
+          case 0:
+            this.state_0 = 2;
+            this.result_0 = sleep(this.local$this$RestartMarioScene, TimeSpan.Companion.fromSeconds_14dthe$(2), this);
+            if (this.result_0 === COROUTINE_SUSPENDED)
+              return COROUTINE_SUSPENDED;
+            continue;
+          case 1:
+            throw this.exception_0;
+          case 2:
+            currentGameState.paused = false;
+            var $this = this.local$this$RestartMarioScene.sceneContainer;
+            var injects = [1];
+            var time;
+            var transition;
+            if (time === void 0) {
+              time = TimeSpan_0.Companion.fromSeconds_14dthe$(0);
+            }
+            if (transition === void 0)
+              transition = $this.defaultTransition;
+            this.state_0 = 3;
+            this.result_0 = $this.changeTo_oszfv1$(getKClass(MarioGameScene), injects.slice(), time, transition, this);
+            if (this.result_0 === COROUTINE_SUSPENDED)
+              return COROUTINE_SUSPENDED;
+            continue;
+          case 3:
+            this.result_0;
+            return this.result_0;
+          default:this.state_0 = 1;
+            throw new Error('State Machine Unreachable execution');
+        }
+      } catch (e) {
+        if (this.state_0 === 1) {
+          this.exceptionState_0 = this.state_0;
+          throw e;
+        } else {
+          this.state_0 = this.exceptionState_0;
+          this.exception_0 = e;
+        }
+      }
+     while (true);
+  };
+  function RestartMarioScene$sceneInit$lambda(this$RestartMarioScene_0) {
+    return function (continuation_0, suspended) {
+      var instance = new Coroutine$RestartMarioScene$sceneInit$lambda(this$RestartMarioScene_0, continuation_0);
+      if (suspended)
+        return instance;
+      else
+        return instance.doResume(null);
+    };
   }
   function Coroutine$sceneInit_st8p7j$_2($this, $receiver_0, continuation_0) {
     CoroutineImpl.call(this, continuation_0);
@@ -3559,27 +3627,17 @@
       try {
         switch (this.state_0) {
           case 0:
-            var $receiver_0 = addTo(new SolidRect_init(1000.0, 1000.0, RGBA.Companion.float_7b5o5w$(numberToDouble(0), numberToDouble(0), numberToDouble(0), numberToDouble(1))), this.local$$receiver);
-            solidRect$lambda_0($receiver_0);
-            currentGameState.paused = false;
-            var $this = this.$this.sceneContainer;
-            var injects = [1];
-            var time;
-            var transition;
-            if (time === void 0) {
-              time = TimeSpan_0.Companion.fromSeconds_14dthe$(0);
-            }
-            if (transition === void 0)
-              transition = $this.defaultTransition;
             this.state_0 = 2;
-            this.result_0 = $this.changeTo_oszfv1$(getKClass(MarioGameScene), injects.slice(), time, transition, this);
+            this.result_0 = readBitmap(std.resourcesVfs.get_61zpoe$('level3/LarrioStart.png'), void 0, void 0, this);
             if (this.result_0 === COROUTINE_SUSPENDED)
               return COROUTINE_SUSPENDED;
             continue;
           case 1:
             throw this.exception_0;
           case 2:
-            this.result_0;
+            var $receiver_0 = addTo(Image_init(this.result_0, 0.0, 0.0), this.local$$receiver);
+            image$lambda_2($receiver_0);
+            launchImmediately(this.$this, RestartMarioScene$sceneInit$lambda(this.$this));
             return;
           default:this.state_0 = 1;
             throw new Error('State Machine Unreachable execution');
@@ -3607,7 +3665,7 @@
     simpleName: 'RestartMarioScene',
     interfaces: [Scene]
   };
-  function solidRect$lambda_1($receiver) {
+  function solidRect$lambda_0($receiver) {
     return Unit;
   }
   function RestartPacmanScene() {
@@ -3632,7 +3690,7 @@
         switch (this.state_0) {
           case 0:
             var $receiver_0 = addTo(new SolidRect_init(1000.0, 1000.0, RGBA.Companion.float_7b5o5w$(numberToDouble(0), numberToDouble(0), numberToDouble(0), numberToDouble(1))), this.local$$receiver);
-            solidRect$lambda_1($receiver_0);
+            solidRect$lambda_0($receiver_0);
             currentGameState.paused = false;
             var $this = this.$this.sceneContainer;
             var injects = [1];
@@ -3752,7 +3810,7 @@
     simpleName: 'RestartSnakeScene',
     interfaces: [Scene]
   };
-  function solidRect$lambda_2($receiver) {
+  function solidRect$lambda_1($receiver) {
     return Unit;
   }
   function TransitionToMarioScene() {
@@ -3778,7 +3836,7 @@
           case 0:
             println('nextLevel.2');
             var $receiver_0 = addTo(new SolidRect_init(1000.0, 1000.0, RGBA.Companion.float_7b5o5w$(numberToDouble(0), numberToDouble(0), numberToDouble(0), numberToDouble(1))), this.local$$receiver);
-            solidRect$lambda_2($receiver_0);
+            solidRect$lambda_1($receiver_0);
             currentGameState.paused = false;
             println('nextLevel.3');
             var $this = this.$this.sceneContainer;
@@ -3826,7 +3884,7 @@
     simpleName: 'TransitionToMarioScene',
     interfaces: [Scene]
   };
-  function solidRect$lambda_3($receiver) {
+  function solidRect$lambda_2($receiver) {
     return Unit;
   }
   function TransitionToPacmanScene() {
@@ -3851,7 +3909,7 @@
         switch (this.state_0) {
           case 0:
             var $receiver_0 = addTo(new SolidRect_init(1000.0, 1000.0, RGBA.Companion.float_7b5o5w$(numberToDouble(0), numberToDouble(0), numberToDouble(0), numberToDouble(1))), this.local$$receiver);
-            solidRect$lambda_3($receiver_0);
+            solidRect$lambda_2($receiver_0);
             currentGameState.paused = false;
             var $this = this.$this.sceneContainer;
             var injects = [1];
