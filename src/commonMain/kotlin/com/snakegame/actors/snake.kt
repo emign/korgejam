@@ -443,6 +443,10 @@ suspend fun Container.snake(views: Views, pos: Point, skin:SnakeSkin, collisionC
                 }
             }
 
+            val hideIndexes = mutableListOf<Int>()
+            val freezeIndexes = mutableListOf<Int>()
+            val duplicateIndexes = mutableListOf<Int>()
+
             fun paintCurves() {
                 val positions = snake.body.map {
                     Point(it.x / TILE_SIZE, it.y / TILE_SIZE)
@@ -450,19 +454,26 @@ suspend fun Container.snake(views: Views, pos: Point, skin:SnakeSkin, collisionC
                 val curves = mutableListOf<Pair<CURVES,Point>>()
 
 
-
                 positions.forEachIndexed { index, it ->
+                    fun addIndexes() {
+                        hideIndexes.add(index+1)
+                        freezeIndexes.add(index)
+                        duplicateIndexes.add(index+2)
+                    }
+
                     if(index>=positions.lastIndex-1) return@forEachIndexed
                     if(index>0) {
                         val next = positions[index+1]
                         if (it.x == next.x) { //Vertical
                             val next2 = positions[index+2]
                             if(it.x < next2.x){ //Vertical left
+                                addIndexes()
                                 if(it.y<next2.y)
                                     curves.add(Pair(CURVES.LU, next)) //LU
                                 else
                                     curves.add(Pair(CURVES.LD, next)) //LD
                             } else if(it.x > next2.x) { //Vertical right
+                                addIndexes()
                                 if(it.y<next2.y)
                                     curves.add(Pair(CURVES.RU, next))//RU
                                 else
@@ -471,11 +482,13 @@ suspend fun Container.snake(views: Views, pos: Point, skin:SnakeSkin, collisionC
                         } else if (it.y == next.y) { //Horizontal
                             val next2 = positions[index+2]
                             if(it.y < next2.y){ //Horizontal UP
+                                addIndexes()
                                 if(it.x<next2.x)
                                     curves.add(Pair(CURVES.UL, next))//!
                                 else
                                     curves.add(Pair(CURVES.UR, next))
                             } else if(it.y > next2.y) { //Horizontal DOWN
+                                addIndexes()
                                 if(it.x<next2.x)
                                     curves.add(Pair(CURVES.DL, next))
                                 else
@@ -501,6 +514,7 @@ suspend fun Container.snake(views: Views, pos: Point, skin:SnakeSkin, collisionC
                             }
                     )
                 }
+
             }
 
             when (movementMode) {
@@ -551,6 +565,8 @@ suspend fun Container.snake(views: Views, pos: Point, skin:SnakeSkin, collisionC
                     }
 
                     paintCurves()
+
+
                 }
                 MovementMode.PACMAN -> {
                     disableWalkingBackwards()
@@ -643,6 +659,35 @@ suspend fun Container.snake(views: Views, pos: Point, skin:SnakeSkin, collisionC
 
             if (!snake.cinematicMode || snake.goRight) {
                 updateBodyParts(snake.body)
+
+
+                bodyParts.forEach {
+                    it.visible = true
+                }
+                freezeIndexes.forEach {
+                    bodyParts[it].x = snake.body[it].x + 16
+                    bodyParts[it].y = snake.body[it].y + 16
+                }
+                duplicateIndexes.forEach {
+                    val kdddd = bodyParts[it].clone()
+                    kdddd.x = snake.body[it].x + 16
+                    kdddd.y = snake.body[it].y + 16
+                    snakeCurvesContainer.addChild(kdddd
+
+                            /*image(bodyParts[it].texture).apply {
+                                smoothing = false
+                                position(
+                                        snake.body[it].x + 16,
+                                        snake.body[it].y + 16
+                                )
+                                rotation(bodyParts[it].rotation)
+                                scale = bodyParts[it].scale
+                            }*/
+                    )
+                }
+                hideIndexes.forEach {
+                    bodyParts[it].visible=false
+                }
             }
         }
     }
