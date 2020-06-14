@@ -21,9 +21,6 @@ class SnakeCinematic(container: Container, private val player: Snake, private va
 
     init {
         container.container {
-            player.bocadilloSmall.alpha = 0.0
-            player.bocadilloBig.alpha = 0.0
-
             timeout(5.seconds){
                 player.bocadilloBig.talk("I'M TIRED", 8.0)
                 if(player.direction != Direction.LEFT)
