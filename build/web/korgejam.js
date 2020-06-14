@@ -1,8 +1,8 @@
 (function (root, factory) {
   if (typeof define === 'function' && define.amd)
-    define(['exports', 'kotlin', 'korge-root-korge', 'kmem-root-kmem', 'korim-root-korim', 'korgw-root-korgw', 'korma-root-korma', 'klock-root-klock', 'korio-root-korio', 'korinject-root-korinject'], factory);
+    define(['exports', 'kotlin', 'korge-root-korge', 'kmem-root-kmem', 'korim-root-korim', 'korgw-root-korgw', 'korma-root-korma', 'klock-root-klock', 'korio-root-korio', 'korau-root-korau', 'korinject-root-korinject'], factory);
   else if (typeof exports === 'object')
-    factory(module.exports, require('kotlin'), require('korge-root-korge'), require('kmem-root-kmem'), require('korim-root-korim'), require('korgw-root-korgw'), require('korma-root-korma'), require('klock-root-klock'), require('korio-root-korio'), require('korinject-root-korinject'));
+    factory(module.exports, require('kotlin'), require('korge-root-korge'), require('kmem-root-kmem'), require('korim-root-korim'), require('korgw-root-korgw'), require('korma-root-korma'), require('klock-root-klock'), require('korio-root-korio'), require('korau-root-korau'), require('korinject-root-korinject'));
   else {
     if (typeof kotlin === 'undefined') {
       throw new Error("Error loading module 'korgejam'. Its dependency 'kotlin' was not found. Please, check whether 'kotlin' is loaded prior to 'korgejam'.");
@@ -20,11 +20,13 @@
       throw new Error("Error loading module 'korgejam'. Its dependency 'klock-root-klock' was not found. Please, check whether 'klock-root-klock' is loaded prior to 'korgejam'.");
     }if (typeof this['korio-root-korio'] === 'undefined') {
       throw new Error("Error loading module 'korgejam'. Its dependency 'korio-root-korio' was not found. Please, check whether 'korio-root-korio' is loaded prior to 'korgejam'.");
+    }if (typeof this['korau-root-korau'] === 'undefined') {
+      throw new Error("Error loading module 'korgejam'. Its dependency 'korau-root-korau' was not found. Please, check whether 'korau-root-korau' is loaded prior to 'korgejam'.");
     }if (typeof this['korinject-root-korinject'] === 'undefined') {
       throw new Error("Error loading module 'korgejam'. Its dependency 'korinject-root-korinject' was not found. Please, check whether 'korinject-root-korinject' is loaded prior to 'korgejam'.");
-    }root.korgejam = factory(typeof korgejam === 'undefined' ? {} : korgejam, kotlin, this['korge-root-korge'], this['kmem-root-kmem'], this['korim-root-korim'], this['korgw-root-korgw'], this['korma-root-korma'], this['klock-root-klock'], this['korio-root-korio'], this['korinject-root-korinject']);
+    }root.korgejam = factory(typeof korgejam === 'undefined' ? {} : korgejam, kotlin, this['korge-root-korge'], this['kmem-root-kmem'], this['korim-root-korim'], this['korgw-root-korgw'], this['korma-root-korma'], this['klock-root-klock'], this['korio-root-korio'], this['korau-root-korau'], this['korinject-root-korinject']);
   }
-}(this, function (_, Kotlin, $module$korge_root_korge, $module$kmem_root_kmem, $module$korim_root_korim, $module$korgw_root_korgw, $module$korma_root_korma, $module$klock_root_klock, $module$korio_root_korio, $module$korinject_root_korinject) {
+}(this, function (_, Kotlin, $module$korge_root_korge, $module$kmem_root_kmem, $module$korim_root_korim, $module$korgw_root_korgw, $module$korma_root_korma, $module$klock_root_klock, $module$korio_root_korio, $module$korau_root_korau, $module$korinject_root_korinject) {
   'use strict';
   var $$importsForInline$$ = _.$$importsForInline$$ || (_.$$importsForInline$$ = {});
   var Image = $module$korge_root_korge.com.soywiz.korge.view.Image;
@@ -90,6 +92,8 @@
   var Kind_OBJECT = Kotlin.Kind.OBJECT;
   var readAtlas = $module$korge_root_korge.com.soywiz.korge.atlas.readAtlas_s70ap7$;
   var readBitmapFont = $module$korim_root_korim.com.soywiz.korim.font.readBitmapFont_2axf5n$;
+  var readSound = $module$korau_root_korau.com.soywiz.korau.sound.readSound_rbebel$;
+  var readMusic = $module$korau_root_korau.com.soywiz.korau.sound.readMusic_fotfka$;
   var RGBA = $module$korim_root_korim.com.soywiz.korim.color.RGBA;
   var tween = $module$korge_root_korge.com.soywiz.korge.tween.tween_t8t7it$;
   var launch_0 = $module$korio_root_korio.com.soywiz.korio.async.launch_hilpzi$;
@@ -1091,6 +1095,7 @@
     return function ($receiver, it) {
       var tmp$;
       if (Kotlin.isType(it, Apple)) {
+        Resources$Companion_getInstance().appleSound.play_gfl8bq$();
         it.spawn();
         first(closure$bodyParts).bitmap = closure$eatingHeadTile;
         timeout($receiver, MILLISECONDS_PER_FRAME.times_14dthe$(closure$speed), snake$lambda$lambda$lambda(closure$headTile, closure$bodyParts));
@@ -1098,6 +1103,7 @@
         closure$addBodyPart();
         closure$onItemEaten();
       }if (Kotlin.isType(it, Dot)) {
+        Resources$Companion_getInstance().appleSound.play_gfl8bq$();
         it.die();
         first(closure$bodyParts).bitmap = closure$eatingHeadTile;
         timeout($receiver, MILLISECONDS_PER_FRAME.times_14dthe$(closure$speed), snake$lambda$lambda$lambda_1(closure$headTile, closure$bodyParts));
@@ -1108,6 +1114,7 @@
           closure$addBodyPart();
         }closure$onItemEaten();
       }if (Kotlin.isType(it, Ghost)) {
+        Resources$Companion_getInstance().pacmanDead.play_gfl8bq$();
         it.die();
         first(closure$bodyParts).bitmap = closure$eatingHeadTile;
         timeout($receiver, MILLISECONDS_PER_FRAME.times_14dthe$(closure$speed), snake$lambda$lambda$lambda_2(closure$headTile, closure$bodyParts));
@@ -1115,6 +1122,7 @@
         closure$onItemEaten();
         closure$enemyPacmanEaten();
       }if (Kotlin.isType(it, Pacoman)) {
+        Resources$Companion_getInstance().pacmanDead.play_gfl8bq$();
         it.die();
         first(closure$bodyParts).bitmap = closure$eatingHeadTile;
         timeout($receiver, MILLISECONDS_PER_FRAME.times_14dthe$(closure$speed), snake$lambda$lambda$lambda_3(closure$headTile, closure$bodyParts));
@@ -1122,6 +1130,7 @@
         closure$onItemEaten();
         closure$enemyPacmanEaten();
       }if (Kotlin.isType(it, Coin)) {
+        Resources$Companion_getInstance().appleSound.play_gfl8bq$();
         it.die();
         first(closure$bodyParts).bitmap = closure$eatingHeadTile;
         timeout($receiver, MILLISECONDS_PER_FRAME.times_14dthe$(closure$speed), snake$lambda$lambda$lambda_4(closure$headTile, closure$bodyParts));
@@ -1158,6 +1167,7 @@
     return function () {
       if (closure$snake.goRight && !closure$goingToNextLevel.v) {
         closure$goingToNextLevel.v = true;
+        Resources$Companion_getInstance().explosion.play_gfl8bq$();
         closure$nextLevel();
       } else {
         closure$onDied();
@@ -1351,6 +1361,7 @@
     var $receiver_0_5 = addTo(Text.Companion.invoke_8ii8iq$('!?', 16.0, color_0, font), $receiver_0_0);
     text$lambda($receiver_0_5);
     bocadilloSmall.addChild_l5rad2$(centerXOn($receiver_0_5, bocadilloSmall));
+    bocadilloSmall.alpha = 0.0;
     var $receiver_0_6 = addTo(new Image(snakeAtlas.get_61zpoe$('bocadillo_01.png'), 0.0, 0.0), $receiver_0_0);
     image$lambda($receiver_0_6);
     var bocadilloBig = $receiver_0_6;
@@ -1360,6 +1371,7 @@
     var $receiver_0_7 = addTo(Text.Companion.invoke_8ii8iq$(text, 10.0, color_0_0, font), $receiver_0_0);
     text$lambda($receiver_0_7);
     bocadilloBig.addChild_l5rad2$(position_0($receiver_0_7, 5, 5));
+    bocadilloBig.alpha = 0.0;
     var updatePart = snake$lambda$updatePart;
     var updateBodyParts = snake$lambda$updateBodyParts(bodyParts, updatePart);
     snake.updateBodyParts = getCallableRef('updateBodyParts', function (body) {
@@ -1472,8 +1484,6 @@
     this.player_0 = player;
     this.coroutineContext_0 = coroutineContext;
     var $receiver_0 = addTo(new Container_init(), container);
-    this.player_0.bocadilloSmall.alpha = 0.0;
-    this.player_0.bocadilloBig.alpha = 0.0;
     timeout($receiver_0, TimeSpan.Companion.fromSeconds_14dthe$(5), SnakeCinematic_init$lambda$lambda(this, $receiver_0));
   }
   function SnakeCinematic$goRight$lambda(this$SnakeCinematic, this$goRight) {
@@ -1880,6 +1890,12 @@
     Resources$Companion_instance = this;
     this.snakeAtlas_y4df72$_0 = this.snakeAtlas_y4df72$_0;
     this.font_vq8m0e$_0 = this.font_vq8m0e$_0;
+    this.appleSound_c658iw$_0 = this.appleSound_c658iw$_0;
+    this.bubbleTalk_5sc5vf$_0 = this.bubbleTalk_5sc5vf$_0;
+    this.explosion_3n588u$_0 = this.explosion_3n588u$_0;
+    this.larrioMusic_ydgkq5$_0 = this.larrioMusic_ydgkq5$_0;
+    this.levelWarp_tdqd6d$_0 = this.levelWarp_tdqd6d$_0;
+    this.pacmanDead_e0z1m7$_0 = this.pacmanDead_e0z1m7$_0;
     this.loaded_0 = false;
   }
   Object.defineProperty(Resources$Companion.prototype, 'snakeAtlas', {
@@ -1900,6 +1916,66 @@
     },
     set: function (font) {
       this.font_vq8m0e$_0 = font;
+    }
+  });
+  Object.defineProperty(Resources$Companion.prototype, 'appleSound', {
+    get: function () {
+      if (this.appleSound_c658iw$_0 == null)
+        return throwUPAE('appleSound');
+      return this.appleSound_c658iw$_0;
+    },
+    set: function (appleSound) {
+      this.appleSound_c658iw$_0 = appleSound;
+    }
+  });
+  Object.defineProperty(Resources$Companion.prototype, 'bubbleTalk', {
+    get: function () {
+      if (this.bubbleTalk_5sc5vf$_0 == null)
+        return throwUPAE('bubbleTalk');
+      return this.bubbleTalk_5sc5vf$_0;
+    },
+    set: function (bubbleTalk) {
+      this.bubbleTalk_5sc5vf$_0 = bubbleTalk;
+    }
+  });
+  Object.defineProperty(Resources$Companion.prototype, 'explosion', {
+    get: function () {
+      if (this.explosion_3n588u$_0 == null)
+        return throwUPAE('explosion');
+      return this.explosion_3n588u$_0;
+    },
+    set: function (explosion) {
+      this.explosion_3n588u$_0 = explosion;
+    }
+  });
+  Object.defineProperty(Resources$Companion.prototype, 'larrioMusic', {
+    get: function () {
+      if (this.larrioMusic_ydgkq5$_0 == null)
+        return throwUPAE('larrioMusic');
+      return this.larrioMusic_ydgkq5$_0;
+    },
+    set: function (larrioMusic) {
+      this.larrioMusic_ydgkq5$_0 = larrioMusic;
+    }
+  });
+  Object.defineProperty(Resources$Companion.prototype, 'levelWarp', {
+    get: function () {
+      if (this.levelWarp_tdqd6d$_0 == null)
+        return throwUPAE('levelWarp');
+      return this.levelWarp_tdqd6d$_0;
+    },
+    set: function (levelWarp) {
+      this.levelWarp_tdqd6d$_0 = levelWarp;
+    }
+  });
+  Object.defineProperty(Resources$Companion.prototype, 'pacmanDead', {
+    get: function () {
+      if (this.pacmanDead_e0z1m7$_0 == null)
+        return throwUPAE('pacmanDead');
+      return this.pacmanDead_e0z1m7$_0;
+    },
+    set: function (pacmanDead) {
+      this.pacmanDead_e0z1m7$_0 = pacmanDead;
     }
   });
   Resources$Companion.$metadata$ = {
@@ -1955,6 +2031,48 @@
             continue;
           case 4:
             Resources$Companion_getInstance().font = this.result_0;
+            this.state_0 = 5;
+            this.result_0 = readSound(std.resourcesVfs.get_61zpoe$('sounds/AppleItem.wav'), void 0, void 0, this);
+            if (this.result_0 === COROUTINE_SUSPENDED)
+              return COROUTINE_SUSPENDED;
+            continue;
+          case 5:
+            Resources$Companion_getInstance().appleSound = this.result_0;
+            this.state_0 = 6;
+            this.result_0 = readSound(std.resourcesVfs.get_61zpoe$('sounds/BubbleTalk.wav'), void 0, void 0, this);
+            if (this.result_0 === COROUTINE_SUSPENDED)
+              return COROUTINE_SUSPENDED;
+            continue;
+          case 6:
+            Resources$Companion_getInstance().bubbleTalk = this.result_0;
+            this.state_0 = 7;
+            this.result_0 = readSound(std.resourcesVfs.get_61zpoe$('sounds/Explosion.wav'), void 0, void 0, this);
+            if (this.result_0 === COROUTINE_SUSPENDED)
+              return COROUTINE_SUSPENDED;
+            continue;
+          case 7:
+            Resources$Companion_getInstance().explosion = this.result_0;
+            this.state_0 = 8;
+            this.result_0 = readMusic(std.resourcesVfs.get_61zpoe$('sounds/LarrioMusic.wav'), void 0, this);
+            if (this.result_0 === COROUTINE_SUSPENDED)
+              return COROUTINE_SUSPENDED;
+            continue;
+          case 8:
+            Resources$Companion_getInstance().larrioMusic = this.result_0;
+            this.state_0 = 9;
+            this.result_0 = readSound(std.resourcesVfs.get_61zpoe$('sounds/LevelWarp.wav'), void 0, void 0, this);
+            if (this.result_0 === COROUTINE_SUSPENDED)
+              return COROUTINE_SUSPENDED;
+            continue;
+          case 9:
+            Resources$Companion_getInstance().levelWarp = this.result_0;
+            this.state_0 = 10;
+            this.result_0 = readSound(std.resourcesVfs.get_61zpoe$('sounds/PacmanDead.wav'), void 0, void 0, this);
+            if (this.result_0 === COROUTINE_SUSPENDED)
+              return COROUTINE_SUSPENDED;
+            continue;
+          case 10:
+            Resources$Companion_getInstance().pacmanDead = this.result_0;
             return;
           default:this.state_0 = 1;
             throw new Error('State Machine Unreachable execution');
