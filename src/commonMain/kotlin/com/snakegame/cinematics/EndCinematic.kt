@@ -33,7 +33,7 @@ class EndCinematic(container: Container, private val player: Snake, private val 
             }
 
             addFixedUpdater(MILLISECONDS_PER_FRAME, false) {
-                if(player.head.xpos > /*8840*/ 100 && !ended){
+                if(player.head.xpos > 8840 && !ended){
                     fade()
                     ended = true
                     player.cinematicMode = false
