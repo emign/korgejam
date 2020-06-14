@@ -165,7 +165,9 @@
           case 2:
             var snakeAtlas = this.result_0;
             var appleTile = snakeAtlas.get_61zpoe$('Apple_02.png');
-            this.local$$receiver.addChild_l5rad2$(new Apple(appleTile));
+            var $receiver = new Apple(appleTile);
+            $receiver.smoothing = false;
+            this.local$$receiver.addChild_l5rad2$($receiver);
             return;
           default:this.state_0 = 1;
             throw new Error('State Machine Unreachable execution');
@@ -572,6 +574,7 @@
       var $receiver = this$;
       var $receiver_0 = addTo(new Image(closure$tailTile, 0.0, 0.0), $receiver);
       image$lambda($receiver_0);
+      $receiver_0.smoothing = false;
       tmp$.add_11rb$($receiver_0);
     };
   }
@@ -630,6 +633,30 @@
       }return Unit;
     };
   }
+  function snake$lambda$lambda$disableWalkingBackwards(closure$newDirection, closure$snake) {
+    return function () {
+      var tmp$;
+      switch (closure$newDirection.v.name) {
+        case 'LEFT':
+          tmp$ = closure$snake.direction === Direction$RIGHT_getInstance();
+          break;
+        case 'RIGHT':
+          tmp$ = closure$snake.direction === Direction$LEFT_getInstance();
+          break;
+        case 'UP':
+          tmp$ = closure$snake.direction === Direction$DOWN_getInstance();
+          break;
+        case 'DOWN':
+          tmp$ = closure$snake.direction === Direction$UP_getInstance();
+          break;
+        default:tmp$ = Kotlin.noWhenBranchMatched();
+          break;
+      }
+      var disable = tmp$;
+      if (disable)
+        closure$newDirection.v = closure$snake.direction;
+    };
+  }
   function snake$lambda$lambda$lambda(closure$snake) {
     return function () {
       closure$snake.head.x = 128.0;
@@ -637,7 +664,7 @@
       return Unit;
     };
   }
-  function snake$lambda$lambda_1(closure$lockInput, closure$key, closure$newDirection, closure$movementMode, closure$speed, closure$frames, closure$snake, closure$collisionChecker, closure$bodyParts) {
+  function snake$lambda$lambda_1(closure$lockInput, closure$key, closure$newDirection, closure$snake, closure$movementMode, closure$speed, closure$frames, closure$collisionChecker, closure$bodyParts) {
     return function ($receiver) {
       var tmp$;
       if (closure$lockInput.v === false) {
@@ -660,8 +687,10 @@
         closure$newDirection.v = tmp$;
         if (numberToInt(closure$key.v & (BUTTON_RIGHT | BUTTON_LEFT | BUTTON_UP | BUTTON_DOWN)) !== 0)
           closure$lockInput.v = true;
-      }loop_label: switch (closure$movementMode.name) {
+      }var disableWalkingBackwards = snake$lambda$lambda$disableWalkingBackwards(closure$newDirection, closure$snake);
+      loop_label: switch (closure$movementMode.name) {
         case 'SNAKE':
+          disableWalkingBackwards();
           closure$frames.v += closure$speed;
           if (closure$frames.v >= TILE_SIZE) {
             closure$lockInput.v = false;
@@ -676,6 +705,7 @@
 
           break loop_label;
         case 'PACMAN':
+          disableWalkingBackwards();
           closure$frames.v += closure$speed;
           if (closure$collisionChecker.colides_lu1900$(closure$snake.head.x + Kotlin.imul(closure$newDirection.v.deltaX(), TILE_SIZE), closure$snake.head.y + Kotlin.imul(closure$newDirection.v.deltaY(), TILE_SIZE))) {
             closure$lockInput.v = false;
@@ -838,10 +868,13 @@
             var $receiver_0 = addTo(new Container_init(), this.local$$receiver);
             var $receiver_0_0 = addTo(new Image(headTile, 0.0, 0.0), $receiver_0);
             image$lambda($receiver_0_0);
+            $receiver_0_0.smoothing = false;
             var $receiver_0_1 = addTo(new Image(bodyTile, 0.0, 0.0), $receiver_0);
             image$lambda($receiver_0_1);
+            $receiver_0_1.smoothing = false;
             var $receiver_0_2 = addTo(new Image(tailTile, 0.0, 0.0), $receiver_0);
             image$lambda($receiver_0_2);
+            $receiver_0_2.smoothing = false;
             var bodyParts = mutableListOf([$receiver_0_0, $receiver_0_1, $receiver_0_2]);
             var head = first(bodyParts);
             var addBodyPart = snake$lambda$addBodyPart(snake, bodyTile, bodyParts, tailTile, $receiver_0);
@@ -857,7 +890,7 @@
             var newDirection = {v: snake.direction};
             var lockInput = {v: false};
             onCollision(head, void 0, void 0, void 0, snake$lambda$lambda_0(addBodyPart));
-            addFixedUpdater($receiver_0, MILLISECONDS_PER_FRAME, false, void 0, snake$lambda$lambda_1(lockInput, key, newDirection, this.local$movementMode, speed, frames, snake, this.local$collisionChecker, bodyParts));
+            addFixedUpdater($receiver_0, MILLISECONDS_PER_FRAME, false, void 0, snake$lambda$lambda_1(lockInput, key, newDirection, snake, this.local$movementMode, speed, frames, this.local$collisionChecker, bodyParts));
             return snake;
           default:this.state_0 = 1;
             throw new Error('State Machine Unreachable execution');
@@ -1359,7 +1392,7 @@
         switch (this.state_0) {
           case 0:
             this.state_0 = 2;
-            this.result_0 = readBitmapFont(std.resourcesVfs.get_61zpoe$('I-pixel-u.fnt'), void 0, this);
+            this.result_0 = readBitmapFont(std.resourcesVfs.get_61zpoe$('texts/I-pixel-u.fnt'), void 0, this);
             if (this.result_0 === COROUTINE_SUSPENDED)
               return COROUTINE_SUSPENDED;
             continue;
@@ -1959,7 +1992,7 @@
             throw this.exception_0;
           case 2:
             this.state_0 = 3;
-            this.result_0 = readBitmapFont(std.resourcesVfs.get_61zpoe$('I-pixel-u.fnt'), void 0, this);
+            this.result_0 = readBitmapFont(std.resourcesVfs.get_61zpoe$('texts/I-pixel-u.fnt'), void 0, this);
             if (this.result_0 === COROUTINE_SUSPENDED)
               return COROUTINE_SUSPENDED;
             continue;
