@@ -191,6 +191,8 @@ class SnakeGameScene() : GameScene(SnakeStageConfig){
         val font = Resources.font
         scoreText = text("000000", 32.0, font = font).position(25, 15)
         updateScore()
+        Resources.channel?.stop()
+        Resources.channel = Resources.snakeMusic.playForever()
     }
 
     fun updateScore(){
@@ -215,6 +217,10 @@ class SnakeGameScene() : GameScene(SnakeStageConfig){
 }
 
 class PacmanGameScene() : GameScene(PacmanStageConfig){
+    override suspend fun Container.customInit() {
+        Resources.channel?.stop()
+        Resources.channel = Resources.pacmanMusic.playForever()
+    }
     override suspend fun nextLevel() {
         fadeOff = true
         delay(1.seconds)
@@ -224,8 +230,8 @@ class PacmanGameScene() : GameScene(PacmanStageConfig){
 }
 class MarioGameScene() : GameScene(MarioStageConfig){
     override suspend fun Container.customInit() {
-        Resources.larrioMusicChannel.stop()
-        Resources.larrioMusicChannel = Resources.larrioMusic.play()
+        Resources.channel?.stop()
+        Resources.channel = Resources.larrioMusic.playForever()
     }
 }
 

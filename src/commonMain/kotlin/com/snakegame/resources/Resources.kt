@@ -20,8 +20,10 @@ class Resources(val views: Views) {
         lateinit var appleSound: NativeSound
         lateinit var bubbleTalk: NativeSound
         lateinit var explosion: NativeSound
-        lateinit var larrioMusicChannel: NativeSoundChannel
+        lateinit var channel: NativeSoundChannel
         lateinit var larrioMusic: NativeSound
+        lateinit var pacmanMusic: NativeSound
+        lateinit var snakeMusic: NativeSound
         lateinit var levelWarp: NativeSound
         lateinit var pacmanDead: NativeSound
 
@@ -37,8 +39,10 @@ class Resources(val views: Views) {
         bubbleTalk = resourcesVfs["sounds/BubbleTalk.wav"].readSound()
         explosion = resourcesVfs["sounds/Explosion.wav"].readSound()
         larrioMusic = resourcesVfs["sounds/LarrioMusic.wav"].readMusic()
-        larrioMusicChannel = larrioMusic.play()
-        larrioMusicChannel.stop()
+        pacmanMusic = resourcesVfs["sounds/PacMan_music.mp3"].readMusic()
+        snakeMusic = resourcesVfs["sounds/Snake_Music.mp3"].readMusic()
+        channel = snakeMusic.play()
+        channel.stop()
         levelWarp = resourcesVfs["sounds/LevelWarp.wav"].readSound()
         pacmanDead = resourcesVfs["sounds/PacmanDead.wav"].readSound()
     }

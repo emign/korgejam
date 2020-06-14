@@ -21,6 +21,8 @@ class MainMenuScene() : Scene() {
 
     override suspend fun Container.sceneInit() {
         Resources(views).loadAll()
+        Resources.channel.stop()
+        Resources.channel = Resources.snakeMusic.playForever()
         currentGameState.reset()
         tiledMap(1)
         val font = Resources.font
