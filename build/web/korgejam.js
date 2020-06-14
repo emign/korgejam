@@ -1050,7 +1050,7 @@
         var $receiver = this$;
         var $receiver_0 = addTo(new Image(closure$snakeAtlas.get_61zpoe$('arrow.png'), 0.0, 0.0), $receiver);
         image$lambda($receiver_0);
-        var arrow = position_0($receiver_0, 22 * TILE_SIZE | 0, 8 * TILE_SIZE | 0);
+        var arrow = position_0($receiver_0, (23 * TILE_SIZE | 0) - 8 | 0, 8 * TILE_SIZE | 0);
         var time = {v: 0};
         addFixedUpdater(arrow, MILLISECONDS_PER_FRAME, void 0, void 0, snake$lambda$enemyPacmanEaten$lambda(time, closure$snake, closure$nextLevel));
       }};
@@ -1272,13 +1272,13 @@
             closure$snake.interpolate_14dthe$(closure$frames.v / TILE_SIZE);
           }
 
-          if (closure$warpEnabled.v) {
-            var tail = last(closure$snake.body);
-            if (closure$snake.direction === Direction$LEFT_getInstance() && tail.x < (-TILE_SIZE | 0)) {
-              closure$snake.warp_5mfw0y$(800, Direction$LEFT_getInstance());
-            }if (closure$snake.direction === Direction$RIGHT_getInstance() && tail.x > 800) {
-              closure$snake.warp_5mfw0y$(0, Direction$RIGHT_getInstance());
-            }}
+          var tail = last(closure$snake.body);
+          if (closure$snake.direction === Direction$LEFT_getInstance() && tail.x < (-TILE_SIZE | 0)) {
+            closure$snake.warp_5mfw0y$(800, Direction$LEFT_getInstance());
+          }
+          if (closure$warpEnabled.v && closure$snake.direction === Direction$RIGHT_getInstance() && tail.x > 800) {
+            closure$snake.warp_5mfw0y$(-TILE_SIZE | 0, Direction$RIGHT_getInstance());
+          }
           break loop_label;
         case 'MARIO':
           closure$frames.v += closure$speed;
