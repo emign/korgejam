@@ -37,8 +37,9 @@ suspend fun Container.pacoman(collisionChecker: CollisionChecker) {
     var direction = getRandomDirection()
 
     fun Pacoman.move() {
-        x += direction.deltaX()
-        y += direction.deltaY()
+        val speed = 2
+        x += direction.deltaX() * speed
+        y += direction.deltaY() * speed
 
         if(x<0 - TILE_SIZE) x = 800.0
         if(x>800) x = 0.0 - TILE_SIZE
