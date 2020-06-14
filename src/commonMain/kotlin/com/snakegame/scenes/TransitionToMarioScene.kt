@@ -19,10 +19,12 @@ import com.soywiz.korio.file.std.resourcesVfs
 class TransitionToMarioScene() : Scene() {
 
     override suspend fun Container.sceneInit() {
+        println("nextLevel.2")
         solidRect(1000.0, 1000.0, RGBA.float(0, 0, 0, 1))
 
         currentGameState.paused = false
-        sceneContainer.changeTo<MarioGameScene>(1)
+        println("nextLevel.3")
+        sceneContainer.changeTo<MarioGameScene>()
     }
 
 }

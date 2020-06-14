@@ -25,6 +25,7 @@ import com.soywiz.korim.font.BitmapFont
 import com.soywiz.korim.format.readNativeImage
 import com.soywiz.korio.async.launch
 import com.soywiz.korio.file.std.resourcesVfs
+import com.soywiz.korio.lang.Cancellable
 import com.soywiz.korma.geom.Point
 import kotlin.coroutines.CoroutineContext
 import kotlin.coroutines.coroutineContext
@@ -278,7 +279,9 @@ suspend fun Container.snake(views: Views, pos: Point, skin:SnakeSkin, collisionC
                 val arrow = image(snakeAtlas["arrow.png"])
                         .position(22* TILE_SIZE,8* TILE_SIZE)
                 var time = 0
+
                 arrow.addFixedUpdater(MILLISECONDS_PER_FRAME){
+                    if(currentGameState.paused) return@addFixedUpdater
                     time++
                     if(time>10) {
                         time = 0
@@ -350,6 +353,8 @@ suspend fun Container.snake(views: Views, pos: Point, skin:SnakeSkin, collisionC
             }
         }
 
+        var goingToNextLevel = false
+
         addFixedUpdater(MILLISECONDS_PER_FRAME, false) {
             if (currentGameState.paused) return@addFixedUpdater
 
@@ -402,10 +407,12 @@ suspend fun Container.snake(views: Views, pos: Point, skin:SnakeSkin, collisionC
                             snake.move()
 
                         collisionChecker.checkCollision(snake.head.x, snake.head.y) {
-                            if(snake.goRight)
+                            if(snake.goRight && !goingToNextLevel) {
+                                goingToNextLevel = true
                                 nextLevel()
-                            else
+                            } else {
                                 onDied()
+                            }
                         }
 
                         if (snake.colides()) onDied()

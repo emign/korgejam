@@ -99,6 +99,7 @@ open class GameScene(val stageConfig: StageConfig) : Scene() {
                     onItemEaten()
                 },nextLevel = {
                     launchImmediately {
+                        println("Call next level!")
                         nextLevel()
                     }
                 }
@@ -210,10 +211,10 @@ class SnakeGameScene() : GameScene(SnakeStageConfig){
 class PacmanGameScene() : GameScene(PacmanStageConfig){
     override suspend fun nextLevel() {
         fadeOff = true
-        launch {
-            delay(1.seconds)
-            sceneContainer.changeTo<TransitionToMarioScene>(1)
-        }
+        delay(1.seconds)
+        currentGameState.paused = true
+        println("nextLevel.1")
+        sceneContainer.changeTo<TransitionToMarioScene>()
     }
 }
 class MarioGameScene() : GameScene(MarioStageConfig)
