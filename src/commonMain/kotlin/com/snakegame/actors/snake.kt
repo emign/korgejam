@@ -178,6 +178,8 @@ suspend fun Container.snake(views: Views, pos: Point, skin:SnakeSkin, collisionC
     val initialX = pos.x * 32.0
     val initialY = pos.y * 32.0
 
+    var warpEnabled = true
+
     val snake = Snake(initialX, initialY, 2)
 
     var key = 0
@@ -285,7 +287,8 @@ suspend fun Container.snake(views: Views, pos: Point, skin:SnakeSkin, collisionC
         var ghostsAndPacmanCounter = 5
         fun enemyPacmanEaten() {
             ghostsAndPacmanCounter--
-            if(ghostsAndPacmanCounter <= 0){
+            if(ghostsAndPacmanCounter <= 0) {
+                warpEnabled = false
                 val arrow = image(snakeAtlas["arrow.png"])
                         .position(22* TILE_SIZE,8* TILE_SIZE)
                 var time = 0
@@ -460,12 +463,14 @@ suspend fun Container.snake(views: Views, pos: Point, skin:SnakeSkin, collisionC
                         snake.interpolate(frames / TILE_SIZE)
                     }
 
-                    val tail = snake.body.last()
-                    if(snake.direction == Direction.LEFT && tail.x< -TILE_SIZE) {
-                        snake.warp(800, Direction.LEFT)
-                    }
-                    if(snake.direction == Direction.RIGHT && tail.x>800) {
-                        snake.warp(0, Direction.RIGHT)
+                    if(warpEnabled) {
+                        val tail = snake.body.last()
+                        if (snake.direction == Direction.LEFT && tail.x < -TILE_SIZE) {
+                            snake.warp(800, Direction.LEFT)
+                        }
+                        if (snake.direction == Direction.RIGHT && tail.x > 800) {
+                            snake.warp(0, Direction.RIGHT)
+                        }
                     }
 
                 }
