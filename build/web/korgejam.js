@@ -75,6 +75,9 @@
   var tween = $module$korge_root_korge.com.soywiz.korge.tween.tween_t8t7it$;
   var launch = $module$korio_root_korio.com.soywiz.korio.async.launch_hilpzi$;
   var readBitmapFont = $module$korim_root_korim.com.soywiz.korim.font.readBitmapFont_2axf5n$;
+  var sleep = $module$korge_root_korge.com.soywiz.korge.scene.sleep_bfzdjs$;
+  var getKClass = Kotlin.getKClass;
+  var launchImmediately = $module$korio_root_korio.com.soywiz.korio.async.launchImmediately_hilpzi$;
   var delay = $module$korio_root_korio.com.soywiz.korio.async.delay_fv8bff$;
   var Scene = $module$korge_root_korge.com.soywiz.korge.scene.Scene;
   var position_0 = $module$korge_root_korge.com.soywiz.korge.view.position_ajix5r$;
@@ -86,14 +89,12 @@
   var color = $module$korge_root_korge.$$importsForInline$$['korim-root-korim'].com.soywiz.korim.color;
   var Text = $module$korge_root_korge.com.soywiz.korge.view.Text;
   var centerBetween = $module$korge_root_korge.com.soywiz.korge.view.centerBetween_wgq76x$;
+  var TimeSpan_0 = $module$korge_root_korge.$$importsForInline$$['klock-root-klock'].com.soywiz.klock.TimeSpan;
   var Camera_init = $module$korge_root_korge.com.soywiz.korge.view.Camera;
   var scale = $module$korge_root_korge.com.soywiz.korge.view.scale_2cbtc5$;
   var Easing = $module$korma_root_korma.com.soywiz.korma.interpolation.Easing;
-  var getKClass = Kotlin.getKClass;
-  var launchImmediately = $module$korio_root_korio.com.soywiz.korio.async.launchImmediately_hilpzi$;
   var get_degrees = $module$korma_root_korma.com.soywiz.korma.geom.get_degrees_s8ev3n$;
   var _interpolateAngle = $module$korge_root_korge.com.soywiz.korge.tween._interpolateAngle_a0zjys$;
-  var TimeSpan_0 = $module$korge_root_korge.$$importsForInline$$['klock-root-klock'].com.soywiz.klock.TimeSpan;
   var centerXOn = $module$korge_root_korge.com.soywiz.korge.view.centerXOn_apzp43$;
   var positionY = $module$korge_root_korge.com.soywiz.korge.view.positionY_bfm155$;
   var wait = $module$korge_root_korge.com.soywiz.korge.time.wait_f287ec$;
@@ -129,6 +130,8 @@
   LoadingScene.prototype.constructor = LoadingScene;
   MainMenuScene.prototype = Object.create(Scene.prototype);
   MainMenuScene.prototype.constructor = MainMenuScene;
+  RestartSnakeScene.prototype = Object.create(Scene.prototype);
+  RestartSnakeScene.prototype.constructor = RestartSnakeScene;
   SnakeGameModule.prototype = Object.create(Module.prototype);
   SnakeGameModule.prototype.constructor = SnakeGameModule;
   function Apple(bitmap, collisionChecker) {
@@ -428,6 +431,17 @@
       element.ypos = lerp(element.lastY, element.y, delta);
     }
   };
+  Snake.prototype.colides = function () {
+    var tmp$;
+    tmp$ = this.body.iterator();
+    while (tmp$.hasNext()) {
+      var element = tmp$.next();
+      var tmp$_0;
+      if (!((tmp$_0 = this.head) != null ? tmp$_0.equals(element) : null) && this.head.x === element.x && this.head.y === element.y) {
+        return true;
+      }}
+    return false;
+  };
   function Snake$head$lambda(this$Snake) {
     return function () {
       return this$Snake.body.get_za3lpa$(0);
@@ -667,14 +681,13 @@
         closure$newDirection.v = closure$snake.direction;
     };
   }
-  function snake$lambda$lambda$lambda(closure$snake) {
+  function snake$lambda$lambda$lambda(closure$onDied) {
     return function () {
-      closure$snake.head.x = 128.0;
-      closure$snake.head.y = 128.0;
+      closure$onDied();
       return Unit;
     };
   }
-  function snake$lambda$lambda_1(closure$lockInput, closure$key, closure$newDirection, closure$snake, closure$movementMode, closure$speed, closure$frames, closure$collisionChecker, closure$bodyParts) {
+  function snake$lambda$lambda_1(closure$lockInput, closure$key, closure$newDirection, closure$snake, closure$movementMode, closure$speed, closure$frames, closure$collisionChecker, closure$onDied, closure$bodyParts) {
     return function ($receiver) {
       var tmp$;
       if (currentGameState.paused)
@@ -710,7 +723,9 @@
             closure$snake.lastDirection = closure$snake.direction;
             closure$snake.direction = closure$newDirection.v;
             closure$snake.move();
-            closure$collisionChecker.checkCollision_morwcd$(closure$snake.head.x, closure$snake.head.y, snake$lambda$lambda$lambda(closure$snake));
+            closure$collisionChecker.checkCollision_morwcd$(closure$snake.head.x, closure$snake.head.y, snake$lambda$lambda$lambda(closure$onDied));
+            if (closure$snake.colides())
+              closure$onDied();
           } else {
             closure$snake.interpolate_14dthe$(closure$frames.v / TILE_SIZE);
           }
@@ -824,7 +839,7 @@
       return Unit;
     };
   }
-  function Coroutine$snake($receiver_0, views_0, pos_0, skin_0, collisionChecker_0, movementMode_0, continuation_0) {
+  function Coroutine$snake($receiver_0, views_0, pos_0, skin_0, collisionChecker_0, movementMode_0, onDied_0, continuation_0) {
     CoroutineImpl.call(this, continuation_0);
     this.exceptionState_0 = 1;
     this.local$$receiver = $receiver_0;
@@ -833,6 +848,7 @@
     this.local$skin = skin_0;
     this.local$collisionChecker = collisionChecker_0;
     this.local$movementMode = movementMode_0;
+    this.local$onDied = onDied_0;
   }
   Coroutine$snake.$metadata$ = {
     kind: Kotlin.Kind.CLASS,
@@ -903,7 +919,7 @@
             var newDirection = {v: snake.direction};
             var lockInput = {v: false};
             onCollision(head, void 0, void 0, void 0, snake$lambda$lambda_0(addBodyPart));
-            addFixedUpdater($receiver_0, MILLISECONDS_PER_FRAME, false, void 0, snake$lambda$lambda_1(lockInput, key, newDirection, snake, this.local$movementMode, speed, frames, this.local$collisionChecker, bodyParts));
+            addFixedUpdater($receiver_0, MILLISECONDS_PER_FRAME, false, void 0, snake$lambda$lambda_1(lockInput, key, newDirection, snake, this.local$movementMode, speed, frames, this.local$collisionChecker, this.local$onDied, bodyParts));
             return snake;
           default:this.state_0 = 1;
             throw new Error('State Machine Unreachable execution');
@@ -919,8 +935,8 @@
       }
      while (true);
   };
-  function snake($receiver_0, views_0, pos_0, skin_0, collisionChecker_0, movementMode_0, continuation_0, suspended) {
-    var instance = new Coroutine$snake($receiver_0, views_0, pos_0, skin_0, collisionChecker_0, movementMode_0, continuation_0);
+  function snake($receiver_0, views_0, pos_0, skin_0, collisionChecker_0, movementMode_0, onDied_0, continuation_0, suspended) {
+    var instance = new Coroutine$snake($receiver_0, views_0, pos_0, skin_0, collisionChecker_0, movementMode_0, onDied_0, continuation_0);
     if (suspended)
       return instance;
     else
@@ -1015,6 +1031,7 @@
   }
   function GameState() {
     this.paused = false;
+    this.restarting = false;
   }
   GameState.$metadata$ = {
     kind: Kind_CLASS,
@@ -1356,7 +1373,90 @@
   };
   GameScene.prototype.customInit_st8p7j$ = function ($receiver, continuation) {
   };
-  function GameScene$sceneInit$lambda$lambda(closure$cameraCenter, closure$player, closure$cameraSpeed, closure$tiledMap, closure$screenSize) {
+  function Coroutine$GameScene$sceneInit$lambda$lambda$lambda(closure$font_0, this$_0, this$GameScene_0, continuation_0) {
+    CoroutineImpl.call(this, continuation_0);
+    this.exceptionState_0 = 1;
+    this.local$closure$font = closure$font_0;
+    this.local$this$ = this$_0;
+    this.local$this$GameScene = this$GameScene_0;
+  }
+  Coroutine$GameScene$sceneInit$lambda$lambda$lambda.$metadata$ = {
+    kind: Kotlin.Kind.CLASS,
+    simpleName: null,
+    interfaces: [CoroutineImpl]
+  };
+  Coroutine$GameScene$sceneInit$lambda$lambda$lambda.prototype = Object.create(CoroutineImpl.prototype);
+  Coroutine$GameScene$sceneInit$lambda$lambda$lambda.prototype.constructor = Coroutine$GameScene$sceneInit$lambda$lambda$lambda;
+  Coroutine$GameScene$sceneInit$lambda$lambda$lambda.prototype.doResume = function () {
+    do
+      try {
+        switch (this.state_0) {
+          case 0:
+            var $receiver = this.local$this$;
+            var text = 'YOU DIED!';
+            var font = this.local$closure$font;
+            var color_0;
+            color_0 = color.Colors.WHITE;
+            var $receiver_0 = addTo(Text.Companion.invoke_8ii8iq$(text, 64.0, color_0, font), $receiver);
+            text$lambda($receiver_0);
+            centerBetween($receiver_0, numberToDouble(0), numberToDouble(0), numberToDouble(800), numberToDouble(400));
+            this.state_0 = 2;
+            this.result_0 = sleep(this.local$this$GameScene, TimeSpan.Companion.fromSeconds_14dthe$(1), this);
+            if (this.result_0 === COROUTINE_SUSPENDED)
+              return COROUTINE_SUSPENDED;
+            continue;
+          case 1:
+            throw this.exception_0;
+          case 2:
+            currentGameState.restarting = true;
+            var $this = this.local$this$GameScene.sceneContainer;
+            var injects = [];
+            var time;
+            var transition;
+            if (time === void 0) {
+              time = TimeSpan_0.Companion.fromSeconds_14dthe$(0);
+            }
+            if (transition === void 0)
+              transition = $this.defaultTransition;
+            this.state_0 = 3;
+            this.result_0 = $this.changeTo_oszfv1$(getKClass(RestartSnakeScene), injects.slice(), time, transition, this);
+            if (this.result_0 === COROUTINE_SUSPENDED)
+              return COROUTINE_SUSPENDED;
+            continue;
+          case 3:
+            this.result_0;
+            return this.result_0;
+          default:this.state_0 = 1;
+            throw new Error('State Machine Unreachable execution');
+        }
+      } catch (e) {
+        if (this.state_0 === 1) {
+          this.exceptionState_0 = this.state_0;
+          throw e;
+        } else {
+          this.state_0 = this.exceptionState_0;
+          this.exception_0 = e;
+        }
+      }
+     while (true);
+  };
+  function GameScene$sceneInit$lambda$lambda$lambda(closure$font_0, this$_0, this$GameScene_0) {
+    return function (continuation_0, suspended) {
+      var instance = new Coroutine$GameScene$sceneInit$lambda$lambda$lambda(closure$font_0, this$_0, this$GameScene_0, continuation_0);
+      if (suspended)
+        return instance;
+      else
+        return instance.doResume(null);
+    };
+  }
+  function GameScene$sceneInit$lambda$lambda(closure$font, this$, this$GameScene) {
+    return function () {
+      currentGameState.paused = true;
+      launchImmediately(this$GameScene, GameScene$sceneInit$lambda$lambda$lambda(closure$font, this$, this$GameScene));
+      return Unit;
+    };
+  }
+  function GameScene$sceneInit$lambda$lambda_0(closure$cameraCenter, closure$player, closure$cameraSpeed, closure$tiledMap, closure$screenSize) {
     return function ($receiver) {
       var target = closure$cameraCenter - closure$player.head.xpos;
       if ($receiver.x < target) {
@@ -1439,7 +1539,7 @@
       }
      while (true);
   };
-  function GameScene$sceneInit$lambda$lambda_0(closure$getReady_0, this$GameScene_0, closure$collisionChecker_0, this$_0) {
+  function GameScene$sceneInit$lambda$lambda_1(closure$getReady_0, this$GameScene_0, closure$collisionChecker_0, this$_0) {
     return function (continuation_0, suspended) {
       var instance = new Coroutine$GameScene$sceneInit$lambda$lambda(closure$getReady_0, this$GameScene_0, closure$collisionChecker_0, this$_0, continuation_0);
       if (suspended)
@@ -1452,6 +1552,7 @@
     CoroutineImpl.call(this, continuation_0);
     this.exceptionState_0 = 1;
     this.$this = $this;
+    this.local$font = void 0;
     this.local$$receiver_0 = void 0;
     this.local$tiledMap = void 0;
     this.local$collisionChecker = void 0;
@@ -1469,58 +1570,67 @@
       try {
         switch (this.state_0) {
           case 0:
-            this.local$$receiver_0 = addTo(new Camera_init(), this.local$$receiver);
             this.state_0 = 2;
-            this.result_0 = tiledMap(this.local$$receiver_0, this.$this.stageConfig.level, this);
+            this.result_0 = readBitmapFont(std.resourcesVfs.get_61zpoe$('texts/I-pixel-u.fnt'), void 0, this);
             if (this.result_0 === COROUTINE_SUSPENDED)
               return COROUTINE_SUSPENDED;
             continue;
           case 1:
             throw this.exception_0;
           case 2:
-            this.local$tiledMap = this.result_0;
-            this.local$collisionChecker = new CollisionChecker(this.local$tiledMap);
+            this.local$font = this.result_0;
+            this.local$$receiver_0 = addTo(new Camera_init(), this.local$$receiver);
             this.state_0 = 3;
-            this.result_0 = snake(this.local$$receiver_0, this.$this.views, this.$this.stageConfig.startingPoint, this.$this.stageConfig.snakeSkin, this.local$collisionChecker, this.$this.stageConfig.movementMode, this);
+            this.result_0 = tiledMap(this.local$$receiver_0, this.$this.stageConfig.level, this);
             if (this.result_0 === COROUTINE_SUSPENDED)
               return COROUTINE_SUSPENDED;
             continue;
           case 3:
+            this.local$tiledMap = this.result_0;
+            this.local$collisionChecker = new CollisionChecker(this.local$tiledMap);
+            this.state_0 = 4;
+            this.result_0 = snake(this.local$$receiver_0, this.$this.views, this.$this.stageConfig.startingPoint, this.$this.stageConfig.snakeSkin, this.local$collisionChecker, this.$this.stageConfig.movementMode, GameScene$sceneInit$lambda$lambda(this.local$font, this.local$$receiver_0, this.$this), this);
+            if (this.result_0 === COROUTINE_SUSPENDED)
+              return COROUTINE_SUSPENDED;
+            continue;
+          case 4:
             var player = this.result_0;
             if (this.$this.stageConfig.scroll) {
               var cameraSpeed = 4;
               var cameraCenter = 400;
               var screenSize = 800;
-              addFixedUpdater(this.local$$receiver_0, MILLISECONDS_PER_FRAME, void 0, void 0, GameScene$sceneInit$lambda$lambda(cameraCenter, player, cameraSpeed, this.local$tiledMap, screenSize));
+              addFixedUpdater(this.local$$receiver_0, MILLISECONDS_PER_FRAME, void 0, void 0, GameScene$sceneInit$lambda$lambda_0(cameraCenter, player, cameraSpeed, this.local$tiledMap, screenSize));
             }
-            this.state_0 = 4;
-            this.result_0 = readBitmapFont(std.resourcesVfs.get_61zpoe$('texts/I-pixel-u.fnt'), void 0, this);
-            if (this.result_0 === COROUTINE_SUSPENDED)
-              return COROUTINE_SUSPENDED;
-            continue;
-          case 4:
-            var font = this.result_0;
             var text = 'GET READY!';
             var color_0;
             color_0 = color.Colors.WHITE;
-            var $receiver_0 = addTo(Text.Companion.invoke_8ii8iq$(text, 64.0, color_0, font), this.local$$receiver_0);
+            var $receiver_0 = addTo(Text.Companion.invoke_8ii8iq$(text, 64.0, color_0, this.local$font), this.local$$receiver_0);
             text$lambda($receiver_0);
             var $receiver = centerBetween($receiver_0, numberToDouble(0), numberToDouble(0), numberToDouble(800), numberToDouble(400));
             $receiver.visible = false;
             var getReady = $receiver;
-            launch(this.$this, GameScene$sceneInit$lambda$lambda_0(getReady, this.$this, this.local$collisionChecker, this.local$$receiver_0));
+            launch(this.$this, GameScene$sceneInit$lambda$lambda_1(getReady, this.$this, this.local$collisionChecker, this.local$$receiver_0));
             this.state_0 = 5;
             this.result_0 = this.$this.customInit_st8p7j$(this.local$$receiver, this);
             if (this.result_0 === COROUTINE_SUSPENDED)
               return COROUTINE_SUSPENDED;
             continue;
           case 5:
-            this.state_0 = 6;
-            this.result_0 = this.$this.unFade_st8p7j$(this.local$$receiver, this);
-            if (this.result_0 === COROUTINE_SUSPENDED)
-              return COROUTINE_SUSPENDED;
-            continue;
+            if (!currentGameState.restarting) {
+              this.state_0 = 6;
+              this.result_0 = this.$this.unFade_st8p7j$(this.local$$receiver, this);
+              if (this.result_0 === COROUTINE_SUSPENDED)
+                return COROUTINE_SUSPENDED;
+              continue;
+            } else {
+              this.state_0 = 7;
+              continue;
+            }
+
           case 6:
+            this.state_0 = 7;
+            continue;
+          case 7:
             return;
           default:this.state_0 = 1;
             throw new Error('State Machine Unreachable execution');
@@ -2161,6 +2271,7 @@
       try {
         switch (this.state_0) {
           case 0:
+            currentGameState.restarting = false;
             this.state_0 = 2;
             this.result_0 = tiledMap(this.local$$receiver, 1, this);
             if (this.result_0 === COROUTINE_SUSPENDED)
@@ -2276,6 +2387,79 @@
   MainMenuScene.$metadata$ = {
     kind: Kind_CLASS,
     simpleName: 'MainMenuScene',
+    interfaces: [Scene]
+  };
+  function RestartSnakeScene() {
+    Scene.call(this);
+  }
+  function Coroutine$sceneInit_st8p7j$_2($this, $receiver_0, continuation_0) {
+    CoroutineImpl.call(this, continuation_0);
+    this.exceptionState_0 = 1;
+    this.$this = $this;
+    this.local$$receiver = $receiver_0;
+  }
+  Coroutine$sceneInit_st8p7j$_2.$metadata$ = {
+    kind: Kotlin.Kind.CLASS,
+    simpleName: null,
+    interfaces: [CoroutineImpl]
+  };
+  Coroutine$sceneInit_st8p7j$_2.prototype = Object.create(CoroutineImpl.prototype);
+  Coroutine$sceneInit_st8p7j$_2.prototype.constructor = Coroutine$sceneInit_st8p7j$_2;
+  Coroutine$sceneInit_st8p7j$_2.prototype.doResume = function () {
+    do
+      try {
+        switch (this.state_0) {
+          case 0:
+            this.state_0 = 2;
+            this.result_0 = tiledMap(this.local$$receiver, 1, this);
+            if (this.result_0 === COROUTINE_SUSPENDED)
+              return COROUTINE_SUSPENDED;
+            continue;
+          case 1:
+            throw this.exception_0;
+          case 2:
+            currentGameState.paused = false;
+            var $this = this.$this.sceneContainer;
+            var injects = [1];
+            var time;
+            var transition;
+            if (time === void 0) {
+              time = TimeSpan_0.Companion.fromSeconds_14dthe$(0);
+            }
+            if (transition === void 0)
+              transition = $this.defaultTransition;
+            this.state_0 = 3;
+            this.result_0 = $this.changeTo_oszfv1$(getKClass(SnakeGameScene), injects.slice(), time, transition, this);
+            if (this.result_0 === COROUTINE_SUSPENDED)
+              return COROUTINE_SUSPENDED;
+            continue;
+          case 3:
+            this.result_0;
+            return;
+          default:this.state_0 = 1;
+            throw new Error('State Machine Unreachable execution');
+        }
+      } catch (e) {
+        if (this.state_0 === 1) {
+          this.exceptionState_0 = this.state_0;
+          throw e;
+        } else {
+          this.state_0 = this.exceptionState_0;
+          this.exception_0 = e;
+        }
+      }
+     while (true);
+  };
+  RestartSnakeScene.prototype.sceneInit_st8p7j$ = function ($receiver_0, continuation_0, suspended) {
+    var instance = new Coroutine$sceneInit_st8p7j$_2(this, $receiver_0, continuation_0);
+    if (suspended)
+      return instance;
+    else
+      return instance.doResume(null);
+  };
+  RestartSnakeScene.$metadata$ = {
+    kind: Kind_CLASS,
+    simpleName: 'RestartSnakeScene',
     interfaces: [Scene]
   };
   function main(continuation) {
@@ -2414,7 +2598,7 @@
       try {
         switch (this.state_0) {
           case 0:
-            return new SnakeGameScene();
+            return new RestartSnakeScene();
           case 1:
             throw this.exception_0;
           default:this.state_0 = 1;
@@ -2455,7 +2639,7 @@
       try {
         switch (this.state_0) {
           case 0:
-            return new PacmanGameScene();
+            return new SnakeGameScene();
           case 1:
             throw this.exception_0;
           default:this.state_0 = 1;
@@ -2496,7 +2680,7 @@
       try {
         switch (this.state_0) {
           case 0:
-            return new MarioGameScene();
+            return new PacmanGameScene();
           case 1:
             throw this.exception_0;
           default:this.state_0 = 1;
@@ -2520,14 +2704,56 @@
     else
       return instance.doResume(null);
   }
+  function Coroutine$SnakeGameModule$init$lambda$lambda_4($receiver_0, controller, continuation_0) {
+    CoroutineImpl.call(this, continuation_0);
+    this.$controller = controller;
+    this.exceptionState_0 = 1;
+  }
+  Coroutine$SnakeGameModule$init$lambda$lambda_4.$metadata$ = {
+    kind: Kotlin.Kind.CLASS,
+    simpleName: null,
+    interfaces: [CoroutineImpl]
+  };
+  Coroutine$SnakeGameModule$init$lambda$lambda_4.prototype = Object.create(CoroutineImpl.prototype);
+  Coroutine$SnakeGameModule$init$lambda$lambda_4.prototype.constructor = Coroutine$SnakeGameModule$init$lambda$lambda_4;
+  Coroutine$SnakeGameModule$init$lambda$lambda_4.prototype.doResume = function () {
+    do
+      try {
+        switch (this.state_0) {
+          case 0:
+            return new MarioGameScene();
+          case 1:
+            throw this.exception_0;
+          default:this.state_0 = 1;
+            throw new Error('State Machine Unreachable execution');
+        }
+      } catch (e) {
+        if (this.state_0 === 1) {
+          this.exceptionState_0 = this.state_0;
+          throw e;
+        } else {
+          this.state_0 = this.exceptionState_0;
+          this.exception_0 = e;
+        }
+      }
+     while (true);
+  };
+  function SnakeGameModule$init$lambda$lambda_4($receiver_0, continuation_0, suspended) {
+    var instance = new Coroutine$SnakeGameModule$init$lambda$lambda_4($receiver_0, this, continuation_0);
+    if (suspended)
+      return instance;
+    else
+      return instance.doResume(null);
+  }
   SnakeGameModule.prototype.init_y6n311$ = function (injector, continuation) {
     var instance = new GameState();
     injector.mapInstance_b1ce0a$(getKClass(GameState), instance);
     injector.mapPrototype_siz2e9$(getKClass(LoadingScene), SnakeGameModule$init$lambda$lambda);
     injector.mapPrototype_siz2e9$(getKClass(MainMenuScene), SnakeGameModule$init$lambda$lambda_0);
-    injector.mapPrototype_siz2e9$(getKClass(SnakeGameScene), SnakeGameModule$init$lambda$lambda_1);
-    injector.mapPrototype_siz2e9$(getKClass(PacmanGameScene), SnakeGameModule$init$lambda$lambda_2);
-    injector.mapPrototype_siz2e9$(getKClass(MarioGameScene), SnakeGameModule$init$lambda$lambda_3);
+    injector.mapPrototype_siz2e9$(getKClass(RestartSnakeScene), SnakeGameModule$init$lambda$lambda_1);
+    injector.mapPrototype_siz2e9$(getKClass(SnakeGameScene), SnakeGameModule$init$lambda$lambda_2);
+    injector.mapPrototype_siz2e9$(getKClass(PacmanGameScene), SnakeGameModule$init$lambda$lambda_3);
+    injector.mapPrototype_siz2e9$(getKClass(MarioGameScene), SnakeGameModule$init$lambda$lambda_4);
     return Unit;
   };
   SnakeGameModule.$metadata$ = {
@@ -2573,7 +2799,7 @@
   });
   package$actors.MovementMode = MovementMode;
   $$importsForInline$$.korgejam = _;
-  package$actors.snake_5znll3$ = snake;
+  package$actors.snake_qrn5gs$ = snake;
   package$actors.SnakeSkin = SnakeSkin;
   package$actors.PacmanSnakeSkin = PacmanSnakeSkin;
   Object.defineProperty(package$snakegame, 'DESIRED_FPS', {
@@ -2683,6 +2909,7 @@
   package$scenes.MarioGameScene = MarioGameScene;
   package$scenes.LoadingScene = LoadingScene;
   package$scenes.MainMenuScene = MainMenuScene;
+  package$scenes.RestartSnakeScene = RestartSnakeScene;
   _.main = main;
   $$importsForInline$$['korinject-root-korinject'] = $module$korinject_root_korinject;
   Object.defineProperty(_, 'SnakeGameModule', {
