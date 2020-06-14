@@ -254,7 +254,8 @@ suspend fun Container.snake(views: Views, pos: Point, skin:SnakeSkin, collisionC
         var lockInput = false
 
 
-
+        val dotsToGrow = 5
+        var remainingToGrow = dotsToGrow
         head.onCollision {
             if (it is Apple) {
                 it.spawn()
@@ -263,6 +264,11 @@ suspend fun Container.snake(views: Views, pos: Point, skin:SnakeSkin, collisionC
             }
             if (it is Dot) {
                 it.die()
+                remainingToGrow--
+                if(remainingToGrow==0) {
+                    remainingToGrow = dotsToGrow
+                    addBodyPart()
+                }
                 onItemEaten()
             }
         }
@@ -350,6 +356,8 @@ suspend fun Container.snake(views: Views, pos: Point, skin:SnakeSkin, collisionC
                             snake.move()
                             frames = 0.0
                         }
+
+                        if (snake.colides()) onDied()
                     } else {
                         snake.interpolate(frames / TILE_SIZE)
                     }

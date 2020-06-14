@@ -23,6 +23,7 @@ object SnakeGameModule : Module() {
 		mapPrototype { LoadingScene(/*get()*/) }
 		mapPrototype { MainMenuScene(/*get()*/) }
 		mapPrototype { RestartSnakeScene(/*get()*/) }
+		mapPrototype { RestartPacmanScene(/*get()*/) }
 		mapPrototype { RestartMarioScene(/*get()*/) }
 		mapPrototype { TransitionToPacmanScene(/*get()*/) }
 		mapPrototype { SnakeGameScene(/*get()*/) }

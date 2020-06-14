@@ -81,7 +81,14 @@ open class GameScene(val stageConfig: StageConfig) : Scene() {
                         sleep(1.seconds)
                         //currentGameState.paused = false
                         currentGameState.restarting = true
-                        sceneContainer.changeTo<RestartSnakeScene>()
+
+                        when(stageConfig) {
+                            SnakeStageConfig->sceneContainer.changeTo<RestartSnakeScene>()
+                            PacmanStageConfig->sceneContainer.changeTo<RestartPacmanScene>()
+                        }
+
+
+
                     }
                 },onItemEaten = {
                     onItemEaten()
