@@ -471,7 +471,7 @@ suspend fun Container.snake(views: Views, pos: Point, skin:SnakeSkin, collisionC
 
                                     explotionAnim.forEachIndexed { index, image ->
                                         timeout(100.milliseconds * (index + 1)) {
-                                            image.position(explotionPos)
+                                            image.position(explotionPos + Point(0, -10))
                                             image.alpha = 1.0
                                         }
                                     }
