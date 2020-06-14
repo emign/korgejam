@@ -2,6 +2,7 @@ package com.snakegame.cinematics
 
 import com.snakegame.actors.Direction
 import com.snakegame.actors.Snake
+import com.snakegame.actors.snake
 import com.soywiz.klock.seconds
 import com.soywiz.korge.time.delay
 import com.soywiz.korge.time.timeout
@@ -16,7 +17,9 @@ import com.soywiz.korio.async.launch
 import com.soywiz.korio.async.launchImmediately
 import kotlin.coroutines.CoroutineContext
 
-class SnakeCinematic(container: Container, player: Snake, private val coroutineContext: CoroutineContext){
+class SnakeCinematic(container: Container, private val player: Snake, private val coroutineContext: CoroutineContext){
+
+    var lockInput = false
 
     init {
         container.container {
@@ -25,8 +28,24 @@ class SnakeCinematic(container: Container, player: Snake, private val coroutineC
 
             timeout(5.seconds){
                 player.bocadilloBig.talk("I'M TIRED", 8.0)
-                player.cinematicMode = true
+                if(player.direction != Direction.LEFT)
+                    player.cinematicMode = true
+
+                goRight()
             }
+        }
+    }
+
+    fun Container.goRight(){
+        timeout(5.seconds) {
+            player.cinematicMode = false
+            if(player.direction == Direction.LEFT){
+                player.cinematicMode = false
+                goRight()
+                return@timeout
+            }
+            player.bocadilloBig.talk("FREEEDOM!!", 8.0)
+            player.goRight = true
         }
     }
 

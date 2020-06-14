@@ -82,6 +82,7 @@ class Snake(
     lateinit var bocadilloBig: Image
 
     var cinematicMode = false
+    var goRight = false
 
     init {
         (0..numBodyParts).forEach {
@@ -298,14 +299,19 @@ suspend fun Container.snake(views: Views, pos: Point, skin:SnakeSkin, collisionC
             when (movementMode) {
                 MovementMode.SNAKE -> {
                     disableWalkingBackwards()
-                    frames += speed // * deltaTime
+                    if (!snake.cinematicMode || snake.goRight)
+                        frames += speed // * deltaTime
                     if (frames >= TILE_SIZE) {
                         lockInput = false
-                        frames = 0.0
+                        if (!snake.cinematicMode || snake.goRight)
+                            frames = 0.0
                         snake.lastDirection = snake.direction
-                        snake.direction = newDirection
+                        if(snake.goRight)
+                            snake.direction = Direction.RIGHT
+                        else
+                            snake.direction = newDirection
 
-                        if (!snake.cinematicMode)
+                        if (!snake.cinematicMode || snake.goRight)
                             snake.move()
 
                         collisionChecker.checkCollision(snake.head.x, snake.head.y) {
@@ -386,7 +392,7 @@ suspend fun Container.snake(views: Views, pos: Point, skin:SnakeSkin, collisionC
             bocadilloSmall.position(head.pos + Point(15, -40))
             bocadilloBig.position(head.pos + Point(15, -55))
 
-            if (!snake.cinematicMode) {
+            if (!snake.cinematicMode || snake.goRight) {
                 updateBodyParts(snake.body)
             }
         }
