@@ -22,6 +22,8 @@ object SnakeGameModule : Module() {
 		mapInstance(GameState())
 		mapPrototype { LoadingScene(/*get()*/) }
 		mapPrototype { MainMenuScene(/*get()*/) }
+		mapPrototype { RestartSnakeScene(/*get()*/) }
+		mapPrototype { TransitionToPacmanScene(/*get()*/) }
 		mapPrototype { SnakeGameScene(/*get()*/) }
 		mapPrototype { PacmanGameScene(/*get()*/) }
 		mapPrototype { MarioGameScene(/*get()*/) }

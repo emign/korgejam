@@ -28,11 +28,11 @@ class CollisionChecker(tiledMapView:TiledMapView)
     tailrec fun getRandomSpawnPoint(): Point {
         val w = collisionLayer.map.width - 1
         val h = collisionLayer.map.height - 1
-        println(w)
+
         val x = (0..w).random().toDouble() * TILE_SIZE
         val y = (0..h).random().toDouble() * TILE_SIZE
 
-        if(!colides(x,y))
+        if (!colides(x,y))
             return Point(x,y)
         else
             return getRandomSpawnPoint()

@@ -3,31 +3,20 @@ package com.snakegame.actors
 import com.snakegame.MILLISECONDS_PER_FRAME
 import com.snakegame.TILE_SIZE
 import com.snakegame.extensions.toBool
+import com.snakegame.gameplay.GameState
 import com.snakegame.gameplay.currentGameState
 import com.snakegame.input.*
 import com.snakegame.map.CollisionChecker
-import com.soywiz.klock.seconds
 import com.soywiz.kmem.unsetBits
 import com.soywiz.korev.Key
 import com.soywiz.korge.atlas.readAtlas
 import com.soywiz.korge.input.onKeyDown
 import com.soywiz.korge.input.onKeyUp
-import com.soywiz.korge.time.timeout
-import com.soywiz.korge.time.wait
-import com.soywiz.korge.tween.hide
-import com.soywiz.korge.tween.show
 import com.soywiz.korge.view.*
 import com.soywiz.korim.bitmap.Bitmap
 import com.soywiz.korim.bitmap.BitmapSlice
-import com.soywiz.korim.color.Colors
-import com.soywiz.korim.font.BitmapFont
-import com.soywiz.korim.font.readBitmapFont
-import com.soywiz.korim.format.readNativeImage
-import com.soywiz.korio.async.launch
-import com.soywiz.korio.async.launchImmediately
 import com.soywiz.korio.file.std.resourcesVfs
 import com.soywiz.korma.geom.Point
-import kotlin.coroutines.coroutineContext
 import kotlin.math.max
 
 
@@ -138,18 +127,20 @@ class Snake(
             it.ypos = lerp(it.lastY, it.y, delta)
         }
     }
+
+    fun colides():Boolean {
+        body.forEach {
+            if (head!=it && head.x == it.x && head.y == it.y){
+                return true
+            }
+        }
+        return false
+    }
 }
 
 enum class MovementMode { SNAKE, PACMAN, MARIO }
 
-suspend fun Image.talk(text: String){
-    (getChildAt(0) as Text).text = text
-    show(1.seconds)
-    wait(2.seconds)
-    hide(1.seconds)
-}
-
-suspend fun Container.snake(views: Views, pos: Point, skin:SnakeSkin, collisionChecker: CollisionChecker, font: BitmapFont, movementMode:MovementMode = MovementMode.SNAKE):Snake {
+suspend fun Container.snake(views: Views, pos: Point, skin:SnakeSkin, collisionChecker: CollisionChecker, movementMode:MovementMode = MovementMode.SNAKE, onDied:()->Unit, onItemEaten:()->Unit):Snake {
     val snakeAtlas = resourcesVfs["snake.atlas.json"].readAtlas(views)
     val headTile = snakeAtlas[skin.headTile]
     val bodyTile = snakeAtlas[skin.bodyTile]
@@ -172,16 +163,6 @@ suspend fun Container.snake(views: Views, pos: Point, skin:SnakeSkin, collisionC
                 image(bodyTile).apply { smoothing = false },
                 image(tailTile).apply { smoothing = false }
         )
-
-        val bocadilloSmall = image(resourcesVfs["texts/bocadillo_02.png"].readNativeImage())
-        bocadilloSmall.addChild(text("!?", 16.0, color = Colors.BLACK, font = font).centerXOn(bocadilloSmall))
-        bocadilloSmall.hide(0.seconds)
-        val bocadilloBig = image(resourcesVfs["texts/bocadillo_01.png"].readNativeImage())
-        bocadilloBig.scale(1.5, 1.5)
-        bocadilloBig.addChild(text("Grrrr...", 10.0, color = Colors.BLACK, font = font).position(5, 5))
-        bocadilloBig.hide(0.seconds)
-
-        launch(coroutineContext){ bocadilloBig.talk("Wololoooo") }
 
         val head = bodyParts.first()
 
@@ -211,11 +192,15 @@ suspend fun Container.snake(views: Views, pos: Point, skin:SnakeSkin, collisionC
             if (it is Apple) {
                 it.spawn()
                 addBodyPart()
+                onItemEaten()
             }
         }
 
         addFixedUpdater(MILLISECONDS_PER_FRAME, false) {
-            if(currentGameState.paused) return@addFixedUpdater
+            if(currentGameState.paused) {
+                //println("GAME IS PAUSERDDD")
+                return@addFixedUpdater
+            }
         //addUpdater { it ->
         //    val deltaTime:Double = if (it.milliseconds == 0.0) 0.0 else (it.milliseconds / 16.666666)
 
@@ -252,9 +237,11 @@ suspend fun Container.snake(views: Views, pos: Point, skin:SnakeSkin, collisionC
                         snake.move()
 
                         collisionChecker.checkCollision(snake.head.x, snake.head.y) {
-                            snake.head.x = 128.0
-                            snake.head.y = 128.0
+                            onDied()
                         }
+
+                        if (snake.colides()) onDied()
+
                     } else {
                         snake.interpolate(frames / TILE_SIZE)
                     }
@@ -324,12 +311,6 @@ suspend fun Container.snake(views: Views, pos: Point, skin:SnakeSkin, collisionC
                 }
             }
 
-            bocadilloSmall.apply {
-                position(head.pos + Point(15, -40))
-            }
-            bocadilloBig.apply {
-                position(head.pos + Point(15, -55))
-            }
 
             bodyParts.forEachIndexed { index, image ->
                 val bodyPart = snake.body[index]

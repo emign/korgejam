@@ -20,7 +20,7 @@ suspend fun main() = Korge(width = 800, height = 600) {
 
     val camera = camera {
         tiledMap(1)
-        snake(views)
+        //snake(views)
     }
         var dx = 0.0
         var dy = 0.0
