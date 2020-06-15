@@ -331,7 +331,7 @@ suspend fun Container.snake(views: Views, pos: Point, skin:SnakeSkin, collisionC
         }
 
         head.onCollision {
-            if(it is Lario){
+            if(it is Lario || it is Koopa){
                 Resources.appleSound.play()
                 head.bitmap = eatingHeadTile
                 timeout(MILLISECONDS_PER_FRAME * speed){

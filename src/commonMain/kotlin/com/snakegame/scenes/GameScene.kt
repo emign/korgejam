@@ -166,6 +166,14 @@ open class GameScene(val stageConfig: StageConfig) : Scene() {
                 if(stageConfig == SnakeStageConfig){
                     apple(views, collisionChecker)
                 }
+
+                if(stageConfig == MarioStageConfig){
+                    koopa(collisionChecker).position(1504, 511)
+                    koopa(collisionChecker).position(4000, 511)
+                    koopa(collisionChecker).position(5865, 511)
+                    koopa(collisionChecker).position(6560, 511)
+                    koopa(collisionChecker).position(8064, 511)
+                }
             }
             customInit()
         }
