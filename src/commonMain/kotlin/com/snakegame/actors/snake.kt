@@ -608,7 +608,6 @@ suspend fun Container.snake(views: Views, pos: Point, skin:SnakeSkin, collisionC
                         }
 
                         if (snake.colides()) onDied()
-                        paintCurves()
 
                     } else {
                         snake.interpolate(frames / TILE_SIZE)
@@ -623,6 +622,7 @@ suspend fun Container.snake(views: Views, pos: Point, skin:SnakeSkin, collisionC
                         snake.warp(-TILE_SIZE, 10 * TILE_SIZE, Direction.RIGHT)
                     }
 
+                    paintCurves()
 
                 }
                 MovementMode.MARIO -> {
