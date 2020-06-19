@@ -109,6 +109,7 @@ class Snake(
             current.y = y
             //current.direction = direction
         }
+        body.last().direction = body[body.lastIndex - 1].direction
 
         head.lastX = head.x
         head.lastY = head.y
@@ -475,7 +476,6 @@ suspend fun Container.snake(views: Views, pos: Point, skin:SnakeSkin, collisionC
                     }
 
                     if(index>=positions.lastIndex-1) return@forEachIndexed
-                    if(index>0) {
                         val next = positions[index+1]
                         if (it.x == next.x) { //Vertical
                             val next2 = positions[index+2]
@@ -508,7 +508,6 @@ suspend fun Container.snake(views: Views, pos: Point, skin:SnakeSkin, collisionC
                                     curves.add(Pair(CURVES.DR, next))
                             }
                         }
-                    }
                 }
                 snakeCurvesContainer.removeChildren()
                 curves.forEach {
